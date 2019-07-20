@@ -1,0 +1,59 @@
+type User {
+  id: ID! @id
+  username: String! @unique
+  name: String!
+  password: String!
+  coursesAttending: [Course!]! @relation(name: "CourseStudents", onDelete: SET_NULL)
+  coursesTeaching: [Course!]! @relation(name: "CourseTeachers", onDelete: SET_NULL)
+  role: Role! @default(value: Student)
+}
+
+enum Role {
+  Student
+  Teacher
+}
+
+type Course {
+  id: ID! @id
+  name: String!
+  students: [User!]! @relation(name: "CourseStudents", onDelete: SET_NULL)
+  teachers: [User!]! @relation(name: "CourseTeachers", onDelete: SET_NULL)
+  term: Term! @relation(link: INLINE)
+  code: String! @unique
+}
+
+type Term {
+  id: ID! @id
+  startDate: DateTime!
+  endDate: DateTime!
+  name: String! @unique
+  courses: [Course!]!
+}
+
+type Session {
+  id: ID! @id
+  startsAt: DateTime!
+  endsAt: DateTime!
+  course: Course! @relation(link: INLINE)
+  prompts: [Prompt!]!
+}
+
+type Prompt {
+  id: ID! @id
+  text: String!
+  answers: [Answer!]!
+}
+
+type Answer {
+  id: ID! @id
+  text: String!
+}
+
+type Response {
+  id: ID! @id
+  student: User @relation(link: INLINE)
+  prompt: Prompt @relation(link: INLINE)
+  answer: Answer @relation(link: INLINE)
+  session: Session
+  createdAt: DateTime! @createdAt
+}
