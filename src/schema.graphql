@@ -1,0 +1,40 @@
+# import * from './generated/graphql/prisma.graphql'
+scalar DateTime
+
+type Query {
+  user(id: ID!): User
+  users: [User!]!
+  course(id: ID!): Course
+  courses: [Course!]!
+  term(id: ID!): Term
+  terms: [Term!]!
+  session(id: ID!): Session
+  sessions: [Session!]!
+  prompt(id: ID!): Prompt
+  prompts: [Prompt!]!
+  answer(id: ID!): Answer
+  answers: [Answer!]!
+  response(id: ID!): Response
+  responses: [Response!]!
+}
+
+type Mutation {
+  signup(username: String!, name: String!, password: String!): AuthPayload!
+  login(username: String!, password: String!): AuthPayload!
+  createTerm(startDate: DateTime!, endDate: DateTime!, name: String!): Term
+  updateTerm(
+    startDate: DateTime!
+    endDate: DateTime!
+    name: String!
+    id: ID!
+  ): Term
+  deleteTerm(id: ID!): Term
+  createCourse(name: String!, termId: ID, code: String!): Course
+  deleteCourse(id: ID!): Course
+  addStudentToCourse(id: ID!, code: String!): Course
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
