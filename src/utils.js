@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-function getUserId(context) {
+function getUserId (context) {
   const Authorization = context.request.get('Authorization')
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
@@ -12,7 +12,7 @@ function getUserId(context) {
 }
 
 class AuthError extends Error {
-  constructor() {
+  constructor () {
     super('Not authorized')
   }
 }
