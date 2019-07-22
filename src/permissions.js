@@ -1,21 +1,23 @@
-const { rule, shield } = require("graphql-shield");
-const { getUserId } = require("./utils");
+const { rule, shield } = require('graphql-shield')
+const { getUserId } = require('./utils')
 
 // Rules
 const isAuthenticatedUser = rule()((parent, args, context) => {
-  const userId = getUserId(context);
-  return Boolean(userId);
-});
+  const userId = getUserId(context)
+  return Boolean(userId)
+})
 
 const isTeacher = rule()((parent, args, context) => {
-  const userId = getUserId(context);
-  return context.prisma.$exists.user({ id: userId, role: "Teacher" });
-});
+  const userId = getUserId(context)
+  return context.prisma.$exists.user({ id: userId, role: 'Teacher' })
+})
 
 // Permissions
 
 exports.permissions = shield({
-  Query: {},
+  Query: {
+    me: isAuthenticatedUser
+  },
   Mutation: {
     createTerm: isTeacher,
     updateTerm: isTeacher,
@@ -23,4 +25,4 @@ exports.permissions = shield({
     createCourse: isTeacher,
     deleteCourse: isTeacher
   }
-});
+})

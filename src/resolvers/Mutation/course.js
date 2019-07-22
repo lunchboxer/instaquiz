@@ -1,5 +1,5 @@
 exports.course = {
-  async createCourse(_, { name, termId, code }, context) {
+  async createCourse (_, { name, termId, code }, context) {
     return context.prisma.createCourse({
       name,
       code,
@@ -8,15 +8,15 @@ exports.course = {
           id: termId
         }
       }
-    });
+    })
   },
-  async addStudentToCourse(_, { id, code }, context) {
+  async addStudentToCourse (_, { id, code }, context) {
     return context.prisma.updateCourse({
       data: {
         students: { connect: { id } }
       },
       where: { code }
-    });
+    })
   },
   // async updateCourse(_, args, context) {
   //   let data = {}
@@ -33,7 +33,7 @@ exports.course = {
   //     where: { id : args.id }
   //   });
   // },
-  deleteCourse(_, { id }, context) {
-    return context.prisma.deleteTerm({ id });
+  deleteCourse (_, { id }, context) {
+    return context.prisma.deleteTerm({ id })
   }
-};
+}

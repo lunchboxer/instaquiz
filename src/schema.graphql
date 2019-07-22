@@ -2,12 +2,13 @@
 scalar DateTime
 
 type Query {
+  me: User
   user(id: ID!): User
   users: [User!]!
   course(id: ID!): Course
-  courses: [Course!]!
+  courses(orderBy: CourseOrderByInput, where: CourseWhereInput): [Course!]!
   term(id: ID!): Term
-  terms: [Term!]!
+  terms(orderBy: TermOrderByInput, where: TermWhereInput): [Term!]!
   session(id: ID!): Session
   sessions: [Session!]!
   prompt(id: ID!): Prompt
