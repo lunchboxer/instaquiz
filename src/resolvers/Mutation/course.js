@@ -34,6 +34,6 @@ exports.course = {
   //   });
   // },
   deleteCourse (_, { id }, context) {
-    return context.prisma.deleteTerm({ id })
+    return context.prisma.deleteCourse({ id })
   }
 }
