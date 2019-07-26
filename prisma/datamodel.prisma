@@ -20,6 +20,7 @@ type Course {
   teachers: [User!]! @relation(name: "CourseTeachers", onDelete: SET_NULL)
   term: Term! @relation(link: INLINE)
   code: String! @unique
+  sessions: [Session!]!
 }
 
 type Term {

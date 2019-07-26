@@ -34,6 +34,8 @@ type Mutation {
   deleteCourse(id: ID!): Course
   addStudentToCourse(id: ID!, code: String!): Course
   addTeacherToCourse(id: ID!, courseId: ID!): Course
+  removeTeacherFromCourse(id: ID!, courseId: ID!): Course
+  createSession(startsAt: DateTime!, endsAt: DateTime!, courseId: ID!): Session
 }
 
 type AuthPayload {
