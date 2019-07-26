@@ -29,8 +29,8 @@ exports.Query = {
   session (_, args, context) {
     return context.prisma.session({ id: args.id })
   },
-  sessions (_, args, context) {
-    return context.prisma.sessions()
+  sessions (_, { orderBy, where }, context) {
+    return context.prisma.sessions({ orderBy, where })
   },
   prompt (_, args, context) {
     return context.prisma.prompt({ id: args.id })
