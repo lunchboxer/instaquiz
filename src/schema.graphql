@@ -33,6 +33,7 @@ type Mutation {
   createCourse(name: String!, termId: ID, code: String!): Course
   deleteCourse(id: ID!): Course
   addStudentToCourse(id: ID!, code: String!): Course
+  addTeacherToCourse(id: ID!, courseId: ID!): Course
 }
 
 type AuthPayload {

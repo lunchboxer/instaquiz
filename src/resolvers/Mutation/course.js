@@ -18,6 +18,14 @@ exports.course = {
       where: { code }
     })
   },
+  async addTeacherToCourse (_, { id, courseId }, context) {
+    return context.prisma.updateCourse({
+      data: {
+        teachers: { connect: { id } }
+      },
+      where: { id: courseId }
+    })
+  },
   // async updateCourse(_, args, context) {
   //   let data = {}
   //   if (args.termId) {
