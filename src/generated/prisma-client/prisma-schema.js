@@ -233,6 +233,7 @@ type Course {
   teachers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   term: Term!
   code: String!
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session!]
 }
 
 type CourseConnection {
@@ -248,6 +249,7 @@ input CourseCreateInput {
   teachers: UserCreateManyWithoutCoursesTeachingInput
   term: TermCreateOneWithoutCoursesInput!
   code: String!
+  sessions: SessionCreateManyWithoutCourseInput
 }
 
 input CourseCreateManyWithoutStudentsInput {
@@ -265,9 +267,18 @@ input CourseCreateManyWithoutTermInput {
   connect: [CourseWhereUniqueInput!]
 }
 
-input CourseCreateOneInput {
-  create: CourseCreateInput
+input CourseCreateOneWithoutSessionsInput {
+  create: CourseCreateWithoutSessionsInput
   connect: CourseWhereUniqueInput
+}
+
+input CourseCreateWithoutSessionsInput {
+  id: ID
+  name: String!
+  students: UserCreateManyWithoutCoursesAttendingInput
+  teachers: UserCreateManyWithoutCoursesTeachingInput
+  term: TermCreateOneWithoutCoursesInput!
+  code: String!
 }
 
 input CourseCreateWithoutStudentsInput {
@@ -276,6 +287,7 @@ input CourseCreateWithoutStudentsInput {
   teachers: UserCreateManyWithoutCoursesTeachingInput
   term: TermCreateOneWithoutCoursesInput!
   code: String!
+  sessions: SessionCreateManyWithoutCourseInput
 }
 
 input CourseCreateWithoutTeachersInput {
@@ -284,6 +296,7 @@ input CourseCreateWithoutTeachersInput {
   students: UserCreateManyWithoutCoursesAttendingInput
   term: TermCreateOneWithoutCoursesInput!
   code: String!
+  sessions: SessionCreateManyWithoutCourseInput
 }
 
 input CourseCreateWithoutTermInput {
@@ -292,6 +305,7 @@ input CourseCreateWithoutTermInput {
   students: UserCreateManyWithoutCoursesAttendingInput
   teachers: UserCreateManyWithoutCoursesTeachingInput
   code: String!
+  sessions: SessionCreateManyWithoutCourseInput
 }
 
 type CourseEdge {
@@ -380,20 +394,13 @@ input CourseSubscriptionWhereInput {
   NOT: [CourseSubscriptionWhereInput!]
 }
 
-input CourseUpdateDataInput {
-  name: String
-  students: UserUpdateManyWithoutCoursesAttendingInput
-  teachers: UserUpdateManyWithoutCoursesTeachingInput
-  term: TermUpdateOneRequiredWithoutCoursesInput
-  code: String
-}
-
 input CourseUpdateInput {
   name: String
   students: UserUpdateManyWithoutCoursesAttendingInput
   teachers: UserUpdateManyWithoutCoursesTeachingInput
   term: TermUpdateOneRequiredWithoutCoursesInput
   code: String
+  sessions: SessionUpdateManyWithoutCourseInput
 }
 
 input CourseUpdateManyDataInput {
@@ -447,11 +454,19 @@ input CourseUpdateManyWithWhereNestedInput {
   data: CourseUpdateManyDataInput!
 }
 
-input CourseUpdateOneRequiredInput {
-  create: CourseCreateInput
-  update: CourseUpdateDataInput
-  upsert: CourseUpsertNestedInput
+input CourseUpdateOneRequiredWithoutSessionsInput {
+  create: CourseCreateWithoutSessionsInput
+  update: CourseUpdateWithoutSessionsDataInput
+  upsert: CourseUpsertWithoutSessionsInput
   connect: CourseWhereUniqueInput
+}
+
+input CourseUpdateWithoutSessionsDataInput {
+  name: String
+  students: UserUpdateManyWithoutCoursesAttendingInput
+  teachers: UserUpdateManyWithoutCoursesTeachingInput
+  term: TermUpdateOneRequiredWithoutCoursesInput
+  code: String
 }
 
 input CourseUpdateWithoutStudentsDataInput {
@@ -459,6 +474,7 @@ input CourseUpdateWithoutStudentsDataInput {
   teachers: UserUpdateManyWithoutCoursesTeachingInput
   term: TermUpdateOneRequiredWithoutCoursesInput
   code: String
+  sessions: SessionUpdateManyWithoutCourseInput
 }
 
 input CourseUpdateWithoutTeachersDataInput {
@@ -466,6 +482,7 @@ input CourseUpdateWithoutTeachersDataInput {
   students: UserUpdateManyWithoutCoursesAttendingInput
   term: TermUpdateOneRequiredWithoutCoursesInput
   code: String
+  sessions: SessionUpdateManyWithoutCourseInput
 }
 
 input CourseUpdateWithoutTermDataInput {
@@ -473,6 +490,7 @@ input CourseUpdateWithoutTermDataInput {
   students: UserUpdateManyWithoutCoursesAttendingInput
   teachers: UserUpdateManyWithoutCoursesTeachingInput
   code: String
+  sessions: SessionUpdateManyWithoutCourseInput
 }
 
 input CourseUpdateWithWhereUniqueWithoutStudentsInput {
@@ -490,9 +508,9 @@ input CourseUpdateWithWhereUniqueWithoutTermInput {
   data: CourseUpdateWithoutTermDataInput!
 }
 
-input CourseUpsertNestedInput {
-  update: CourseUpdateDataInput!
-  create: CourseCreateInput!
+input CourseUpsertWithoutSessionsInput {
+  update: CourseUpdateWithoutSessionsDataInput!
+  create: CourseCreateWithoutSessionsInput!
 }
 
 input CourseUpsertWithWhereUniqueWithoutStudentsInput {
@@ -563,6 +581,9 @@ input CourseWhereInput {
   code_not_starts_with: String
   code_ends_with: String
   code_not_ends_with: String
+  sessions_every: SessionWhereInput
+  sessions_some: SessionWhereInput
+  sessions_none: SessionWhereInput
   AND: [CourseWhereInput!]
   OR: [CourseWhereInput!]
   NOT: [CourseWhereInput!]
@@ -985,13 +1006,25 @@ input SessionCreateInput {
   id: ID
   startsAt: DateTime!
   endsAt: DateTime!
-  course: CourseCreateOneInput!
+  course: CourseCreateOneWithoutSessionsInput!
   prompts: PromptCreateManyInput
+}
+
+input SessionCreateManyWithoutCourseInput {
+  create: [SessionCreateWithoutCourseInput!]
+  connect: [SessionWhereUniqueInput!]
 }
 
 input SessionCreateOneInput {
   create: SessionCreateInput
   connect: SessionWhereUniqueInput
+}
+
+input SessionCreateWithoutCourseInput {
+  id: ID
+  startsAt: DateTime!
+  endsAt: DateTime!
+  prompts: PromptCreateManyInput
 }
 
 type SessionEdge {
@@ -1012,6 +1045,42 @@ type SessionPreviousValues {
   id: ID!
   startsAt: DateTime!
   endsAt: DateTime!
+}
+
+input SessionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  startsAt: DateTime
+  startsAt_not: DateTime
+  startsAt_in: [DateTime!]
+  startsAt_not_in: [DateTime!]
+  startsAt_lt: DateTime
+  startsAt_lte: DateTime
+  startsAt_gt: DateTime
+  startsAt_gte: DateTime
+  endsAt: DateTime
+  endsAt_not: DateTime
+  endsAt_in: [DateTime!]
+  endsAt_not_in: [DateTime!]
+  endsAt_lt: DateTime
+  endsAt_lte: DateTime
+  endsAt_gt: DateTime
+  endsAt_gte: DateTime
+  AND: [SessionScalarWhereInput!]
+  OR: [SessionScalarWhereInput!]
+  NOT: [SessionScalarWhereInput!]
 }
 
 type SessionSubscriptionPayload {
@@ -1035,20 +1104,42 @@ input SessionSubscriptionWhereInput {
 input SessionUpdateDataInput {
   startsAt: DateTime
   endsAt: DateTime
-  course: CourseUpdateOneRequiredInput
+  course: CourseUpdateOneRequiredWithoutSessionsInput
   prompts: PromptUpdateManyInput
 }
 
 input SessionUpdateInput {
   startsAt: DateTime
   endsAt: DateTime
-  course: CourseUpdateOneRequiredInput
+  course: CourseUpdateOneRequiredWithoutSessionsInput
   prompts: PromptUpdateManyInput
+}
+
+input SessionUpdateManyDataInput {
+  startsAt: DateTime
+  endsAt: DateTime
 }
 
 input SessionUpdateManyMutationInput {
   startsAt: DateTime
   endsAt: DateTime
+}
+
+input SessionUpdateManyWithoutCourseInput {
+  create: [SessionCreateWithoutCourseInput!]
+  delete: [SessionWhereUniqueInput!]
+  connect: [SessionWhereUniqueInput!]
+  set: [SessionWhereUniqueInput!]
+  disconnect: [SessionWhereUniqueInput!]
+  update: [SessionUpdateWithWhereUniqueWithoutCourseInput!]
+  upsert: [SessionUpsertWithWhereUniqueWithoutCourseInput!]
+  deleteMany: [SessionScalarWhereInput!]
+  updateMany: [SessionUpdateManyWithWhereNestedInput!]
+}
+
+input SessionUpdateManyWithWhereNestedInput {
+  where: SessionScalarWhereInput!
+  data: SessionUpdateManyDataInput!
 }
 
 input SessionUpdateOneInput {
@@ -1060,9 +1151,26 @@ input SessionUpdateOneInput {
   connect: SessionWhereUniqueInput
 }
 
+input SessionUpdateWithoutCourseDataInput {
+  startsAt: DateTime
+  endsAt: DateTime
+  prompts: PromptUpdateManyInput
+}
+
+input SessionUpdateWithWhereUniqueWithoutCourseInput {
+  where: SessionWhereUniqueInput!
+  data: SessionUpdateWithoutCourseDataInput!
+}
+
 input SessionUpsertNestedInput {
   update: SessionUpdateDataInput!
   create: SessionCreateInput!
+}
+
+input SessionUpsertWithWhereUniqueWithoutCourseInput {
+  where: SessionWhereUniqueInput!
+  update: SessionUpdateWithoutCourseDataInput!
+  create: SessionCreateWithoutCourseInput!
 }
 
 input SessionWhereInput {

@@ -7,5 +7,8 @@ exports.Course = {
   },
   teachers (root, args, context) {
     return context.prisma.course({ id: root.id }).teachers()
+  },
+  sessions (root, args, context) {
+    return context.prisma.course({ id: root.id }).sessions()
   }
 }

@@ -359,6 +359,14 @@ export type CourseOrderByInput =
   | "code_ASC"
   | "code_DESC";
 
+export type SessionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "startsAt_ASC"
+  | "startsAt_DESC"
+  | "endsAt_ASC"
+  | "endsAt_DESC";
+
 export type PromptOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -370,14 +378,6 @@ export type ResponseOrderByInput =
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
-
-export type SessionOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "startsAt_ASC"
-  | "startsAt_DESC"
-  | "endsAt_ASC"
-  | "endsAt_DESC";
 
 export type TermOrderByInput =
   | "id_ASC"
@@ -556,6 +556,9 @@ export interface CourseWhereInput {
   code_not_starts_with?: Maybe<String>;
   code_ends_with?: Maybe<String>;
   code_not_ends_with?: Maybe<String>;
+  sessions_every?: Maybe<SessionWhereInput>;
+  sessions_some?: Maybe<SessionWhereInput>;
+  sessions_none?: Maybe<SessionWhereInput>;
   AND?: Maybe<CourseWhereInput[] | CourseWhereInput>;
   OR?: Maybe<CourseWhereInput[] | CourseWhereInput>;
   NOT?: Maybe<CourseWhereInput[] | CourseWhereInput>;
@@ -614,83 +617,6 @@ export interface TermWhereInput {
   NOT?: Maybe<TermWhereInput[] | TermWhereInput>;
 }
 
-export type PromptWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface PromptWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  answers_every?: Maybe<AnswerWhereInput>;
-  answers_some?: Maybe<AnswerWhereInput>;
-  answers_none?: Maybe<AnswerWhereInput>;
-  AND?: Maybe<PromptWhereInput[] | PromptWhereInput>;
-  OR?: Maybe<PromptWhereInput[] | PromptWhereInput>;
-  NOT?: Maybe<PromptWhereInput[] | PromptWhereInput>;
-}
-
-export type ResponseWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ResponseWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  student?: Maybe<UserWhereInput>;
-  prompt?: Maybe<PromptWhereInput>;
-  answer?: Maybe<AnswerWhereInput>;
-  session?: Maybe<SessionWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-}
-
 export interface SessionWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -731,6 +657,83 @@ export interface SessionWhereInput {
   NOT?: Maybe<SessionWhereInput[] | SessionWhereInput>;
 }
 
+export interface PromptWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  answers_every?: Maybe<AnswerWhereInput>;
+  answers_some?: Maybe<AnswerWhereInput>;
+  answers_none?: Maybe<AnswerWhereInput>;
+  AND?: Maybe<PromptWhereInput[] | PromptWhereInput>;
+  OR?: Maybe<PromptWhereInput[] | PromptWhereInput>;
+  NOT?: Maybe<PromptWhereInput[] | PromptWhereInput>;
+}
+
+export type PromptWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type ResponseWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ResponseWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  student?: Maybe<UserWhereInput>;
+  prompt?: Maybe<PromptWhereInput>;
+  answer?: Maybe<AnswerWhereInput>;
+  session?: Maybe<SessionWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+}
+
 export type SessionWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -765,6 +768,7 @@ export interface CourseCreateInput {
   teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
   term: TermCreateOneWithoutCoursesInput;
   code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
 }
 
 export interface UserCreateManyWithoutCoursesAttendingInput {
@@ -797,6 +801,7 @@ export interface CourseCreateWithoutTeachersInput {
   students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
   term: TermCreateOneWithoutCoursesInput;
   code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
 }
 
 export interface TermCreateOneWithoutCoursesInput {
@@ -809,6 +814,36 @@ export interface TermCreateWithoutCoursesInput {
   startDate: DateTimeInput;
   endDate: DateTimeInput;
   name: String;
+}
+
+export interface SessionCreateManyWithoutCourseInput {
+  create?: Maybe<
+    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
+  >;
+  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+}
+
+export interface SessionCreateWithoutCourseInput {
+  id?: Maybe<ID_Input>;
+  startsAt: DateTimeInput;
+  endsAt: DateTimeInput;
+  prompts?: Maybe<PromptCreateManyInput>;
+}
+
+export interface PromptCreateManyInput {
+  create?: Maybe<PromptCreateInput[] | PromptCreateInput>;
+  connect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+}
+
+export interface PromptCreateInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  answers?: Maybe<AnswerCreateManyInput>;
+}
+
+export interface AnswerCreateManyInput {
+  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
+  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
 }
 
 export interface UserCreateManyWithoutCoursesTeachingInput {
@@ -841,6 +876,7 @@ export interface CourseCreateWithoutStudentsInput {
   teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
   term: TermCreateOneWithoutCoursesInput;
   code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
 }
 
 export interface CourseUpdateInput {
@@ -849,6 +885,7 @@ export interface CourseUpdateInput {
   teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
   term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
   code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
 }
 
 export interface UserUpdateManyWithoutCoursesAttendingInput {
@@ -920,6 +957,7 @@ export interface CourseUpdateWithoutTeachersDataInput {
   students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
   term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
   code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
 }
 
 export interface TermUpdateOneRequiredWithoutCoursesInput {
@@ -938,6 +976,251 @@ export interface TermUpdateWithoutCoursesDataInput {
 export interface TermUpsertWithoutCoursesInput {
   update: TermUpdateWithoutCoursesDataInput;
   create: TermCreateWithoutCoursesInput;
+}
+
+export interface SessionUpdateManyWithoutCourseInput {
+  create?: Maybe<
+    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
+  >;
+  delete?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  set?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  disconnect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  update?: Maybe<
+    | SessionUpdateWithWhereUniqueWithoutCourseInput[]
+    | SessionUpdateWithWhereUniqueWithoutCourseInput
+  >;
+  upsert?: Maybe<
+    | SessionUpsertWithWhereUniqueWithoutCourseInput[]
+    | SessionUpsertWithWhereUniqueWithoutCourseInput
+  >;
+  deleteMany?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
+  updateMany?: Maybe<
+    | SessionUpdateManyWithWhereNestedInput[]
+    | SessionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SessionUpdateWithWhereUniqueWithoutCourseInput {
+  where: SessionWhereUniqueInput;
+  data: SessionUpdateWithoutCourseDataInput;
+}
+
+export interface SessionUpdateWithoutCourseDataInput {
+  startsAt?: Maybe<DateTimeInput>;
+  endsAt?: Maybe<DateTimeInput>;
+  prompts?: Maybe<PromptUpdateManyInput>;
+}
+
+export interface PromptUpdateManyInput {
+  create?: Maybe<PromptCreateInput[] | PromptCreateInput>;
+  update?: Maybe<
+    | PromptUpdateWithWhereUniqueNestedInput[]
+    | PromptUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | PromptUpsertWithWhereUniqueNestedInput[]
+    | PromptUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+  connect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+  set?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+  disconnect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+  deleteMany?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
+  updateMany?: Maybe<
+    | PromptUpdateManyWithWhereNestedInput[]
+    | PromptUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PromptUpdateWithWhereUniqueNestedInput {
+  where: PromptWhereUniqueInput;
+  data: PromptUpdateDataInput;
+}
+
+export interface PromptUpdateDataInput {
+  text?: Maybe<String>;
+  answers?: Maybe<AnswerUpdateManyInput>;
+}
+
+export interface AnswerUpdateManyInput {
+  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
+  update?: Maybe<
+    | AnswerUpdateWithWhereUniqueNestedInput[]
+    | AnswerUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | AnswerUpsertWithWhereUniqueNestedInput[]
+    | AnswerUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  set?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  disconnect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  deleteMany?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  updateMany?: Maybe<
+    | AnswerUpdateManyWithWhereNestedInput[]
+    | AnswerUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AnswerUpdateWithWhereUniqueNestedInput {
+  where: AnswerWhereUniqueInput;
+  data: AnswerUpdateDataInput;
+}
+
+export interface AnswerUpdateDataInput {
+  text?: Maybe<String>;
+}
+
+export interface AnswerUpsertWithWhereUniqueNestedInput {
+  where: AnswerWhereUniqueInput;
+  update: AnswerUpdateDataInput;
+  create: AnswerCreateInput;
+}
+
+export interface AnswerScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  OR?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  NOT?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+}
+
+export interface AnswerUpdateManyWithWhereNestedInput {
+  where: AnswerScalarWhereInput;
+  data: AnswerUpdateManyDataInput;
+}
+
+export interface AnswerUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
+export interface PromptUpsertWithWhereUniqueNestedInput {
+  where: PromptWhereUniqueInput;
+  update: PromptUpdateDataInput;
+  create: PromptCreateInput;
+}
+
+export interface PromptScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
+  OR?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
+  NOT?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
+}
+
+export interface PromptUpdateManyWithWhereNestedInput {
+  where: PromptScalarWhereInput;
+  data: PromptUpdateManyDataInput;
+}
+
+export interface PromptUpdateManyDataInput {
+  text?: Maybe<String>;
+}
+
+export interface SessionUpsertWithWhereUniqueWithoutCourseInput {
+  where: SessionWhereUniqueInput;
+  update: SessionUpdateWithoutCourseDataInput;
+  create: SessionCreateWithoutCourseInput;
+}
+
+export interface SessionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  startsAt?: Maybe<DateTimeInput>;
+  startsAt_not?: Maybe<DateTimeInput>;
+  startsAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startsAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  startsAt_lt?: Maybe<DateTimeInput>;
+  startsAt_lte?: Maybe<DateTimeInput>;
+  startsAt_gt?: Maybe<DateTimeInput>;
+  startsAt_gte?: Maybe<DateTimeInput>;
+  endsAt?: Maybe<DateTimeInput>;
+  endsAt_not?: Maybe<DateTimeInput>;
+  endsAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endsAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  endsAt_lt?: Maybe<DateTimeInput>;
+  endsAt_lte?: Maybe<DateTimeInput>;
+  endsAt_gt?: Maybe<DateTimeInput>;
+  endsAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
+  OR?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
+  NOT?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
+}
+
+export interface SessionUpdateManyWithWhereNestedInput {
+  where: SessionScalarWhereInput;
+  data: SessionUpdateManyDataInput;
+}
+
+export interface SessionUpdateManyDataInput {
+  startsAt?: Maybe<DateTimeInput>;
+  endsAt?: Maybe<DateTimeInput>;
 }
 
 export interface CourseUpsertWithWhereUniqueWithoutTeachersInput {
@@ -1157,6 +1440,7 @@ export interface CourseUpdateWithoutStudentsDataInput {
   teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
   term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
   code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
 }
 
 export interface CourseUpsertWithWhereUniqueWithoutStudentsInput {
@@ -1176,99 +1460,9 @@ export interface CourseUpdateManyMutationInput {
   code?: Maybe<String>;
 }
 
-export interface PromptCreateInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  answers?: Maybe<AnswerCreateManyInput>;
-}
-
-export interface AnswerCreateManyInput {
-  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
-  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-}
-
 export interface PromptUpdateInput {
   text?: Maybe<String>;
   answers?: Maybe<AnswerUpdateManyInput>;
-}
-
-export interface AnswerUpdateManyInput {
-  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
-  update?: Maybe<
-    | AnswerUpdateWithWhereUniqueNestedInput[]
-    | AnswerUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | AnswerUpsertWithWhereUniqueNestedInput[]
-    | AnswerUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  set?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  disconnect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  deleteMany?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  updateMany?: Maybe<
-    | AnswerUpdateManyWithWhereNestedInput[]
-    | AnswerUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface AnswerUpdateWithWhereUniqueNestedInput {
-  where: AnswerWhereUniqueInput;
-  data: AnswerUpdateDataInput;
-}
-
-export interface AnswerUpdateDataInput {
-  text?: Maybe<String>;
-}
-
-export interface AnswerUpsertWithWhereUniqueNestedInput {
-  where: AnswerWhereUniqueInput;
-  update: AnswerUpdateDataInput;
-  create: AnswerCreateInput;
-}
-
-export interface AnswerScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  AND?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  OR?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  NOT?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-}
-
-export interface AnswerUpdateManyWithWhereNestedInput {
-  where: AnswerScalarWhereInput;
-  data: AnswerUpdateManyDataInput;
-}
-
-export interface AnswerUpdateManyDataInput {
-  text?: Maybe<String>;
 }
 
 export interface PromptUpdateManyMutationInput {
@@ -1317,18 +1511,22 @@ export interface SessionCreateInput {
   id?: Maybe<ID_Input>;
   startsAt: DateTimeInput;
   endsAt: DateTimeInput;
-  course: CourseCreateOneInput;
+  course: CourseCreateOneWithoutSessionsInput;
   prompts?: Maybe<PromptCreateManyInput>;
 }
 
-export interface CourseCreateOneInput {
-  create?: Maybe<CourseCreateInput>;
+export interface CourseCreateOneWithoutSessionsInput {
+  create?: Maybe<CourseCreateWithoutSessionsInput>;
   connect?: Maybe<CourseWhereUniqueInput>;
 }
 
-export interface PromptCreateManyInput {
-  create?: Maybe<PromptCreateInput[] | PromptCreateInput>;
-  connect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
+export interface CourseCreateWithoutSessionsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
+  teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
+  term: TermCreateOneWithoutCoursesInput;
+  code: String;
 }
 
 export interface ResponseUpdateInput {
@@ -1370,11 +1568,6 @@ export interface PromptUpdateOneInput {
   connect?: Maybe<PromptWhereUniqueInput>;
 }
 
-export interface PromptUpdateDataInput {
-  text?: Maybe<String>;
-  answers?: Maybe<AnswerUpdateManyInput>;
-}
-
 export interface PromptUpsertNestedInput {
   update: PromptUpdateDataInput;
   create: PromptCreateInput;
@@ -1406,18 +1599,18 @@ export interface SessionUpdateOneInput {
 export interface SessionUpdateDataInput {
   startsAt?: Maybe<DateTimeInput>;
   endsAt?: Maybe<DateTimeInput>;
-  course?: Maybe<CourseUpdateOneRequiredInput>;
+  course?: Maybe<CourseUpdateOneRequiredWithoutSessionsInput>;
   prompts?: Maybe<PromptUpdateManyInput>;
 }
 
-export interface CourseUpdateOneRequiredInput {
-  create?: Maybe<CourseCreateInput>;
-  update?: Maybe<CourseUpdateDataInput>;
-  upsert?: Maybe<CourseUpsertNestedInput>;
+export interface CourseUpdateOneRequiredWithoutSessionsInput {
+  create?: Maybe<CourseCreateWithoutSessionsInput>;
+  update?: Maybe<CourseUpdateWithoutSessionsDataInput>;
+  upsert?: Maybe<CourseUpsertWithoutSessionsInput>;
   connect?: Maybe<CourseWhereUniqueInput>;
 }
 
-export interface CourseUpdateDataInput {
+export interface CourseUpdateWithoutSessionsDataInput {
   name?: Maybe<String>;
   students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
   teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
@@ -1425,84 +1618,9 @@ export interface CourseUpdateDataInput {
   code?: Maybe<String>;
 }
 
-export interface CourseUpsertNestedInput {
-  update: CourseUpdateDataInput;
-  create: CourseCreateInput;
-}
-
-export interface PromptUpdateManyInput {
-  create?: Maybe<PromptCreateInput[] | PromptCreateInput>;
-  update?: Maybe<
-    | PromptUpdateWithWhereUniqueNestedInput[]
-    | PromptUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | PromptUpsertWithWhereUniqueNestedInput[]
-    | PromptUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
-  connect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
-  set?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
-  disconnect?: Maybe<PromptWhereUniqueInput[] | PromptWhereUniqueInput>;
-  deleteMany?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
-  updateMany?: Maybe<
-    | PromptUpdateManyWithWhereNestedInput[]
-    | PromptUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface PromptUpdateWithWhereUniqueNestedInput {
-  where: PromptWhereUniqueInput;
-  data: PromptUpdateDataInput;
-}
-
-export interface PromptUpsertWithWhereUniqueNestedInput {
-  where: PromptWhereUniqueInput;
-  update: PromptUpdateDataInput;
-  create: PromptCreateInput;
-}
-
-export interface PromptScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
-  OR?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
-  NOT?: Maybe<PromptScalarWhereInput[] | PromptScalarWhereInput>;
-}
-
-export interface PromptUpdateManyWithWhereNestedInput {
-  where: PromptScalarWhereInput;
-  data: PromptUpdateManyDataInput;
-}
-
-export interface PromptUpdateManyDataInput {
-  text?: Maybe<String>;
+export interface CourseUpsertWithoutSessionsInput {
+  update: CourseUpdateWithoutSessionsDataInput;
+  create: CourseCreateWithoutSessionsInput;
 }
 
 export interface SessionUpsertNestedInput {
@@ -1513,7 +1631,7 @@ export interface SessionUpsertNestedInput {
 export interface SessionUpdateInput {
   startsAt?: Maybe<DateTimeInput>;
   endsAt?: Maybe<DateTimeInput>;
-  course?: Maybe<CourseUpdateOneRequiredInput>;
+  course?: Maybe<CourseUpdateOneRequiredWithoutSessionsInput>;
   prompts?: Maybe<PromptUpdateManyInput>;
 }
 
@@ -1541,6 +1659,7 @@ export interface CourseCreateWithoutTermInput {
   students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
   teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
   code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
 }
 
 export interface TermUpdateInput {
@@ -1581,6 +1700,7 @@ export interface CourseUpdateWithoutTermDataInput {
   students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
   teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
   code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
 }
 
 export interface CourseUpsertWithWhereUniqueWithoutTermInput {
@@ -1826,6 +1946,15 @@ export interface CoursePromise extends Promise<Course>, Fragmentable {
   }) => T;
   term: <T = TermPromise>() => T;
   code: () => Promise<String>;
+  sessions: <T = FragmentableArray<Session>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CourseSubscription
@@ -1853,6 +1982,15 @@ export interface CourseSubscription
   }) => T;
   term: <T = TermSubscription>() => T;
   code: () => Promise<AsyncIterator<String>>;
+  sessions: <T = Promise<AsyncIterator<SessionSubscription>>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CourseNullablePromise
@@ -1880,6 +2018,15 @@ export interface CourseNullablePromise
   }) => T;
   term: <T = TermPromise>() => T;
   code: () => Promise<String>;
+  sessions: <T = FragmentableArray<Session>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface User {
@@ -2031,6 +2178,115 @@ export interface TermNullablePromise
   }) => T;
 }
 
+export interface Session {
+  id: ID_Output;
+  startsAt: DateTimeOutput;
+  endsAt: DateTimeOutput;
+}
+
+export interface SessionPromise extends Promise<Session>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  startsAt: () => Promise<DateTimeOutput>;
+  endsAt: () => Promise<DateTimeOutput>;
+  course: <T = CoursePromise>() => T;
+  prompts: <T = FragmentableArray<Prompt>>(args?: {
+    where?: PromptWhereInput;
+    orderBy?: PromptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SessionSubscription
+  extends Promise<AsyncIterator<Session>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  startsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  course: <T = CourseSubscription>() => T;
+  prompts: <T = Promise<AsyncIterator<PromptSubscription>>>(args?: {
+    where?: PromptWhereInput;
+    orderBy?: PromptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SessionNullablePromise
+  extends Promise<Session | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  startsAt: () => Promise<DateTimeOutput>;
+  endsAt: () => Promise<DateTimeOutput>;
+  course: <T = CoursePromise>() => T;
+  prompts: <T = FragmentableArray<Prompt>>(args?: {
+    where?: PromptWhereInput;
+    orderBy?: PromptOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Prompt {
+  id: ID_Output;
+  text: String;
+}
+
+export interface PromptPromise extends Promise<Prompt>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  answers: <T = FragmentableArray<Answer>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PromptSubscription
+  extends Promise<AsyncIterator<Prompt>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  answers: <T = Promise<AsyncIterator<AnswerSubscription>>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PromptNullablePromise
+  extends Promise<Prompt | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  answers: <T = FragmentableArray<Answer>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
 export interface CourseConnection {
   pageInfo: PageInfo;
   edges: CourseEdge[];
@@ -2083,57 +2339,6 @@ export interface AggregateCourseSubscription
   extends Promise<AsyncIterator<AggregateCourse>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Prompt {
-  id: ID_Output;
-  text: String;
-}
-
-export interface PromptPromise extends Promise<Prompt>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  answers: <T = FragmentableArray<Answer>>(args?: {
-    where?: AnswerWhereInput;
-    orderBy?: AnswerOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PromptSubscription
-  extends Promise<AsyncIterator<Prompt>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  answers: <T = Promise<AsyncIterator<AnswerSubscription>>>(args?: {
-    where?: AnswerWhereInput;
-    orderBy?: AnswerOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PromptNullablePromise
-  extends Promise<Prompt | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  answers: <T = FragmentableArray<Answer>>(args?: {
-    where?: AnswerWhereInput;
-    orderBy?: AnswerOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
 }
 
 export interface PromptConnection {
@@ -2224,64 +2429,6 @@ export interface ResponseNullablePromise
   answer: <T = AnswerPromise>() => T;
   session: <T = SessionPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
-}
-
-export interface Session {
-  id: ID_Output;
-  startsAt: DateTimeOutput;
-  endsAt: DateTimeOutput;
-}
-
-export interface SessionPromise extends Promise<Session>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  startsAt: () => Promise<DateTimeOutput>;
-  endsAt: () => Promise<DateTimeOutput>;
-  course: <T = CoursePromise>() => T;
-  prompts: <T = FragmentableArray<Prompt>>(args?: {
-    where?: PromptWhereInput;
-    orderBy?: PromptOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SessionSubscription
-  extends Promise<AsyncIterator<Session>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  startsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  course: <T = CourseSubscription>() => T;
-  prompts: <T = Promise<AsyncIterator<PromptSubscription>>>(args?: {
-    where?: PromptWhereInput;
-    orderBy?: PromptOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SessionNullablePromise
-  extends Promise<Session | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  startsAt: () => Promise<DateTimeOutput>;
-  endsAt: () => Promise<DateTimeOutput>;
-  course: <T = CoursePromise>() => T;
-  prompts: <T = FragmentableArray<Prompt>>(args?: {
-    where?: PromptWhereInput;
-    orderBy?: PromptOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
 }
 
 export interface ResponseConnection {
