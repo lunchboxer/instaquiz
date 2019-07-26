@@ -10,7 +10,7 @@ type Query {
   term(id: ID!): Term
   terms(orderBy: TermOrderByInput, where: TermWhereInput): [Term!]!
   session(id: ID!): Session
-  sessions: [Session!]!
+  sessions(orderBy: SessionOrderByInput, where: SessionWhereInput): [Session!]!
   prompt(id: ID!): Prompt
   prompts: [Prompt!]!
   answer(id: ID!): Answer
