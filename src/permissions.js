@@ -1,10 +1,15 @@
-const { rule, shield } = require('graphql-shield')
+const { rule, shield, or } = require('graphql-shield')
 const { getUserId } = require('./utils')
 
 // Rules
 const isAuthenticatedUser = rule()((parent, args, context) => {
   const userId = getUserId(context)
   return Boolean(userId)
+})
+
+const isThisUser = rule()((parent, args, context) => {
+  const userId = getUserId(context)
+  return userId === context.id
 })
 
 const isTeacher = rule()((parent, args, context) => {
@@ -19,6 +24,8 @@ exports.permissions = shield({
     me: isAuthenticatedUser
   },
   Mutation: {
+    addStudentToCourse: or(isThisUser, isTeacher),
+    addTeacherToCourse: isTeacher,
     createTerm: isTeacher,
     updateTerm: isTeacher,
     deleteTerm: isTeacher,
