@@ -30,13 +30,13 @@ exports.Query = {
     return context.prisma.session({ id: args.id })
   },
   sessions (_, { orderBy, where }, context) {
-    return context.prisma.sessions({ orderBy, where })
+    return context.prisma.sessions({ orderBy: orderBy || 'startsAt_ASC', where })
   },
-  prompt (_, args, context) {
-    return context.prisma.prompt({ id: args.id })
+  question (_, args, context) {
+    return context.prisma.question({ id: args.id })
   },
-  prompts (_, { orderBy, where }, context) {
-    return context.prisma.prompts({ orderBy, where })
+  questions (_, { orderBy, where }, context) {
+    return context.prisma.questions({ orderBy, where })
   },
   answer (_, args, context) {
     return context.prisma.answer({ id: args.id })

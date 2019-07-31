@@ -10,7 +10,7 @@ exports.Session = {
     }).aggregate().count()
     return sessions + 1
   },
-  prompts (root, args, context) {
-    return context.prisma.session({ id: root.id }).prompts()
+  questions (root, args, context) {
+    return context.prisma.session({ id: root.id }).questions()
   }
 }
