@@ -9,7 +9,7 @@ const isAuthenticatedUser = rule()((parent, args, context) => {
 
 const isThisUser = rule()((parent, args, context) => {
   const userId = getUserId(context)
-  return userId === context.id
+  return userId === args.id
 })
 
 const isTeacher = rule()((parent, args, context) => {
