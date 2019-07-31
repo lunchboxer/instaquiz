@@ -1,7 +1,7 @@
 exports.question = {
   async createQuestion (_, { text, order, sessionId }, context) {
     let newOrder = null
-    if (order) {
+    if (typeof order === 'number') {
       const existing = await context.prisma.questions({ where: { order } })
       if (existing && existing.length > 0) {
         newOrder = order
@@ -16,13 +16,15 @@ exports.question = {
     }
     // order on server side should count from 0
     // if newOrder has been set then keep it otherwise put new prompt at end of the list
-    newOrder = newOrder || await context.prisma.questionsConnection({
-      where: {
-        session: {
-          id: sessionId
+    if (newOrder === null) {
+      newOrder = await context.prisma.questionsConnection({
+        where: {
+          session: {
+            id: sessionId
+          }
         }
-      }
-    }).aggregate().count()
+      }).aggregate().count()
+    }
     return context.prisma.createQuestion({
       text,
       order: newOrder,
