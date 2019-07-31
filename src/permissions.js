@@ -30,7 +30,9 @@ exports.permissions = shield({
     updateTerm: isTeacher,
     deleteTerm: isTeacher,
     createCourse: isTeacher,
-    deleteCourse: isTeacher
-    // createPrompt: isTeacher
+    deleteCourse: isTeacher,
+    createQuestion: isTeacher,
+    updateQuestion: isTeacher,
+    deleteQuestion: isTeacher
   }
 })
