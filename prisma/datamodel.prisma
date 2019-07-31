@@ -42,7 +42,10 @@ type Session {
 type Prompt {
   id: ID! @id
   text: String!
+  order: Int!
   answers: [Answer!]!
+  responses: [Response!]!
+  session: Session! @relation(link: INLINE)
 }
 
 type Answer {
@@ -52,9 +55,9 @@ type Answer {
 
 type Response {
   id: ID! @id
-  student: User @relation(link: INLINE)
-  prompt: Prompt @relation(link: INLINE)
-  answer: Answer @relation(link: INLINE)
-  session: Session
+  student: User! @relation(link: INLINE)
+  prompt: Prompt! @relation(link: INLINE)
+  answer: Answer! @relation(link: INLINE)
+  session: Session!
   createdAt: DateTime! @createdAt
 }

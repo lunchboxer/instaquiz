@@ -35,8 +35,8 @@ exports.Query = {
   prompt (_, args, context) {
     return context.prisma.prompt({ id: args.id })
   },
-  prompts (_, args, context) {
-    return context.prisma.prompts()
+  prompts (_, { orderBy, where }, context) {
+    return context.prisma.prompts({ orderBy, where })
   },
   answer (_, args, context) {
     return context.prisma.answer({ id: args.id })

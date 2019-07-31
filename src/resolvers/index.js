@@ -4,6 +4,7 @@ const { Course } = require('./Course')
 const { User } = require('./User')
 const { Term } = require('./Term')
 const { Session } = require('./Session')
+const { Prompt } = require('./Prompt')
 
 exports.resolvers = {
   Query,
@@ -11,5 +12,6 @@ exports.resolvers = {
   Course,
   User,
   Term,
-  Session
+  Session,
+  Prompt
 }

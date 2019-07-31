@@ -159,12 +159,10 @@ input AnswerUpdateManyWithWhereNestedInput {
   data: AnswerUpdateManyDataInput!
 }
 
-input AnswerUpdateOneInput {
+input AnswerUpdateOneRequiredInput {
   create: AnswerCreateInput
   update: AnswerUpdateDataInput
   upsert: AnswerUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
   connect: AnswerWhereUniqueInput
 }
 
@@ -662,7 +660,10 @@ type PageInfo {
 type Prompt {
   id: ID!
   text: String!
+  order: Int!
   answers(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Answer!]
+  responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response!]
+  session: Session!
 }
 
 type PromptConnection {
@@ -674,17 +675,36 @@ type PromptConnection {
 input PromptCreateInput {
   id: ID
   text: String!
+  order: Int!
   answers: AnswerCreateManyInput
+  responses: ResponseCreateManyWithoutPromptInput
+  session: SessionCreateOneWithoutPromptsInput!
 }
 
-input PromptCreateManyInput {
-  create: [PromptCreateInput!]
+input PromptCreateManyWithoutSessionInput {
+  create: [PromptCreateWithoutSessionInput!]
   connect: [PromptWhereUniqueInput!]
 }
 
-input PromptCreateOneInput {
-  create: PromptCreateInput
+input PromptCreateOneWithoutResponsesInput {
+  create: PromptCreateWithoutResponsesInput
   connect: PromptWhereUniqueInput
+}
+
+input PromptCreateWithoutResponsesInput {
+  id: ID
+  text: String!
+  order: Int!
+  answers: AnswerCreateManyInput
+  session: SessionCreateOneWithoutPromptsInput!
+}
+
+input PromptCreateWithoutSessionInput {
+  id: ID
+  text: String!
+  order: Int!
+  answers: AnswerCreateManyInput
+  responses: ResponseCreateManyWithoutPromptInput
 }
 
 type PromptEdge {
@@ -697,11 +717,14 @@ enum PromptOrderByInput {
   id_DESC
   text_ASC
   text_DESC
+  order_ASC
+  order_DESC
 }
 
 type PromptPreviousValues {
   id: ID!
   text: String!
+  order: Int!
 }
 
 input PromptScalarWhereInput {
@@ -733,6 +756,14 @@ input PromptScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  order: Int
+  order_not: Int
+  order_in: [Int!]
+  order_not_in: [Int!]
+  order_lt: Int
+  order_lte: Int
+  order_gt: Int
+  order_gte: Int
   AND: [PromptScalarWhereInput!]
   OR: [PromptScalarWhereInput!]
   NOT: [PromptScalarWhereInput!]
@@ -756,34 +787,34 @@ input PromptSubscriptionWhereInput {
   NOT: [PromptSubscriptionWhereInput!]
 }
 
-input PromptUpdateDataInput {
-  text: String
-  answers: AnswerUpdateManyInput
-}
-
 input PromptUpdateInput {
   text: String
+  order: Int
   answers: AnswerUpdateManyInput
+  responses: ResponseUpdateManyWithoutPromptInput
+  session: SessionUpdateOneRequiredWithoutPromptsInput
 }
 
 input PromptUpdateManyDataInput {
   text: String
-}
-
-input PromptUpdateManyInput {
-  create: [PromptCreateInput!]
-  update: [PromptUpdateWithWhereUniqueNestedInput!]
-  upsert: [PromptUpsertWithWhereUniqueNestedInput!]
-  delete: [PromptWhereUniqueInput!]
-  connect: [PromptWhereUniqueInput!]
-  set: [PromptWhereUniqueInput!]
-  disconnect: [PromptWhereUniqueInput!]
-  deleteMany: [PromptScalarWhereInput!]
-  updateMany: [PromptUpdateManyWithWhereNestedInput!]
+  order: Int
 }
 
 input PromptUpdateManyMutationInput {
   text: String
+  order: Int
+}
+
+input PromptUpdateManyWithoutSessionInput {
+  create: [PromptCreateWithoutSessionInput!]
+  delete: [PromptWhereUniqueInput!]
+  connect: [PromptWhereUniqueInput!]
+  set: [PromptWhereUniqueInput!]
+  disconnect: [PromptWhereUniqueInput!]
+  update: [PromptUpdateWithWhereUniqueWithoutSessionInput!]
+  upsert: [PromptUpsertWithWhereUniqueWithoutSessionInput!]
+  deleteMany: [PromptScalarWhereInput!]
+  updateMany: [PromptUpdateManyWithWhereNestedInput!]
 }
 
 input PromptUpdateManyWithWhereNestedInput {
@@ -791,29 +822,41 @@ input PromptUpdateManyWithWhereNestedInput {
   data: PromptUpdateManyDataInput!
 }
 
-input PromptUpdateOneInput {
-  create: PromptCreateInput
-  update: PromptUpdateDataInput
-  upsert: PromptUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
+input PromptUpdateOneRequiredWithoutResponsesInput {
+  create: PromptCreateWithoutResponsesInput
+  update: PromptUpdateWithoutResponsesDataInput
+  upsert: PromptUpsertWithoutResponsesInput
   connect: PromptWhereUniqueInput
 }
 
-input PromptUpdateWithWhereUniqueNestedInput {
-  where: PromptWhereUniqueInput!
-  data: PromptUpdateDataInput!
+input PromptUpdateWithoutResponsesDataInput {
+  text: String
+  order: Int
+  answers: AnswerUpdateManyInput
+  session: SessionUpdateOneRequiredWithoutPromptsInput
 }
 
-input PromptUpsertNestedInput {
-  update: PromptUpdateDataInput!
-  create: PromptCreateInput!
+input PromptUpdateWithoutSessionDataInput {
+  text: String
+  order: Int
+  answers: AnswerUpdateManyInput
+  responses: ResponseUpdateManyWithoutPromptInput
 }
 
-input PromptUpsertWithWhereUniqueNestedInput {
+input PromptUpdateWithWhereUniqueWithoutSessionInput {
   where: PromptWhereUniqueInput!
-  update: PromptUpdateDataInput!
-  create: PromptCreateInput!
+  data: PromptUpdateWithoutSessionDataInput!
+}
+
+input PromptUpsertWithoutResponsesInput {
+  update: PromptUpdateWithoutResponsesDataInput!
+  create: PromptCreateWithoutResponsesInput!
+}
+
+input PromptUpsertWithWhereUniqueWithoutSessionInput {
+  where: PromptWhereUniqueInput!
+  update: PromptUpdateWithoutSessionDataInput!
+  create: PromptCreateWithoutSessionInput!
 }
 
 input PromptWhereInput {
@@ -845,9 +888,21 @@ input PromptWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  order: Int
+  order_not: Int
+  order_in: [Int!]
+  order_not_in: [Int!]
+  order_lt: Int
+  order_lte: Int
+  order_gt: Int
+  order_gte: Int
   answers_every: AnswerWhereInput
   answers_some: AnswerWhereInput
   answers_none: AnswerWhereInput
+  responses_every: ResponseWhereInput
+  responses_some: ResponseWhereInput
+  responses_none: ResponseWhereInput
+  session: SessionWhereInput
   AND: [PromptWhereInput!]
   OR: [PromptWhereInput!]
   NOT: [PromptWhereInput!]
@@ -884,10 +939,10 @@ type Query {
 
 type Response {
   id: ID!
-  student: User
-  prompt: Prompt
-  answer: Answer
-  session: Session
+  student: User!
+  prompt: Prompt!
+  answer: Answer!
+  session: Session!
   createdAt: DateTime!
 }
 
@@ -899,10 +954,22 @@ type ResponseConnection {
 
 input ResponseCreateInput {
   id: ID
-  student: UserCreateOneInput
-  prompt: PromptCreateOneInput
-  answer: AnswerCreateOneInput
-  session: SessionCreateOneInput
+  student: UserCreateOneInput!
+  prompt: PromptCreateOneWithoutResponsesInput!
+  answer: AnswerCreateOneInput!
+  session: SessionCreateOneInput!
+}
+
+input ResponseCreateManyWithoutPromptInput {
+  create: [ResponseCreateWithoutPromptInput!]
+  connect: [ResponseWhereUniqueInput!]
+}
+
+input ResponseCreateWithoutPromptInput {
+  id: ID
+  student: UserCreateOneInput!
+  answer: AnswerCreateOneInput!
+  session: SessionCreateOneInput!
 }
 
 type ResponseEdge {
@@ -920,6 +987,34 @@ enum ResponseOrderByInput {
 type ResponsePreviousValues {
   id: ID!
   createdAt: DateTime!
+}
+
+input ResponseScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [ResponseScalarWhereInput!]
+  OR: [ResponseScalarWhereInput!]
+  NOT: [ResponseScalarWhereInput!]
 }
 
 type ResponseSubscriptionPayload {
@@ -941,10 +1036,38 @@ input ResponseSubscriptionWhereInput {
 }
 
 input ResponseUpdateInput {
-  student: UserUpdateOneInput
-  prompt: PromptUpdateOneInput
-  answer: AnswerUpdateOneInput
-  session: SessionUpdateOneInput
+  student: UserUpdateOneRequiredInput
+  prompt: PromptUpdateOneRequiredWithoutResponsesInput
+  answer: AnswerUpdateOneRequiredInput
+  session: SessionUpdateOneRequiredInput
+}
+
+input ResponseUpdateManyWithoutPromptInput {
+  create: [ResponseCreateWithoutPromptInput!]
+  delete: [ResponseWhereUniqueInput!]
+  connect: [ResponseWhereUniqueInput!]
+  set: [ResponseWhereUniqueInput!]
+  disconnect: [ResponseWhereUniqueInput!]
+  update: [ResponseUpdateWithWhereUniqueWithoutPromptInput!]
+  upsert: [ResponseUpsertWithWhereUniqueWithoutPromptInput!]
+  deleteMany: [ResponseScalarWhereInput!]
+}
+
+input ResponseUpdateWithoutPromptDataInput {
+  student: UserUpdateOneRequiredInput
+  answer: AnswerUpdateOneRequiredInput
+  session: SessionUpdateOneRequiredInput
+}
+
+input ResponseUpdateWithWhereUniqueWithoutPromptInput {
+  where: ResponseWhereUniqueInput!
+  data: ResponseUpdateWithoutPromptDataInput!
+}
+
+input ResponseUpsertWithWhereUniqueWithoutPromptInput {
+  where: ResponseWhereUniqueInput!
+  update: ResponseUpdateWithoutPromptDataInput!
+  create: ResponseCreateWithoutPromptInput!
 }
 
 input ResponseWhereInput {
@@ -1007,7 +1130,7 @@ input SessionCreateInput {
   startsAt: DateTime!
   endsAt: DateTime!
   course: CourseCreateOneWithoutSessionsInput!
-  prompts: PromptCreateManyInput
+  prompts: PromptCreateManyWithoutSessionInput
 }
 
 input SessionCreateManyWithoutCourseInput {
@@ -1020,11 +1143,23 @@ input SessionCreateOneInput {
   connect: SessionWhereUniqueInput
 }
 
+input SessionCreateOneWithoutPromptsInput {
+  create: SessionCreateWithoutPromptsInput
+  connect: SessionWhereUniqueInput
+}
+
 input SessionCreateWithoutCourseInput {
   id: ID
   startsAt: DateTime!
   endsAt: DateTime!
-  prompts: PromptCreateManyInput
+  prompts: PromptCreateManyWithoutSessionInput
+}
+
+input SessionCreateWithoutPromptsInput {
+  id: ID
+  startsAt: DateTime!
+  endsAt: DateTime!
+  course: CourseCreateOneWithoutSessionsInput!
 }
 
 type SessionEdge {
@@ -1105,14 +1240,14 @@ input SessionUpdateDataInput {
   startsAt: DateTime
   endsAt: DateTime
   course: CourseUpdateOneRequiredWithoutSessionsInput
-  prompts: PromptUpdateManyInput
+  prompts: PromptUpdateManyWithoutSessionInput
 }
 
 input SessionUpdateInput {
   startsAt: DateTime
   endsAt: DateTime
   course: CourseUpdateOneRequiredWithoutSessionsInput
-  prompts: PromptUpdateManyInput
+  prompts: PromptUpdateManyWithoutSessionInput
 }
 
 input SessionUpdateManyDataInput {
@@ -1142,19 +1277,30 @@ input SessionUpdateManyWithWhereNestedInput {
   data: SessionUpdateManyDataInput!
 }
 
-input SessionUpdateOneInput {
+input SessionUpdateOneRequiredInput {
   create: SessionCreateInput
   update: SessionUpdateDataInput
   upsert: SessionUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
+  connect: SessionWhereUniqueInput
+}
+
+input SessionUpdateOneRequiredWithoutPromptsInput {
+  create: SessionCreateWithoutPromptsInput
+  update: SessionUpdateWithoutPromptsDataInput
+  upsert: SessionUpsertWithoutPromptsInput
   connect: SessionWhereUniqueInput
 }
 
 input SessionUpdateWithoutCourseDataInput {
   startsAt: DateTime
   endsAt: DateTime
-  prompts: PromptUpdateManyInput
+  prompts: PromptUpdateManyWithoutSessionInput
+}
+
+input SessionUpdateWithoutPromptsDataInput {
+  startsAt: DateTime
+  endsAt: DateTime
+  course: CourseUpdateOneRequiredWithoutSessionsInput
 }
 
 input SessionUpdateWithWhereUniqueWithoutCourseInput {
@@ -1165,6 +1311,11 @@ input SessionUpdateWithWhereUniqueWithoutCourseInput {
 input SessionUpsertNestedInput {
   update: SessionUpdateDataInput!
   create: SessionCreateInput!
+}
+
+input SessionUpsertWithoutPromptsInput {
+  update: SessionUpdateWithoutPromptsDataInput!
+  create: SessionCreateWithoutPromptsInput!
 }
 
 input SessionUpsertWithWhereUniqueWithoutCourseInput {
@@ -1621,12 +1772,10 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneInput {
+input UserUpdateOneRequiredInput {
   create: UserCreateInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

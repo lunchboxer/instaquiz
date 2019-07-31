@@ -1,5 +1,16 @@
 exports.Session = {
   course (root, args, context) {
     return context.prisma.session({ id: root.id }).course()
+  },
+  async order (root, args, context) {
+    const thisSession = await context.prisma.session({ id: root.id })
+    const course = await context.prisma.session({ id: root.id }).course()
+    const sessions = await context.prisma.sessionsConnection({
+      where: { startsAt_lt: thisSession.startsAt, course: { id: course.id } }
+    }).aggregate().count()
+    return sessions + 1
+  },
+  prompts (root, args, context) {
+    return context.prisma.session({ id: root.id }).prompts()
   }
 }
