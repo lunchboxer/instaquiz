@@ -331,13 +331,27 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type Role = "Student" | "Teacher";
+
 export type AnswerOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "text_ASC"
   | "text_DESC";
 
-export type Role = "Student" | "Teacher";
+export type ResponseOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type CourseOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "code_ASC"
+  | "code_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -350,14 +364,6 @@ export type UserOrderByInput =
   | "password_DESC"
   | "role_ASC"
   | "role_DESC";
-
-export type CourseOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "code_ASC"
-  | "code_DESC";
 
 export type SessionOrderByInput =
   | "id_ASC"
@@ -374,12 +380,6 @@ export type QuestionOrderByInput =
   | "text_DESC"
   | "order_ASC"
   | "order_DESC";
-
-export type ResponseOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
 
 export type TermOrderByInput =
   | "id_ASC"
@@ -426,15 +426,95 @@ export interface AnswerWhereInput {
   text_not_starts_with?: Maybe<String>;
   text_ends_with?: Maybe<String>;
   text_not_ends_with?: Maybe<String>;
+  question?: Maybe<QuestionWhereInput>;
+  responses_every?: Maybe<ResponseWhereInput>;
+  responses_some?: Maybe<ResponseWhereInput>;
+  responses_none?: Maybe<ResponseWhereInput>;
   AND?: Maybe<AnswerWhereInput[] | AnswerWhereInput>;
   OR?: Maybe<AnswerWhereInput[] | AnswerWhereInput>;
   NOT?: Maybe<AnswerWhereInput[] | AnswerWhereInput>;
 }
 
-export type CourseWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  code?: Maybe<String>;
-}>;
+export interface QuestionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  order?: Maybe<Int>;
+  order_not?: Maybe<Int>;
+  order_in?: Maybe<Int[] | Int>;
+  order_not_in?: Maybe<Int[] | Int>;
+  order_lt?: Maybe<Int>;
+  order_lte?: Maybe<Int>;
+  order_gt?: Maybe<Int>;
+  order_gte?: Maybe<Int>;
+  answers_every?: Maybe<AnswerWhereInput>;
+  answers_some?: Maybe<AnswerWhereInput>;
+  answers_none?: Maybe<AnswerWhereInput>;
+  responses_every?: Maybe<ResponseWhereInput>;
+  responses_some?: Maybe<ResponseWhereInput>;
+  responses_none?: Maybe<ResponseWhereInput>;
+  session?: Maybe<SessionWhereInput>;
+  AND?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
+  OR?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
+  NOT?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
+}
+
+export interface ResponseWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  student?: Maybe<UserWhereInput>;
+  question?: Maybe<QuestionWhereInput>;
+  answer?: Maybe<AnswerWhereInput>;
+  session?: Maybe<SessionWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
+}
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -659,86 +739,10 @@ export interface SessionWhereInput {
   NOT?: Maybe<SessionWhereInput[] | SessionWhereInput>;
 }
 
-export interface QuestionWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  order?: Maybe<Int>;
-  order_not?: Maybe<Int>;
-  order_in?: Maybe<Int[] | Int>;
-  order_not_in?: Maybe<Int[] | Int>;
-  order_lt?: Maybe<Int>;
-  order_lte?: Maybe<Int>;
-  order_gt?: Maybe<Int>;
-  order_gte?: Maybe<Int>;
-  answers_every?: Maybe<AnswerWhereInput>;
-  answers_some?: Maybe<AnswerWhereInput>;
-  answers_none?: Maybe<AnswerWhereInput>;
-  responses_every?: Maybe<ResponseWhereInput>;
-  responses_some?: Maybe<ResponseWhereInput>;
-  responses_none?: Maybe<ResponseWhereInput>;
-  session?: Maybe<SessionWhereInput>;
-  AND?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
-  OR?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
-  NOT?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
-}
-
-export interface ResponseWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  student?: Maybe<UserWhereInput>;
-  question?: Maybe<QuestionWhereInput>;
-  answer?: Maybe<AnswerWhereInput>;
-  session?: Maybe<SessionWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-  NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
-}
+export type CourseWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  code?: Maybe<String>;
+}>;
 
 export type QuestionWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -765,103 +769,21 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface AnswerCreateInput {
   id?: Maybe<ID_Input>;
   text: String;
+  question: QuestionCreateOneWithoutAnswersInput;
+  responses?: Maybe<ResponseCreateManyWithoutAnswerInput>;
 }
 
-export interface AnswerUpdateInput {
-  text?: Maybe<String>;
+export interface QuestionCreateOneWithoutAnswersInput {
+  create?: Maybe<QuestionCreateWithoutAnswersInput>;
+  connect?: Maybe<QuestionWhereUniqueInput>;
 }
 
-export interface AnswerUpdateManyMutationInput {
-  text?: Maybe<String>;
-}
-
-export interface CourseCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
-  teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
-  term: TermCreateOneWithoutCoursesInput;
-  code: String;
-  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
-}
-
-export interface UserCreateManyWithoutCoursesAttendingInput {
-  create?: Maybe<
-    | UserCreateWithoutCoursesAttendingInput[]
-    | UserCreateWithoutCoursesAttendingInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutCoursesAttendingInput {
-  id?: Maybe<ID_Input>;
-  username: String;
-  name: String;
-  password: String;
-  coursesTeaching?: Maybe<CourseCreateManyWithoutTeachersInput>;
-  role?: Maybe<Role>;
-}
-
-export interface CourseCreateManyWithoutTeachersInput {
-  create?: Maybe<
-    CourseCreateWithoutTeachersInput[] | CourseCreateWithoutTeachersInput
-  >;
-  connect?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
-}
-
-export interface CourseCreateWithoutTeachersInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
-  term: TermCreateOneWithoutCoursesInput;
-  code: String;
-  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
-}
-
-export interface TermCreateOneWithoutCoursesInput {
-  create?: Maybe<TermCreateWithoutCoursesInput>;
-  connect?: Maybe<TermWhereUniqueInput>;
-}
-
-export interface TermCreateWithoutCoursesInput {
-  id?: Maybe<ID_Input>;
-  startDate: DateTimeInput;
-  endDate: DateTimeInput;
-  name: String;
-}
-
-export interface SessionCreateManyWithoutCourseInput {
-  create?: Maybe<
-    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
-  >;
-  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
-}
-
-export interface SessionCreateWithoutCourseInput {
-  id?: Maybe<ID_Input>;
-  startsAt: DateTimeInput;
-  endsAt: DateTimeInput;
-  questions?: Maybe<QuestionCreateManyWithoutSessionInput>;
-}
-
-export interface QuestionCreateManyWithoutSessionInput {
-  create?: Maybe<
-    QuestionCreateWithoutSessionInput[] | QuestionCreateWithoutSessionInput
-  >;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutSessionInput {
+export interface QuestionCreateWithoutAnswersInput {
   id?: Maybe<ID_Input>;
   text: String;
   order: Int;
-  answers?: Maybe<AnswerCreateManyInput>;
   responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
-}
-
-export interface AnswerCreateManyInput {
-  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
-  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  session: SessionCreateOneWithoutQuestionsInput;
 }
 
 export interface ResponseCreateManyWithoutQuestionInput {
@@ -874,7 +796,7 @@ export interface ResponseCreateManyWithoutQuestionInput {
 export interface ResponseCreateWithoutQuestionInput {
   id?: Maybe<ID_Input>;
   student: UserCreateOneInput;
-  answer: AnswerCreateOneInput;
+  answer: AnswerCreateOneWithoutResponsesInput;
   session: SessionCreateOneInput;
 }
 
@@ -926,22 +848,97 @@ export interface UserCreateWithoutCoursesTeachingInput {
   role?: Maybe<Role>;
 }
 
-export interface AnswerCreateOneInput {
-  create?: Maybe<AnswerCreateInput>;
-  connect?: Maybe<AnswerWhereUniqueInput>;
+export interface TermCreateOneWithoutCoursesInput {
+  create?: Maybe<TermCreateWithoutCoursesInput>;
+  connect?: Maybe<TermWhereUniqueInput>;
 }
 
-export interface SessionCreateOneInput {
-  create?: Maybe<SessionCreateInput>;
+export interface TermCreateWithoutCoursesInput {
+  id?: Maybe<ID_Input>;
+  startDate: DateTimeInput;
+  endDate: DateTimeInput;
+  name: String;
+}
+
+export interface SessionCreateManyWithoutCourseInput {
+  create?: Maybe<
+    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
+  >;
+  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+}
+
+export interface SessionCreateWithoutCourseInput {
+  id?: Maybe<ID_Input>;
+  startsAt: DateTimeInput;
+  endsAt: DateTimeInput;
+  questions?: Maybe<QuestionCreateManyWithoutSessionInput>;
+}
+
+export interface QuestionCreateManyWithoutSessionInput {
+  create?: Maybe<
+    QuestionCreateWithoutSessionInput[] | QuestionCreateWithoutSessionInput
+  >;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+}
+
+export interface QuestionCreateWithoutSessionInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  order: Int;
+  answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
+  responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
+}
+
+export interface AnswerCreateManyWithoutQuestionInput {
+  create?: Maybe<
+    AnswerCreateWithoutQuestionInput[] | AnswerCreateWithoutQuestionInput
+  >;
+  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+}
+
+export interface AnswerCreateWithoutQuestionInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  responses?: Maybe<ResponseCreateManyWithoutAnswerInput>;
+}
+
+export interface ResponseCreateManyWithoutAnswerInput {
+  create?: Maybe<
+    ResponseCreateWithoutAnswerInput[] | ResponseCreateWithoutAnswerInput
+  >;
+  connect?: Maybe<ResponseWhereUniqueInput[] | ResponseWhereUniqueInput>;
+}
+
+export interface ResponseCreateWithoutAnswerInput {
+  id?: Maybe<ID_Input>;
+  student: UserCreateOneInput;
+  question: QuestionCreateOneWithoutResponsesInput;
+  session: SessionCreateOneInput;
+}
+
+export interface QuestionCreateOneWithoutResponsesInput {
+  create?: Maybe<QuestionCreateWithoutResponsesInput>;
+  connect?: Maybe<QuestionWhereUniqueInput>;
+}
+
+export interface QuestionCreateWithoutResponsesInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  order: Int;
+  answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
+  session: SessionCreateOneWithoutQuestionsInput;
+}
+
+export interface SessionCreateOneWithoutQuestionsInput {
+  create?: Maybe<SessionCreateWithoutQuestionsInput>;
   connect?: Maybe<SessionWhereUniqueInput>;
 }
 
-export interface SessionCreateInput {
+export interface SessionCreateWithoutQuestionsInput {
   id?: Maybe<ID_Input>;
   startsAt: DateTimeInput;
   endsAt: DateTimeInput;
   course: CourseCreateOneWithoutSessionsInput;
-  questions?: Maybe<QuestionCreateManyWithoutSessionInput>;
 }
 
 export interface CourseCreateOneWithoutSessionsInput {
@@ -958,251 +955,81 @@ export interface CourseCreateWithoutSessionsInput {
   code: String;
 }
 
-export interface CourseUpdateInput {
-  name?: Maybe<String>;
-  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
-  teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
-  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
-  code?: Maybe<String>;
-  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
-}
-
-export interface UserUpdateManyWithoutCoursesAttendingInput {
+export interface UserCreateManyWithoutCoursesAttendingInput {
   create?: Maybe<
     | UserCreateWithoutCoursesAttendingInput[]
     | UserCreateWithoutCoursesAttendingInput
   >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutCoursesAttendingInput[]
-    | UserUpdateWithWhereUniqueWithoutCoursesAttendingInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutCoursesAttendingInput[]
-    | UserUpsertWithWhereUniqueWithoutCoursesAttendingInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutCoursesAttendingInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutCoursesAttendingDataInput;
-}
-
-export interface UserUpdateWithoutCoursesAttendingDataInput {
-  username?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  coursesTeaching?: Maybe<CourseUpdateManyWithoutTeachersInput>;
+export interface UserCreateWithoutCoursesAttendingInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  name: String;
+  password: String;
+  coursesTeaching?: Maybe<CourseCreateManyWithoutTeachersInput>;
   role?: Maybe<Role>;
 }
 
-export interface CourseUpdateManyWithoutTeachersInput {
+export interface CourseCreateManyWithoutTeachersInput {
   create?: Maybe<
     CourseCreateWithoutTeachersInput[] | CourseCreateWithoutTeachersInput
   >;
-  delete?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
   connect?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
-  set?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
-  disconnect?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
-  update?: Maybe<
-    | CourseUpdateWithWhereUniqueWithoutTeachersInput[]
-    | CourseUpdateWithWhereUniqueWithoutTeachersInput
-  >;
-  upsert?: Maybe<
-    | CourseUpsertWithWhereUniqueWithoutTeachersInput[]
-    | CourseUpsertWithWhereUniqueWithoutTeachersInput
-  >;
-  deleteMany?: Maybe<CourseScalarWhereInput[] | CourseScalarWhereInput>;
-  updateMany?: Maybe<
-    | CourseUpdateManyWithWhereNestedInput[]
-    | CourseUpdateManyWithWhereNestedInput
-  >;
 }
 
-export interface CourseUpdateWithWhereUniqueWithoutTeachersInput {
-  where: CourseWhereUniqueInput;
-  data: CourseUpdateWithoutTeachersDataInput;
+export interface CourseCreateWithoutTeachersInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
+  term: TermCreateOneWithoutCoursesInput;
+  code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
 }
 
-export interface CourseUpdateWithoutTeachersDataInput {
-  name?: Maybe<String>;
-  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
-  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
-  code?: Maybe<String>;
-  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
+export interface SessionCreateOneInput {
+  create?: Maybe<SessionCreateInput>;
+  connect?: Maybe<SessionWhereUniqueInput>;
 }
 
-export interface TermUpdateOneRequiredWithoutCoursesInput {
-  create?: Maybe<TermCreateWithoutCoursesInput>;
-  update?: Maybe<TermUpdateWithoutCoursesDataInput>;
-  upsert?: Maybe<TermUpsertWithoutCoursesInput>;
-  connect?: Maybe<TermWhereUniqueInput>;
+export interface SessionCreateInput {
+  id?: Maybe<ID_Input>;
+  startsAt: DateTimeInput;
+  endsAt: DateTimeInput;
+  course: CourseCreateOneWithoutSessionsInput;
+  questions?: Maybe<QuestionCreateManyWithoutSessionInput>;
 }
 
-export interface TermUpdateWithoutCoursesDataInput {
-  startDate?: Maybe<DateTimeInput>;
-  endDate?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
+export interface AnswerCreateOneWithoutResponsesInput {
+  create?: Maybe<AnswerCreateWithoutResponsesInput>;
+  connect?: Maybe<AnswerWhereUniqueInput>;
 }
 
-export interface TermUpsertWithoutCoursesInput {
-  update: TermUpdateWithoutCoursesDataInput;
-  create: TermCreateWithoutCoursesInput;
+export interface AnswerCreateWithoutResponsesInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  question: QuestionCreateOneWithoutAnswersInput;
 }
 
-export interface SessionUpdateManyWithoutCourseInput {
-  create?: Maybe<
-    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
-  >;
-  delete?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
-  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
-  set?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
-  disconnect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
-  update?: Maybe<
-    | SessionUpdateWithWhereUniqueWithoutCourseInput[]
-    | SessionUpdateWithWhereUniqueWithoutCourseInput
-  >;
-  upsert?: Maybe<
-    | SessionUpsertWithWhereUniqueWithoutCourseInput[]
-    | SessionUpsertWithWhereUniqueWithoutCourseInput
-  >;
-  deleteMany?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
-  updateMany?: Maybe<
-    | SessionUpdateManyWithWhereNestedInput[]
-    | SessionUpdateManyWithWhereNestedInput
-  >;
+export interface AnswerUpdateInput {
+  text?: Maybe<String>;
+  question?: Maybe<QuestionUpdateOneRequiredWithoutAnswersInput>;
+  responses?: Maybe<ResponseUpdateManyWithoutAnswerInput>;
 }
 
-export interface SessionUpdateWithWhereUniqueWithoutCourseInput {
-  where: SessionWhereUniqueInput;
-  data: SessionUpdateWithoutCourseDataInput;
+export interface QuestionUpdateOneRequiredWithoutAnswersInput {
+  create?: Maybe<QuestionCreateWithoutAnswersInput>;
+  update?: Maybe<QuestionUpdateWithoutAnswersDataInput>;
+  upsert?: Maybe<QuestionUpsertWithoutAnswersInput>;
+  connect?: Maybe<QuestionWhereUniqueInput>;
 }
 
-export interface SessionUpdateWithoutCourseDataInput {
-  startsAt?: Maybe<DateTimeInput>;
-  endsAt?: Maybe<DateTimeInput>;
-  questions?: Maybe<QuestionUpdateManyWithoutSessionInput>;
-}
-
-export interface QuestionUpdateManyWithoutSessionInput {
-  create?: Maybe<
-    QuestionCreateWithoutSessionInput[] | QuestionCreateWithoutSessionInput
-  >;
-  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
-  update?: Maybe<
-    | QuestionUpdateWithWhereUniqueWithoutSessionInput[]
-    | QuestionUpdateWithWhereUniqueWithoutSessionInput
-  >;
-  upsert?: Maybe<
-    | QuestionUpsertWithWhereUniqueWithoutSessionInput[]
-    | QuestionUpsertWithWhereUniqueWithoutSessionInput
-  >;
-  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
-  updateMany?: Maybe<
-    | QuestionUpdateManyWithWhereNestedInput[]
-    | QuestionUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface QuestionUpdateWithWhereUniqueWithoutSessionInput {
-  where: QuestionWhereUniqueInput;
-  data: QuestionUpdateWithoutSessionDataInput;
-}
-
-export interface QuestionUpdateWithoutSessionDataInput {
+export interface QuestionUpdateWithoutAnswersDataInput {
   text?: Maybe<String>;
   order?: Maybe<Int>;
-  answers?: Maybe<AnswerUpdateManyInput>;
   responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
-}
-
-export interface AnswerUpdateManyInput {
-  create?: Maybe<AnswerCreateInput[] | AnswerCreateInput>;
-  update?: Maybe<
-    | AnswerUpdateWithWhereUniqueNestedInput[]
-    | AnswerUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | AnswerUpsertWithWhereUniqueNestedInput[]
-    | AnswerUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  set?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  disconnect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
-  deleteMany?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  updateMany?: Maybe<
-    | AnswerUpdateManyWithWhereNestedInput[]
-    | AnswerUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface AnswerUpdateWithWhereUniqueNestedInput {
-  where: AnswerWhereUniqueInput;
-  data: AnswerUpdateDataInput;
-}
-
-export interface AnswerUpdateDataInput {
-  text?: Maybe<String>;
-}
-
-export interface AnswerUpsertWithWhereUniqueNestedInput {
-  where: AnswerWhereUniqueInput;
-  update: AnswerUpdateDataInput;
-  create: AnswerCreateInput;
-}
-
-export interface AnswerScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  AND?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  OR?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-  NOT?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
-}
-
-export interface AnswerUpdateManyWithWhereNestedInput {
-  where: AnswerScalarWhereInput;
-  data: AnswerUpdateManyDataInput;
-}
-
-export interface AnswerUpdateManyDataInput {
-  text?: Maybe<String>;
+  session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
 }
 
 export interface ResponseUpdateManyWithoutQuestionInput {
@@ -1231,7 +1058,7 @@ export interface ResponseUpdateWithWhereUniqueWithoutQuestionInput {
 
 export interface ResponseUpdateWithoutQuestionDataInput {
   student?: Maybe<UserUpdateOneRequiredInput>;
-  answer?: Maybe<AnswerUpdateOneRequiredInput>;
+  answer?: Maybe<AnswerUpdateOneRequiredWithoutResponsesInput>;
   session?: Maybe<SessionUpdateOneRequiredInput>;
 }
 
@@ -1407,10 +1234,274 @@ export interface UserUpdateManyDataInput {
   role?: Maybe<Role>;
 }
 
-export interface CourseUpsertWithWhereUniqueWithoutStudentsInput {
+export interface TermUpdateOneRequiredWithoutCoursesInput {
+  create?: Maybe<TermCreateWithoutCoursesInput>;
+  update?: Maybe<TermUpdateWithoutCoursesDataInput>;
+  upsert?: Maybe<TermUpsertWithoutCoursesInput>;
+  connect?: Maybe<TermWhereUniqueInput>;
+}
+
+export interface TermUpdateWithoutCoursesDataInput {
+  startDate?: Maybe<DateTimeInput>;
+  endDate?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+}
+
+export interface TermUpsertWithoutCoursesInput {
+  update: TermUpdateWithoutCoursesDataInput;
+  create: TermCreateWithoutCoursesInput;
+}
+
+export interface SessionUpdateManyWithoutCourseInput {
+  create?: Maybe<
+    SessionCreateWithoutCourseInput[] | SessionCreateWithoutCourseInput
+  >;
+  delete?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  connect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  set?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  disconnect?: Maybe<SessionWhereUniqueInput[] | SessionWhereUniqueInput>;
+  update?: Maybe<
+    | SessionUpdateWithWhereUniqueWithoutCourseInput[]
+    | SessionUpdateWithWhereUniqueWithoutCourseInput
+  >;
+  upsert?: Maybe<
+    | SessionUpsertWithWhereUniqueWithoutCourseInput[]
+    | SessionUpsertWithWhereUniqueWithoutCourseInput
+  >;
+  deleteMany?: Maybe<SessionScalarWhereInput[] | SessionScalarWhereInput>;
+  updateMany?: Maybe<
+    | SessionUpdateManyWithWhereNestedInput[]
+    | SessionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SessionUpdateWithWhereUniqueWithoutCourseInput {
+  where: SessionWhereUniqueInput;
+  data: SessionUpdateWithoutCourseDataInput;
+}
+
+export interface SessionUpdateWithoutCourseDataInput {
+  startsAt?: Maybe<DateTimeInput>;
+  endsAt?: Maybe<DateTimeInput>;
+  questions?: Maybe<QuestionUpdateManyWithoutSessionInput>;
+}
+
+export interface QuestionUpdateManyWithoutSessionInput {
+  create?: Maybe<
+    QuestionCreateWithoutSessionInput[] | QuestionCreateWithoutSessionInput
+  >;
+  delete?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  connect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  set?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  disconnect?: Maybe<QuestionWhereUniqueInput[] | QuestionWhereUniqueInput>;
+  update?: Maybe<
+    | QuestionUpdateWithWhereUniqueWithoutSessionInput[]
+    | QuestionUpdateWithWhereUniqueWithoutSessionInput
+  >;
+  upsert?: Maybe<
+    | QuestionUpsertWithWhereUniqueWithoutSessionInput[]
+    | QuestionUpsertWithWhereUniqueWithoutSessionInput
+  >;
+  deleteMany?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
+  updateMany?: Maybe<
+    | QuestionUpdateManyWithWhereNestedInput[]
+    | QuestionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface QuestionUpdateWithWhereUniqueWithoutSessionInput {
+  where: QuestionWhereUniqueInput;
+  data: QuestionUpdateWithoutSessionDataInput;
+}
+
+export interface QuestionUpdateWithoutSessionDataInput {
+  text?: Maybe<String>;
+  order?: Maybe<Int>;
+  answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
+  responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
+}
+
+export interface AnswerUpdateManyWithoutQuestionInput {
+  create?: Maybe<
+    AnswerCreateWithoutQuestionInput[] | AnswerCreateWithoutQuestionInput
+  >;
+  delete?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  connect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  set?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  disconnect?: Maybe<AnswerWhereUniqueInput[] | AnswerWhereUniqueInput>;
+  update?: Maybe<
+    | AnswerUpdateWithWhereUniqueWithoutQuestionInput[]
+    | AnswerUpdateWithWhereUniqueWithoutQuestionInput
+  >;
+  upsert?: Maybe<
+    | AnswerUpsertWithWhereUniqueWithoutQuestionInput[]
+    | AnswerUpsertWithWhereUniqueWithoutQuestionInput
+  >;
+  deleteMany?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  updateMany?: Maybe<
+    | AnswerUpdateManyWithWhereNestedInput[]
+    | AnswerUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AnswerUpdateWithWhereUniqueWithoutQuestionInput {
+  where: AnswerWhereUniqueInput;
+  data: AnswerUpdateWithoutQuestionDataInput;
+}
+
+export interface AnswerUpdateWithoutQuestionDataInput {
+  text?: Maybe<String>;
+  responses?: Maybe<ResponseUpdateManyWithoutAnswerInput>;
+}
+
+export interface ResponseUpdateManyWithoutAnswerInput {
+  create?: Maybe<
+    ResponseCreateWithoutAnswerInput[] | ResponseCreateWithoutAnswerInput
+  >;
+  delete?: Maybe<ResponseWhereUniqueInput[] | ResponseWhereUniqueInput>;
+  connect?: Maybe<ResponseWhereUniqueInput[] | ResponseWhereUniqueInput>;
+  set?: Maybe<ResponseWhereUniqueInput[] | ResponseWhereUniqueInput>;
+  disconnect?: Maybe<ResponseWhereUniqueInput[] | ResponseWhereUniqueInput>;
+  update?: Maybe<
+    | ResponseUpdateWithWhereUniqueWithoutAnswerInput[]
+    | ResponseUpdateWithWhereUniqueWithoutAnswerInput
+  >;
+  upsert?: Maybe<
+    | ResponseUpsertWithWhereUniqueWithoutAnswerInput[]
+    | ResponseUpsertWithWhereUniqueWithoutAnswerInput
+  >;
+  deleteMany?: Maybe<ResponseScalarWhereInput[] | ResponseScalarWhereInput>;
+}
+
+export interface ResponseUpdateWithWhereUniqueWithoutAnswerInput {
+  where: ResponseWhereUniqueInput;
+  data: ResponseUpdateWithoutAnswerDataInput;
+}
+
+export interface ResponseUpdateWithoutAnswerDataInput {
+  student?: Maybe<UserUpdateOneRequiredInput>;
+  question?: Maybe<QuestionUpdateOneRequiredWithoutResponsesInput>;
+  session?: Maybe<SessionUpdateOneRequiredInput>;
+}
+
+export interface QuestionUpdateOneRequiredWithoutResponsesInput {
+  create?: Maybe<QuestionCreateWithoutResponsesInput>;
+  update?: Maybe<QuestionUpdateWithoutResponsesDataInput>;
+  upsert?: Maybe<QuestionUpsertWithoutResponsesInput>;
+  connect?: Maybe<QuestionWhereUniqueInput>;
+}
+
+export interface QuestionUpdateWithoutResponsesDataInput {
+  text?: Maybe<String>;
+  order?: Maybe<Int>;
+  answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
+  session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
+}
+
+export interface SessionUpdateOneRequiredWithoutQuestionsInput {
+  create?: Maybe<SessionCreateWithoutQuestionsInput>;
+  update?: Maybe<SessionUpdateWithoutQuestionsDataInput>;
+  upsert?: Maybe<SessionUpsertWithoutQuestionsInput>;
+  connect?: Maybe<SessionWhereUniqueInput>;
+}
+
+export interface SessionUpdateWithoutQuestionsDataInput {
+  startsAt?: Maybe<DateTimeInput>;
+  endsAt?: Maybe<DateTimeInput>;
+  course?: Maybe<CourseUpdateOneRequiredWithoutSessionsInput>;
+}
+
+export interface CourseUpdateOneRequiredWithoutSessionsInput {
+  create?: Maybe<CourseCreateWithoutSessionsInput>;
+  update?: Maybe<CourseUpdateWithoutSessionsDataInput>;
+  upsert?: Maybe<CourseUpsertWithoutSessionsInput>;
+  connect?: Maybe<CourseWhereUniqueInput>;
+}
+
+export interface CourseUpdateWithoutSessionsDataInput {
+  name?: Maybe<String>;
+  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
+  teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
+  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
+  code?: Maybe<String>;
+}
+
+export interface UserUpdateManyWithoutCoursesAttendingInput {
+  create?: Maybe<
+    | UserCreateWithoutCoursesAttendingInput[]
+    | UserCreateWithoutCoursesAttendingInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueWithoutCoursesAttendingInput[]
+    | UserUpdateWithWhereUniqueWithoutCoursesAttendingInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueWithoutCoursesAttendingInput[]
+    | UserUpsertWithWhereUniqueWithoutCoursesAttendingInput
+  >;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutCoursesAttendingInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutCoursesAttendingDataInput;
+}
+
+export interface UserUpdateWithoutCoursesAttendingDataInput {
+  username?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  coursesTeaching?: Maybe<CourseUpdateManyWithoutTeachersInput>;
+  role?: Maybe<Role>;
+}
+
+export interface CourseUpdateManyWithoutTeachersInput {
+  create?: Maybe<
+    CourseCreateWithoutTeachersInput[] | CourseCreateWithoutTeachersInput
+  >;
+  delete?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
+  connect?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
+  set?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
+  disconnect?: Maybe<CourseWhereUniqueInput[] | CourseWhereUniqueInput>;
+  update?: Maybe<
+    | CourseUpdateWithWhereUniqueWithoutTeachersInput[]
+    | CourseUpdateWithWhereUniqueWithoutTeachersInput
+  >;
+  upsert?: Maybe<
+    | CourseUpsertWithWhereUniqueWithoutTeachersInput[]
+    | CourseUpsertWithWhereUniqueWithoutTeachersInput
+  >;
+  deleteMany?: Maybe<CourseScalarWhereInput[] | CourseScalarWhereInput>;
+  updateMany?: Maybe<
+    | CourseUpdateManyWithWhereNestedInput[]
+    | CourseUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CourseUpdateWithWhereUniqueWithoutTeachersInput {
   where: CourseWhereUniqueInput;
-  update: CourseUpdateWithoutStudentsDataInput;
-  create: CourseCreateWithoutStudentsInput;
+  data: CourseUpdateWithoutTeachersDataInput;
+}
+
+export interface CourseUpdateWithoutTeachersDataInput {
+  name?: Maybe<String>;
+  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
+  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
+  code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
+}
+
+export interface CourseUpsertWithWhereUniqueWithoutTeachersInput {
+  where: CourseWhereUniqueInput;
+  update: CourseUpdateWithoutTeachersDataInput;
+  create: CourseCreateWithoutTeachersInput;
 }
 
 export interface CourseScalarWhereInput {
@@ -1471,21 +1562,25 @@ export interface CourseUpdateManyDataInput {
   code?: Maybe<String>;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface UserUpsertWithWhereUniqueWithoutCoursesAttendingInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutCoursesAttendingDataInput;
+  create: UserCreateWithoutCoursesAttendingInput;
 }
 
-export interface AnswerUpdateOneRequiredInput {
-  create?: Maybe<AnswerCreateInput>;
-  update?: Maybe<AnswerUpdateDataInput>;
-  upsert?: Maybe<AnswerUpsertNestedInput>;
-  connect?: Maybe<AnswerWhereUniqueInput>;
+export interface CourseUpsertWithoutSessionsInput {
+  update: CourseUpdateWithoutSessionsDataInput;
+  create: CourseCreateWithoutSessionsInput;
 }
 
-export interface AnswerUpsertNestedInput {
-  update: AnswerUpdateDataInput;
-  create: AnswerCreateInput;
+export interface SessionUpsertWithoutQuestionsInput {
+  update: SessionUpdateWithoutQuestionsDataInput;
+  create: SessionCreateWithoutQuestionsInput;
+}
+
+export interface QuestionUpsertWithoutResponsesInput {
+  update: QuestionUpdateWithoutResponsesDataInput;
+  create: QuestionCreateWithoutResponsesInput;
 }
 
 export interface SessionUpdateOneRequiredInput {
@@ -1502,35 +1597,15 @@ export interface SessionUpdateDataInput {
   questions?: Maybe<QuestionUpdateManyWithoutSessionInput>;
 }
 
-export interface CourseUpdateOneRequiredWithoutSessionsInput {
-  create?: Maybe<CourseCreateWithoutSessionsInput>;
-  update?: Maybe<CourseUpdateWithoutSessionsDataInput>;
-  upsert?: Maybe<CourseUpsertWithoutSessionsInput>;
-  connect?: Maybe<CourseWhereUniqueInput>;
-}
-
-export interface CourseUpdateWithoutSessionsDataInput {
-  name?: Maybe<String>;
-  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
-  teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
-  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
-  code?: Maybe<String>;
-}
-
-export interface CourseUpsertWithoutSessionsInput {
-  update: CourseUpdateWithoutSessionsDataInput;
-  create: CourseCreateWithoutSessionsInput;
-}
-
 export interface SessionUpsertNestedInput {
   update: SessionUpdateDataInput;
   create: SessionCreateInput;
 }
 
-export interface ResponseUpsertWithWhereUniqueWithoutQuestionInput {
+export interface ResponseUpsertWithWhereUniqueWithoutAnswerInput {
   where: ResponseWhereUniqueInput;
-  update: ResponseUpdateWithoutQuestionDataInput;
-  create: ResponseCreateWithoutQuestionInput;
+  update: ResponseUpdateWithoutAnswerDataInput;
+  create: ResponseCreateWithoutAnswerInput;
 }
 
 export interface ResponseScalarWhereInput {
@@ -1559,6 +1634,55 @@ export interface ResponseScalarWhereInput {
   AND?: Maybe<ResponseScalarWhereInput[] | ResponseScalarWhereInput>;
   OR?: Maybe<ResponseScalarWhereInput[] | ResponseScalarWhereInput>;
   NOT?: Maybe<ResponseScalarWhereInput[] | ResponseScalarWhereInput>;
+}
+
+export interface AnswerUpsertWithWhereUniqueWithoutQuestionInput {
+  where: AnswerWhereUniqueInput;
+  update: AnswerUpdateWithoutQuestionDataInput;
+  create: AnswerCreateWithoutQuestionInput;
+}
+
+export interface AnswerScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  OR?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+  NOT?: Maybe<AnswerScalarWhereInput[] | AnswerScalarWhereInput>;
+}
+
+export interface AnswerUpdateManyWithWhereNestedInput {
+  where: AnswerScalarWhereInput;
+  data: AnswerUpdateManyDataInput;
+}
+
+export interface AnswerUpdateManyDataInput {
+  text?: Maybe<String>;
 }
 
 export interface QuestionUpsertWithWhereUniqueWithoutSessionInput {
@@ -1671,16 +1795,66 @@ export interface SessionUpdateManyDataInput {
   endsAt?: Maybe<DateTimeInput>;
 }
 
-export interface CourseUpsertWithWhereUniqueWithoutTeachersInput {
+export interface CourseUpsertWithWhereUniqueWithoutStudentsInput {
   where: CourseWhereUniqueInput;
-  update: CourseUpdateWithoutTeachersDataInput;
-  create: CourseCreateWithoutTeachersInput;
+  update: CourseUpdateWithoutStudentsDataInput;
+  create: CourseCreateWithoutStudentsInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutCoursesAttendingInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutCoursesAttendingDataInput;
-  create: UserCreateWithoutCoursesAttendingInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface AnswerUpdateOneRequiredWithoutResponsesInput {
+  create?: Maybe<AnswerCreateWithoutResponsesInput>;
+  update?: Maybe<AnswerUpdateWithoutResponsesDataInput>;
+  upsert?: Maybe<AnswerUpsertWithoutResponsesInput>;
+  connect?: Maybe<AnswerWhereUniqueInput>;
+}
+
+export interface AnswerUpdateWithoutResponsesDataInput {
+  text?: Maybe<String>;
+  question?: Maybe<QuestionUpdateOneRequiredWithoutAnswersInput>;
+}
+
+export interface AnswerUpsertWithoutResponsesInput {
+  update: AnswerUpdateWithoutResponsesDataInput;
+  create: AnswerCreateWithoutResponsesInput;
+}
+
+export interface ResponseUpsertWithWhereUniqueWithoutQuestionInput {
+  where: ResponseWhereUniqueInput;
+  update: ResponseUpdateWithoutQuestionDataInput;
+  create: ResponseCreateWithoutQuestionInput;
+}
+
+export interface QuestionUpsertWithoutAnswersInput {
+  update: QuestionUpdateWithoutAnswersDataInput;
+  create: QuestionCreateWithoutAnswersInput;
+}
+
+export interface AnswerUpdateManyMutationInput {
+  text?: Maybe<String>;
+}
+
+export interface CourseCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  students?: Maybe<UserCreateManyWithoutCoursesAttendingInput>;
+  teachers?: Maybe<UserCreateManyWithoutCoursesTeachingInput>;
+  term: TermCreateOneWithoutCoursesInput;
+  code: String;
+  sessions?: Maybe<SessionCreateManyWithoutCourseInput>;
+}
+
+export interface CourseUpdateInput {
+  name?: Maybe<String>;
+  students?: Maybe<UserUpdateManyWithoutCoursesAttendingInput>;
+  teachers?: Maybe<UserUpdateManyWithoutCoursesTeachingInput>;
+  term?: Maybe<TermUpdateOneRequiredWithoutCoursesInput>;
+  code?: Maybe<String>;
+  sessions?: Maybe<SessionUpdateManyWithoutCourseInput>;
 }
 
 export interface CourseUpdateManyMutationInput {
@@ -1692,47 +1866,17 @@ export interface QuestionCreateInput {
   id?: Maybe<ID_Input>;
   text: String;
   order: Int;
-  answers?: Maybe<AnswerCreateManyInput>;
+  answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
   session: SessionCreateOneWithoutQuestionsInput;
-}
-
-export interface SessionCreateOneWithoutQuestionsInput {
-  create?: Maybe<SessionCreateWithoutQuestionsInput>;
-  connect?: Maybe<SessionWhereUniqueInput>;
-}
-
-export interface SessionCreateWithoutQuestionsInput {
-  id?: Maybe<ID_Input>;
-  startsAt: DateTimeInput;
-  endsAt: DateTimeInput;
-  course: CourseCreateOneWithoutSessionsInput;
 }
 
 export interface QuestionUpdateInput {
   text?: Maybe<String>;
   order?: Maybe<Int>;
-  answers?: Maybe<AnswerUpdateManyInput>;
+  answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
   session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
-}
-
-export interface SessionUpdateOneRequiredWithoutQuestionsInput {
-  create?: Maybe<SessionCreateWithoutQuestionsInput>;
-  update?: Maybe<SessionUpdateWithoutQuestionsDataInput>;
-  upsert?: Maybe<SessionUpsertWithoutQuestionsInput>;
-  connect?: Maybe<SessionWhereUniqueInput>;
-}
-
-export interface SessionUpdateWithoutQuestionsDataInput {
-  startsAt?: Maybe<DateTimeInput>;
-  endsAt?: Maybe<DateTimeInput>;
-  course?: Maybe<CourseUpdateOneRequiredWithoutSessionsInput>;
-}
-
-export interface SessionUpsertWithoutQuestionsInput {
-  update: SessionUpdateWithoutQuestionsDataInput;
-  create: SessionCreateWithoutQuestionsInput;
 }
 
 export interface QuestionUpdateManyMutationInput {
@@ -1744,47 +1888,15 @@ export interface ResponseCreateInput {
   id?: Maybe<ID_Input>;
   student: UserCreateOneInput;
   question: QuestionCreateOneWithoutResponsesInput;
-  answer: AnswerCreateOneInput;
+  answer: AnswerCreateOneWithoutResponsesInput;
   session: SessionCreateOneInput;
-}
-
-export interface QuestionCreateOneWithoutResponsesInput {
-  create?: Maybe<QuestionCreateWithoutResponsesInput>;
-  connect?: Maybe<QuestionWhereUniqueInput>;
-}
-
-export interface QuestionCreateWithoutResponsesInput {
-  id?: Maybe<ID_Input>;
-  text: String;
-  order: Int;
-  answers?: Maybe<AnswerCreateManyInput>;
-  session: SessionCreateOneWithoutQuestionsInput;
 }
 
 export interface ResponseUpdateInput {
   student?: Maybe<UserUpdateOneRequiredInput>;
   question?: Maybe<QuestionUpdateOneRequiredWithoutResponsesInput>;
-  answer?: Maybe<AnswerUpdateOneRequiredInput>;
+  answer?: Maybe<AnswerUpdateOneRequiredWithoutResponsesInput>;
   session?: Maybe<SessionUpdateOneRequiredInput>;
-}
-
-export interface QuestionUpdateOneRequiredWithoutResponsesInput {
-  create?: Maybe<QuestionCreateWithoutResponsesInput>;
-  update?: Maybe<QuestionUpdateWithoutResponsesDataInput>;
-  upsert?: Maybe<QuestionUpsertWithoutResponsesInput>;
-  connect?: Maybe<QuestionWhereUniqueInput>;
-}
-
-export interface QuestionUpdateWithoutResponsesDataInput {
-  text?: Maybe<String>;
-  order?: Maybe<Int>;
-  answers?: Maybe<AnswerUpdateManyInput>;
-  session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
-}
-
-export interface QuestionUpsertWithoutResponsesInput {
-  update: QuestionUpdateWithoutResponsesDataInput;
-  create: QuestionCreateWithoutResponsesInput;
 }
 
 export interface SessionUpdateInput {
@@ -1987,6 +2099,16 @@ export interface Answer {
 export interface AnswerPromise extends Promise<Answer>, Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  question: <T = QuestionPromise>() => T;
+  responses: <T = FragmentableArray<Response>>(args?: {
+    where?: ResponseWhereInput;
+    orderBy?: ResponseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface AnswerSubscription
@@ -1994,6 +2116,16 @@ export interface AnswerSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  question: <T = QuestionSubscription>() => T;
+  responses: <T = Promise<AsyncIterator<ResponseSubscription>>>(args?: {
+    where?: ResponseWhereInput;
+    orderBy?: ResponseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface AnswerNullablePromise
@@ -2001,396 +2133,10 @@ export interface AnswerNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
-}
-
-export interface AnswerConnection {
-  pageInfo: PageInfo;
-  edges: AnswerEdge[];
-}
-
-export interface AnswerConnectionPromise
-  extends Promise<AnswerConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AnswerEdge>>() => T;
-  aggregate: <T = AggregateAnswerPromise>() => T;
-}
-
-export interface AnswerConnectionSubscription
-  extends Promise<AsyncIterator<AnswerConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AnswerEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAnswerSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AnswerEdge {
-  node: Answer;
-  cursor: String;
-}
-
-export interface AnswerEdgePromise extends Promise<AnswerEdge>, Fragmentable {
-  node: <T = AnswerPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AnswerEdgeSubscription
-  extends Promise<AsyncIterator<AnswerEdge>>,
-    Fragmentable {
-  node: <T = AnswerSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAnswer {
-  count: Int;
-}
-
-export interface AggregateAnswerPromise
-  extends Promise<AggregateAnswer>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAnswerSubscription
-  extends Promise<AsyncIterator<AggregateAnswer>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Course {
-  id: ID_Output;
-  name: String;
-  code: String;
-}
-
-export interface CoursePromise extends Promise<Course>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  students: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  teachers: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  term: <T = TermPromise>() => T;
-  code: () => Promise<String>;
-  sessions: <T = FragmentableArray<Session>>(args?: {
-    where?: SessionWhereInput;
-    orderBy?: SessionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface CourseSubscription
-  extends Promise<AsyncIterator<Course>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  students: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  teachers: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  term: <T = TermSubscription>() => T;
-  code: () => Promise<AsyncIterator<String>>;
-  sessions: <T = Promise<AsyncIterator<SessionSubscription>>>(args?: {
-    where?: SessionWhereInput;
-    orderBy?: SessionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface CourseNullablePromise
-  extends Promise<Course | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  students: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  teachers: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  term: <T = TermPromise>() => T;
-  code: () => Promise<String>;
-  sessions: <T = FragmentableArray<Session>>(args?: {
-    where?: SessionWhereInput;
-    orderBy?: SessionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface User {
-  id: ID_Output;
-  username: String;
-  name: String;
-  password: String;
-  role: Role;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  name: () => Promise<String>;
-  password: () => Promise<String>;
-  coursesAttending: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  coursesTeaching: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  role: () => Promise<Role>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  username: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  coursesAttending: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  coursesTeaching: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  role: () => Promise<AsyncIterator<Role>>;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  username: () => Promise<String>;
-  name: () => Promise<String>;
-  password: () => Promise<String>;
-  coursesAttending: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  coursesTeaching: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  role: () => Promise<Role>;
-}
-
-export interface Term {
-  id: ID_Output;
-  startDate: DateTimeOutput;
-  endDate: DateTimeOutput;
-  name: String;
-}
-
-export interface TermPromise extends Promise<Term>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  startDate: () => Promise<DateTimeOutput>;
-  endDate: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  courses: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface TermSubscription
-  extends Promise<AsyncIterator<Term>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  courses: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface TermNullablePromise
-  extends Promise<Term | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  startDate: () => Promise<DateTimeOutput>;
-  endDate: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  courses: <T = FragmentableArray<Course>>(args?: {
-    where?: CourseWhereInput;
-    orderBy?: CourseOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface Session {
-  id: ID_Output;
-  startsAt: DateTimeOutput;
-  endsAt: DateTimeOutput;
-}
-
-export interface SessionPromise extends Promise<Session>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  startsAt: () => Promise<DateTimeOutput>;
-  endsAt: () => Promise<DateTimeOutput>;
-  course: <T = CoursePromise>() => T;
-  questions: <T = FragmentableArray<Question>>(args?: {
-    where?: QuestionWhereInput;
-    orderBy?: QuestionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SessionSubscription
-  extends Promise<AsyncIterator<Session>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  startsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  endsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  course: <T = CourseSubscription>() => T;
-  questions: <T = Promise<AsyncIterator<QuestionSubscription>>>(args?: {
-    where?: QuestionWhereInput;
-    orderBy?: QuestionOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SessionNullablePromise
-  extends Promise<Session | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  startsAt: () => Promise<DateTimeOutput>;
-  endsAt: () => Promise<DateTimeOutput>;
-  course: <T = CoursePromise>() => T;
-  questions: <T = FragmentableArray<Question>>(args?: {
-    where?: QuestionWhereInput;
-    orderBy?: QuestionOrderByInput;
+  question: <T = QuestionPromise>() => T;
+  responses: <T = FragmentableArray<Response>>(args?: {
+    where?: ResponseWhereInput;
+    orderBy?: ResponseOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -2518,6 +2264,402 @@ export interface ResponseNullablePromise
   answer: <T = AnswerPromise>() => T;
   session: <T = SessionPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface User {
+  id: ID_Output;
+  username: String;
+  name: String;
+  password: String;
+  role: Role;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  coursesAttending: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coursesTeaching: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  role: () => Promise<Role>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  coursesAttending: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coursesTeaching: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  role: () => Promise<AsyncIterator<Role>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  coursesAttending: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  coursesTeaching: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  role: () => Promise<Role>;
+}
+
+export interface Course {
+  id: ID_Output;
+  name: String;
+  code: String;
+}
+
+export interface CoursePromise extends Promise<Course>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  students: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  teachers: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  term: <T = TermPromise>() => T;
+  code: () => Promise<String>;
+  sessions: <T = FragmentableArray<Session>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface CourseSubscription
+  extends Promise<AsyncIterator<Course>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  students: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  teachers: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  term: <T = TermSubscription>() => T;
+  code: () => Promise<AsyncIterator<String>>;
+  sessions: <T = Promise<AsyncIterator<SessionSubscription>>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface CourseNullablePromise
+  extends Promise<Course | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  students: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  teachers: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  term: <T = TermPromise>() => T;
+  code: () => Promise<String>;
+  sessions: <T = FragmentableArray<Session>>(args?: {
+    where?: SessionWhereInput;
+    orderBy?: SessionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Term {
+  id: ID_Output;
+  startDate: DateTimeOutput;
+  endDate: DateTimeOutput;
+  name: String;
+}
+
+export interface TermPromise extends Promise<Term>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  startDate: () => Promise<DateTimeOutput>;
+  endDate: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  courses: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TermSubscription
+  extends Promise<AsyncIterator<Term>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  courses: <T = Promise<AsyncIterator<CourseSubscription>>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TermNullablePromise
+  extends Promise<Term | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  startDate: () => Promise<DateTimeOutput>;
+  endDate: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  courses: <T = FragmentableArray<Course>>(args?: {
+    where?: CourseWhereInput;
+    orderBy?: CourseOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface Session {
+  id: ID_Output;
+  startsAt: DateTimeOutput;
+  endsAt: DateTimeOutput;
+}
+
+export interface SessionPromise extends Promise<Session>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  startsAt: () => Promise<DateTimeOutput>;
+  endsAt: () => Promise<DateTimeOutput>;
+  course: <T = CoursePromise>() => T;
+  questions: <T = FragmentableArray<Question>>(args?: {
+    where?: QuestionWhereInput;
+    orderBy?: QuestionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SessionSubscription
+  extends Promise<AsyncIterator<Session>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  startsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  endsAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  course: <T = CourseSubscription>() => T;
+  questions: <T = Promise<AsyncIterator<QuestionSubscription>>>(args?: {
+    where?: QuestionWhereInput;
+    orderBy?: QuestionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface SessionNullablePromise
+  extends Promise<Session | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  startsAt: () => Promise<DateTimeOutput>;
+  endsAt: () => Promise<DateTimeOutput>;
+  course: <T = CoursePromise>() => T;
+  questions: <T = FragmentableArray<Question>>(args?: {
+    where?: QuestionWhereInput;
+    orderBy?: QuestionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface AnswerConnection {
+  pageInfo: PageInfo;
+  edges: AnswerEdge[];
+}
+
+export interface AnswerConnectionPromise
+  extends Promise<AnswerConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AnswerEdge>>() => T;
+  aggregate: <T = AggregateAnswerPromise>() => T;
+}
+
+export interface AnswerConnectionSubscription
+  extends Promise<AsyncIterator<AnswerConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AnswerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAnswerSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AnswerEdge {
+  node: Answer;
+  cursor: String;
+}
+
+export interface AnswerEdgePromise extends Promise<AnswerEdge>, Fragmentable {
+  node: <T = AnswerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AnswerEdgeSubscription
+  extends Promise<AsyncIterator<AnswerEdge>>,
+    Fragmentable {
+  node: <T = AnswerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAnswer {
+  count: Int;
+}
+
+export interface AggregateAnswerPromise
+  extends Promise<AggregateAnswer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAnswerSubscription
+  extends Promise<AsyncIterator<AggregateAnswer>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CourseConnection {
@@ -3213,11 +3355,6 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -3226,6 +3363,11 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 export type Long = string;
 

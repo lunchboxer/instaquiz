@@ -12,7 +12,10 @@ type Query {
   session(id: ID!): Session
   sessions(orderBy: SessionOrderByInput, where: SessionWhereInput): [Session!]!
   question(id: ID!): Question
-  questions: [Question!]!
+  questions(
+    orderBy: QuestionOrderByInput
+    where: QuestionWhereInput
+  ): [Question!]!
   answer(id: ID!): Answer
   answers: [Answer!]!
   response(id: ID!): Response
@@ -39,6 +42,8 @@ type Mutation {
   createQuestion(text: String!, order: Int, sessionId: ID!): Question
   updateQuestion(text: String!, order: Int): Question
   deleteQuestion(id: ID!): Question
+  createAnswer(text: String!, questionId: ID!): Answer
+  deleteAnswer(id: ID!): Answer
 }
 
 type AuthPayload {

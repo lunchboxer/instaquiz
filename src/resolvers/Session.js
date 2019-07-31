@@ -11,6 +11,6 @@ exports.Session = {
     return sessions + 1
   },
   questions (root, args, context) {
-    return context.prisma.session({ id: root.id }).questions()
+    return context.prisma.session({ id: root.id }).questions({ orderBy: 'order_ASC' })
   }
 }

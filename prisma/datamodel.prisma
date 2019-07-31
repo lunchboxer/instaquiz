@@ -51,6 +51,8 @@ type Question {
 type Answer {
   id: ID! @id
   text: String!
+  question: Question! 
+  responses: [Response!]!
 }
 
 type Response {

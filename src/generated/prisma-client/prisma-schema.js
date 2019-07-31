@@ -34,6 +34,8 @@ type AggregateUser {
 type Answer {
   id: ID!
   text: String!
+  question: Question!
+  responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response!]
 }
 
 type AnswerConnection {
@@ -45,16 +47,30 @@ type AnswerConnection {
 input AnswerCreateInput {
   id: ID
   text: String!
+  question: QuestionCreateOneWithoutAnswersInput!
+  responses: ResponseCreateManyWithoutAnswerInput
 }
 
-input AnswerCreateManyInput {
-  create: [AnswerCreateInput!]
+input AnswerCreateManyWithoutQuestionInput {
+  create: [AnswerCreateWithoutQuestionInput!]
   connect: [AnswerWhereUniqueInput!]
 }
 
-input AnswerCreateOneInput {
-  create: AnswerCreateInput
+input AnswerCreateOneWithoutResponsesInput {
+  create: AnswerCreateWithoutResponsesInput
   connect: AnswerWhereUniqueInput
+}
+
+input AnswerCreateWithoutQuestionInput {
+  id: ID
+  text: String!
+  responses: ResponseCreateManyWithoutAnswerInput
+}
+
+input AnswerCreateWithoutResponsesInput {
+  id: ID
+  text: String!
+  question: QuestionCreateOneWithoutAnswersInput!
 }
 
 type AnswerEdge {
@@ -126,32 +142,30 @@ input AnswerSubscriptionWhereInput {
   NOT: [AnswerSubscriptionWhereInput!]
 }
 
-input AnswerUpdateDataInput {
-  text: String
-}
-
 input AnswerUpdateInput {
   text: String
+  question: QuestionUpdateOneRequiredWithoutAnswersInput
+  responses: ResponseUpdateManyWithoutAnswerInput
 }
 
 input AnswerUpdateManyDataInput {
   text: String
 }
 
-input AnswerUpdateManyInput {
-  create: [AnswerCreateInput!]
-  update: [AnswerUpdateWithWhereUniqueNestedInput!]
-  upsert: [AnswerUpsertWithWhereUniqueNestedInput!]
+input AnswerUpdateManyMutationInput {
+  text: String
+}
+
+input AnswerUpdateManyWithoutQuestionInput {
+  create: [AnswerCreateWithoutQuestionInput!]
   delete: [AnswerWhereUniqueInput!]
   connect: [AnswerWhereUniqueInput!]
   set: [AnswerWhereUniqueInput!]
   disconnect: [AnswerWhereUniqueInput!]
+  update: [AnswerUpdateWithWhereUniqueWithoutQuestionInput!]
+  upsert: [AnswerUpsertWithWhereUniqueWithoutQuestionInput!]
   deleteMany: [AnswerScalarWhereInput!]
   updateMany: [AnswerUpdateManyWithWhereNestedInput!]
-}
-
-input AnswerUpdateManyMutationInput {
-  text: String
 }
 
 input AnswerUpdateManyWithWhereNestedInput {
@@ -159,27 +173,37 @@ input AnswerUpdateManyWithWhereNestedInput {
   data: AnswerUpdateManyDataInput!
 }
 
-input AnswerUpdateOneRequiredInput {
-  create: AnswerCreateInput
-  update: AnswerUpdateDataInput
-  upsert: AnswerUpsertNestedInput
+input AnswerUpdateOneRequiredWithoutResponsesInput {
+  create: AnswerCreateWithoutResponsesInput
+  update: AnswerUpdateWithoutResponsesDataInput
+  upsert: AnswerUpsertWithoutResponsesInput
   connect: AnswerWhereUniqueInput
 }
 
-input AnswerUpdateWithWhereUniqueNestedInput {
-  where: AnswerWhereUniqueInput!
-  data: AnswerUpdateDataInput!
+input AnswerUpdateWithoutQuestionDataInput {
+  text: String
+  responses: ResponseUpdateManyWithoutAnswerInput
 }
 
-input AnswerUpsertNestedInput {
-  update: AnswerUpdateDataInput!
-  create: AnswerCreateInput!
+input AnswerUpdateWithoutResponsesDataInput {
+  text: String
+  question: QuestionUpdateOneRequiredWithoutAnswersInput
 }
 
-input AnswerUpsertWithWhereUniqueNestedInput {
+input AnswerUpdateWithWhereUniqueWithoutQuestionInput {
   where: AnswerWhereUniqueInput!
-  update: AnswerUpdateDataInput!
-  create: AnswerCreateInput!
+  data: AnswerUpdateWithoutQuestionDataInput!
+}
+
+input AnswerUpsertWithoutResponsesInput {
+  update: AnswerUpdateWithoutResponsesDataInput!
+  create: AnswerCreateWithoutResponsesInput!
+}
+
+input AnswerUpsertWithWhereUniqueWithoutQuestionInput {
+  where: AnswerWhereUniqueInput!
+  update: AnswerUpdateWithoutQuestionDataInput!
+  create: AnswerCreateWithoutQuestionInput!
 }
 
 input AnswerWhereInput {
@@ -211,6 +235,10 @@ input AnswerWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  question: QuestionWhereInput
+  responses_every: ResponseWhereInput
+  responses_some: ResponseWhereInput
+  responses_none: ResponseWhereInput
   AND: [AnswerWhereInput!]
   OR: [AnswerWhereInput!]
   NOT: [AnswerWhereInput!]
@@ -701,7 +729,7 @@ input QuestionCreateInput {
   id: ID
   text: String!
   order: Int!
-  answers: AnswerCreateManyInput
+  answers: AnswerCreateManyWithoutQuestionInput
   responses: ResponseCreateManyWithoutQuestionInput
   session: SessionCreateOneWithoutQuestionsInput!
 }
@@ -711,16 +739,29 @@ input QuestionCreateManyWithoutSessionInput {
   connect: [QuestionWhereUniqueInput!]
 }
 
+input QuestionCreateOneWithoutAnswersInput {
+  create: QuestionCreateWithoutAnswersInput
+  connect: QuestionWhereUniqueInput
+}
+
 input QuestionCreateOneWithoutResponsesInput {
   create: QuestionCreateWithoutResponsesInput
   connect: QuestionWhereUniqueInput
+}
+
+input QuestionCreateWithoutAnswersInput {
+  id: ID
+  text: String!
+  order: Int!
+  responses: ResponseCreateManyWithoutQuestionInput
+  session: SessionCreateOneWithoutQuestionsInput!
 }
 
 input QuestionCreateWithoutResponsesInput {
   id: ID
   text: String!
   order: Int!
-  answers: AnswerCreateManyInput
+  answers: AnswerCreateManyWithoutQuestionInput
   session: SessionCreateOneWithoutQuestionsInput!
 }
 
@@ -728,7 +769,7 @@ input QuestionCreateWithoutSessionInput {
   id: ID
   text: String!
   order: Int!
-  answers: AnswerCreateManyInput
+  answers: AnswerCreateManyWithoutQuestionInput
   responses: ResponseCreateManyWithoutQuestionInput
 }
 
@@ -815,7 +856,7 @@ input QuestionSubscriptionWhereInput {
 input QuestionUpdateInput {
   text: String
   order: Int
-  answers: AnswerUpdateManyInput
+  answers: AnswerUpdateManyWithoutQuestionInput
   responses: ResponseUpdateManyWithoutQuestionInput
   session: SessionUpdateOneRequiredWithoutQuestionsInput
 }
@@ -847,6 +888,13 @@ input QuestionUpdateManyWithWhereNestedInput {
   data: QuestionUpdateManyDataInput!
 }
 
+input QuestionUpdateOneRequiredWithoutAnswersInput {
+  create: QuestionCreateWithoutAnswersInput
+  update: QuestionUpdateWithoutAnswersDataInput
+  upsert: QuestionUpsertWithoutAnswersInput
+  connect: QuestionWhereUniqueInput
+}
+
 input QuestionUpdateOneRequiredWithoutResponsesInput {
   create: QuestionCreateWithoutResponsesInput
   update: QuestionUpdateWithoutResponsesDataInput
@@ -854,23 +902,35 @@ input QuestionUpdateOneRequiredWithoutResponsesInput {
   connect: QuestionWhereUniqueInput
 }
 
+input QuestionUpdateWithoutAnswersDataInput {
+  text: String
+  order: Int
+  responses: ResponseUpdateManyWithoutQuestionInput
+  session: SessionUpdateOneRequiredWithoutQuestionsInput
+}
+
 input QuestionUpdateWithoutResponsesDataInput {
   text: String
   order: Int
-  answers: AnswerUpdateManyInput
+  answers: AnswerUpdateManyWithoutQuestionInput
   session: SessionUpdateOneRequiredWithoutQuestionsInput
 }
 
 input QuestionUpdateWithoutSessionDataInput {
   text: String
   order: Int
-  answers: AnswerUpdateManyInput
+  answers: AnswerUpdateManyWithoutQuestionInput
   responses: ResponseUpdateManyWithoutQuestionInput
 }
 
 input QuestionUpdateWithWhereUniqueWithoutSessionInput {
   where: QuestionWhereUniqueInput!
   data: QuestionUpdateWithoutSessionDataInput!
+}
+
+input QuestionUpsertWithoutAnswersInput {
+  update: QuestionUpdateWithoutAnswersDataInput!
+  create: QuestionCreateWithoutAnswersInput!
 }
 
 input QuestionUpsertWithoutResponsesInput {
@@ -956,8 +1016,13 @@ input ResponseCreateInput {
   id: ID
   student: UserCreateOneInput!
   question: QuestionCreateOneWithoutResponsesInput!
-  answer: AnswerCreateOneInput!
+  answer: AnswerCreateOneWithoutResponsesInput!
   session: SessionCreateOneInput!
+}
+
+input ResponseCreateManyWithoutAnswerInput {
+  create: [ResponseCreateWithoutAnswerInput!]
+  connect: [ResponseWhereUniqueInput!]
 }
 
 input ResponseCreateManyWithoutQuestionInput {
@@ -965,10 +1030,17 @@ input ResponseCreateManyWithoutQuestionInput {
   connect: [ResponseWhereUniqueInput!]
 }
 
+input ResponseCreateWithoutAnswerInput {
+  id: ID
+  student: UserCreateOneInput!
+  question: QuestionCreateOneWithoutResponsesInput!
+  session: SessionCreateOneInput!
+}
+
 input ResponseCreateWithoutQuestionInput {
   id: ID
   student: UserCreateOneInput!
-  answer: AnswerCreateOneInput!
+  answer: AnswerCreateOneWithoutResponsesInput!
   session: SessionCreateOneInput!
 }
 
@@ -1038,8 +1110,19 @@ input ResponseSubscriptionWhereInput {
 input ResponseUpdateInput {
   student: UserUpdateOneRequiredInput
   question: QuestionUpdateOneRequiredWithoutResponsesInput
-  answer: AnswerUpdateOneRequiredInput
+  answer: AnswerUpdateOneRequiredWithoutResponsesInput
   session: SessionUpdateOneRequiredInput
+}
+
+input ResponseUpdateManyWithoutAnswerInput {
+  create: [ResponseCreateWithoutAnswerInput!]
+  delete: [ResponseWhereUniqueInput!]
+  connect: [ResponseWhereUniqueInput!]
+  set: [ResponseWhereUniqueInput!]
+  disconnect: [ResponseWhereUniqueInput!]
+  update: [ResponseUpdateWithWhereUniqueWithoutAnswerInput!]
+  upsert: [ResponseUpsertWithWhereUniqueWithoutAnswerInput!]
+  deleteMany: [ResponseScalarWhereInput!]
 }
 
 input ResponseUpdateManyWithoutQuestionInput {
@@ -1053,15 +1136,32 @@ input ResponseUpdateManyWithoutQuestionInput {
   deleteMany: [ResponseScalarWhereInput!]
 }
 
+input ResponseUpdateWithoutAnswerDataInput {
+  student: UserUpdateOneRequiredInput
+  question: QuestionUpdateOneRequiredWithoutResponsesInput
+  session: SessionUpdateOneRequiredInput
+}
+
 input ResponseUpdateWithoutQuestionDataInput {
   student: UserUpdateOneRequiredInput
-  answer: AnswerUpdateOneRequiredInput
+  answer: AnswerUpdateOneRequiredWithoutResponsesInput
   session: SessionUpdateOneRequiredInput
+}
+
+input ResponseUpdateWithWhereUniqueWithoutAnswerInput {
+  where: ResponseWhereUniqueInput!
+  data: ResponseUpdateWithoutAnswerDataInput!
 }
 
 input ResponseUpdateWithWhereUniqueWithoutQuestionInput {
   where: ResponseWhereUniqueInput!
   data: ResponseUpdateWithoutQuestionDataInput!
+}
+
+input ResponseUpsertWithWhereUniqueWithoutAnswerInput {
+  where: ResponseWhereUniqueInput!
+  update: ResponseUpdateWithoutAnswerDataInput!
+  create: ResponseCreateWithoutAnswerInput!
 }
 
 input ResponseUpsertWithWhereUniqueWithoutQuestionInput {

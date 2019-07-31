@@ -9,6 +9,6 @@ exports.Course = {
     return context.prisma.course({ id: root.id }).teachers()
   },
   sessions (root, args, context) {
-    return context.prisma.course({ id: root.id }).sessions()
+    return context.prisma.course({ id: root.id }).sessions({ orderBy: 'startsAt_ASC' })
   }
 }
