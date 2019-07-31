@@ -36,9 +36,21 @@ type Mutation {
   addTeacherToCourse(id: ID!, courseId: ID!): Course
   removeTeacherFromCourse(id: ID!, courseId: ID!): Course
   createSession(startsAt: DateTime!, endsAt: DateTime!, courseId: ID!): Session
+  createPrompt(text: String!, order: Int, sessionId: ID!): Prompt
+  updatePrompt(text: String!, order: Int): Prompt
+  deletePrompt(id: ID!): Prompt
 }
 
 type AuthPayload {
   token: String!
   user: User!
+}
+
+type Session {
+  id: ID!
+  startsAt: DateTime!
+  endsAt: DateTime!
+  course: Course!
+  prompts: [Prompt!]!
+  order: Int
 }
