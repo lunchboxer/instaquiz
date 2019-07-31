@@ -25,7 +25,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Prompt",
+    name: "Question",
     embedded: false
   },
   {

@@ -36,10 +36,10 @@ type Session {
   startsAt: DateTime!
   endsAt: DateTime!
   course: Course! @relation(link: INLINE)
-  prompts: [Prompt!]!
+  questions: [Question!]!
 }
 
-type Prompt {
+type Question {
   id: ID! @id
   text: String!
   order: Int!
@@ -56,7 +56,7 @@ type Answer {
 type Response {
   id: ID! @id
   student: User! @relation(link: INLINE)
-  prompt: Prompt! @relation(link: INLINE)
+  question: Question! @relation(link: INLINE)
   answer: Answer! @relation(link: INLINE)
   session: Session!
   createdAt: DateTime! @createdAt

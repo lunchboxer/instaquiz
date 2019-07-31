@@ -11,7 +11,7 @@ type AggregateCourse {
   count: Int!
 }
 
-type AggregatePrompt {
+type AggregateQuestion {
   count: Int!
 }
 
@@ -609,12 +609,12 @@ type Mutation {
   upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   deleteCourse(where: CourseWhereUniqueInput!): Course
   deleteManyCourses(where: CourseWhereInput): BatchPayload!
-  createPrompt(data: PromptCreateInput!): Prompt!
-  updatePrompt(data: PromptUpdateInput!, where: PromptWhereUniqueInput!): Prompt
-  updateManyPrompts(data: PromptUpdateManyMutationInput!, where: PromptWhereInput): BatchPayload!
-  upsertPrompt(where: PromptWhereUniqueInput!, create: PromptCreateInput!, update: PromptUpdateInput!): Prompt!
-  deletePrompt(where: PromptWhereUniqueInput!): Prompt
-  deleteManyPrompts(where: PromptWhereInput): BatchPayload!
+  createQuestion(data: QuestionCreateInput!): Question!
+  updateQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
+  updateManyQuestions(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
+  upsertQuestion(where: QuestionWhereUniqueInput!, create: QuestionCreateInput!, update: QuestionUpdateInput!): Question!
+  deleteQuestion(where: QuestionWhereUniqueInput!): Question
+  deleteManyQuestions(where: QuestionWhereInput): BatchPayload!
   createResponse(data: ResponseCreateInput!): Response!
   updateResponse(data: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response
   upsertResponse(where: ResponseWhereUniqueInput!, create: ResponseCreateInput!, update: ResponseUpdateInput!): Response!
@@ -657,7 +657,32 @@ type PageInfo {
   endCursor: String
 }
 
-type Prompt {
+type Query {
+  answer(where: AnswerWhereUniqueInput!): Answer
+  answers(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Answer]!
+  answersConnection(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnswerConnection!
+  course(where: CourseWhereUniqueInput!): Course
+  courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
+  coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
+  question(where: QuestionWhereUniqueInput!): Question
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question]!
+  questionsConnection(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): QuestionConnection!
+  response(where: ResponseWhereUniqueInput!): Response
+  responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response]!
+  responsesConnection(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResponseConnection!
+  session(where: SessionWhereUniqueInput!): Session
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
+  sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
+  term(where: TermWhereUniqueInput!): Term
+  terms(where: TermWhereInput, orderBy: TermOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Term]!
+  termsConnection(where: TermWhereInput, orderBy: TermOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TermConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
+}
+
+type Question {
   id: ID!
   text: String!
   order: Int!
@@ -666,53 +691,53 @@ type Prompt {
   session: Session!
 }
 
-type PromptConnection {
+type QuestionConnection {
   pageInfo: PageInfo!
-  edges: [PromptEdge]!
-  aggregate: AggregatePrompt!
+  edges: [QuestionEdge]!
+  aggregate: AggregateQuestion!
 }
 
-input PromptCreateInput {
+input QuestionCreateInput {
   id: ID
   text: String!
   order: Int!
   answers: AnswerCreateManyInput
-  responses: ResponseCreateManyWithoutPromptInput
-  session: SessionCreateOneWithoutPromptsInput!
+  responses: ResponseCreateManyWithoutQuestionInput
+  session: SessionCreateOneWithoutQuestionsInput!
 }
 
-input PromptCreateManyWithoutSessionInput {
-  create: [PromptCreateWithoutSessionInput!]
-  connect: [PromptWhereUniqueInput!]
+input QuestionCreateManyWithoutSessionInput {
+  create: [QuestionCreateWithoutSessionInput!]
+  connect: [QuestionWhereUniqueInput!]
 }
 
-input PromptCreateOneWithoutResponsesInput {
-  create: PromptCreateWithoutResponsesInput
-  connect: PromptWhereUniqueInput
+input QuestionCreateOneWithoutResponsesInput {
+  create: QuestionCreateWithoutResponsesInput
+  connect: QuestionWhereUniqueInput
 }
 
-input PromptCreateWithoutResponsesInput {
+input QuestionCreateWithoutResponsesInput {
   id: ID
   text: String!
   order: Int!
   answers: AnswerCreateManyInput
-  session: SessionCreateOneWithoutPromptsInput!
+  session: SessionCreateOneWithoutQuestionsInput!
 }
 
-input PromptCreateWithoutSessionInput {
+input QuestionCreateWithoutSessionInput {
   id: ID
   text: String!
   order: Int!
   answers: AnswerCreateManyInput
-  responses: ResponseCreateManyWithoutPromptInput
+  responses: ResponseCreateManyWithoutQuestionInput
 }
 
-type PromptEdge {
-  node: Prompt!
+type QuestionEdge {
+  node: Question!
   cursor: String!
 }
 
-enum PromptOrderByInput {
+enum QuestionOrderByInput {
   id_ASC
   id_DESC
   text_ASC
@@ -721,13 +746,13 @@ enum PromptOrderByInput {
   order_DESC
 }
 
-type PromptPreviousValues {
+type QuestionPreviousValues {
   id: ID!
   text: String!
   order: Int!
 }
 
-input PromptScalarWhereInput {
+input QuestionScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -764,102 +789,102 @@ input PromptScalarWhereInput {
   order_lte: Int
   order_gt: Int
   order_gte: Int
-  AND: [PromptScalarWhereInput!]
-  OR: [PromptScalarWhereInput!]
-  NOT: [PromptScalarWhereInput!]
+  AND: [QuestionScalarWhereInput!]
+  OR: [QuestionScalarWhereInput!]
+  NOT: [QuestionScalarWhereInput!]
 }
 
-type PromptSubscriptionPayload {
+type QuestionSubscriptionPayload {
   mutation: MutationType!
-  node: Prompt
+  node: Question
   updatedFields: [String!]
-  previousValues: PromptPreviousValues
+  previousValues: QuestionPreviousValues
 }
 
-input PromptSubscriptionWhereInput {
+input QuestionSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: PromptWhereInput
-  AND: [PromptSubscriptionWhereInput!]
-  OR: [PromptSubscriptionWhereInput!]
-  NOT: [PromptSubscriptionWhereInput!]
+  node: QuestionWhereInput
+  AND: [QuestionSubscriptionWhereInput!]
+  OR: [QuestionSubscriptionWhereInput!]
+  NOT: [QuestionSubscriptionWhereInput!]
 }
 
-input PromptUpdateInput {
+input QuestionUpdateInput {
   text: String
   order: Int
   answers: AnswerUpdateManyInput
-  responses: ResponseUpdateManyWithoutPromptInput
-  session: SessionUpdateOneRequiredWithoutPromptsInput
+  responses: ResponseUpdateManyWithoutQuestionInput
+  session: SessionUpdateOneRequiredWithoutQuestionsInput
 }
 
-input PromptUpdateManyDataInput {
+input QuestionUpdateManyDataInput {
   text: String
   order: Int
 }
 
-input PromptUpdateManyMutationInput {
+input QuestionUpdateManyMutationInput {
   text: String
   order: Int
 }
 
-input PromptUpdateManyWithoutSessionInput {
-  create: [PromptCreateWithoutSessionInput!]
-  delete: [PromptWhereUniqueInput!]
-  connect: [PromptWhereUniqueInput!]
-  set: [PromptWhereUniqueInput!]
-  disconnect: [PromptWhereUniqueInput!]
-  update: [PromptUpdateWithWhereUniqueWithoutSessionInput!]
-  upsert: [PromptUpsertWithWhereUniqueWithoutSessionInput!]
-  deleteMany: [PromptScalarWhereInput!]
-  updateMany: [PromptUpdateManyWithWhereNestedInput!]
+input QuestionUpdateManyWithoutSessionInput {
+  create: [QuestionCreateWithoutSessionInput!]
+  delete: [QuestionWhereUniqueInput!]
+  connect: [QuestionWhereUniqueInput!]
+  set: [QuestionWhereUniqueInput!]
+  disconnect: [QuestionWhereUniqueInput!]
+  update: [QuestionUpdateWithWhereUniqueWithoutSessionInput!]
+  upsert: [QuestionUpsertWithWhereUniqueWithoutSessionInput!]
+  deleteMany: [QuestionScalarWhereInput!]
+  updateMany: [QuestionUpdateManyWithWhereNestedInput!]
 }
 
-input PromptUpdateManyWithWhereNestedInput {
-  where: PromptScalarWhereInput!
-  data: PromptUpdateManyDataInput!
+input QuestionUpdateManyWithWhereNestedInput {
+  where: QuestionScalarWhereInput!
+  data: QuestionUpdateManyDataInput!
 }
 
-input PromptUpdateOneRequiredWithoutResponsesInput {
-  create: PromptCreateWithoutResponsesInput
-  update: PromptUpdateWithoutResponsesDataInput
-  upsert: PromptUpsertWithoutResponsesInput
-  connect: PromptWhereUniqueInput
+input QuestionUpdateOneRequiredWithoutResponsesInput {
+  create: QuestionCreateWithoutResponsesInput
+  update: QuestionUpdateWithoutResponsesDataInput
+  upsert: QuestionUpsertWithoutResponsesInput
+  connect: QuestionWhereUniqueInput
 }
 
-input PromptUpdateWithoutResponsesDataInput {
-  text: String
-  order: Int
-  answers: AnswerUpdateManyInput
-  session: SessionUpdateOneRequiredWithoutPromptsInput
-}
-
-input PromptUpdateWithoutSessionDataInput {
+input QuestionUpdateWithoutResponsesDataInput {
   text: String
   order: Int
   answers: AnswerUpdateManyInput
-  responses: ResponseUpdateManyWithoutPromptInput
+  session: SessionUpdateOneRequiredWithoutQuestionsInput
 }
 
-input PromptUpdateWithWhereUniqueWithoutSessionInput {
-  where: PromptWhereUniqueInput!
-  data: PromptUpdateWithoutSessionDataInput!
+input QuestionUpdateWithoutSessionDataInput {
+  text: String
+  order: Int
+  answers: AnswerUpdateManyInput
+  responses: ResponseUpdateManyWithoutQuestionInput
 }
 
-input PromptUpsertWithoutResponsesInput {
-  update: PromptUpdateWithoutResponsesDataInput!
-  create: PromptCreateWithoutResponsesInput!
+input QuestionUpdateWithWhereUniqueWithoutSessionInput {
+  where: QuestionWhereUniqueInput!
+  data: QuestionUpdateWithoutSessionDataInput!
 }
 
-input PromptUpsertWithWhereUniqueWithoutSessionInput {
-  where: PromptWhereUniqueInput!
-  update: PromptUpdateWithoutSessionDataInput!
-  create: PromptCreateWithoutSessionInput!
+input QuestionUpsertWithoutResponsesInput {
+  update: QuestionUpdateWithoutResponsesDataInput!
+  create: QuestionCreateWithoutResponsesInput!
 }
 
-input PromptWhereInput {
+input QuestionUpsertWithWhereUniqueWithoutSessionInput {
+  where: QuestionWhereUniqueInput!
+  update: QuestionUpdateWithoutSessionDataInput!
+  create: QuestionCreateWithoutSessionInput!
+}
+
+input QuestionWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -903,44 +928,19 @@ input PromptWhereInput {
   responses_some: ResponseWhereInput
   responses_none: ResponseWhereInput
   session: SessionWhereInput
-  AND: [PromptWhereInput!]
-  OR: [PromptWhereInput!]
-  NOT: [PromptWhereInput!]
+  AND: [QuestionWhereInput!]
+  OR: [QuestionWhereInput!]
+  NOT: [QuestionWhereInput!]
 }
 
-input PromptWhereUniqueInput {
+input QuestionWhereUniqueInput {
   id: ID
-}
-
-type Query {
-  answer(where: AnswerWhereUniqueInput!): Answer
-  answers(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Answer]!
-  answersConnection(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnswerConnection!
-  course(where: CourseWhereUniqueInput!): Course
-  courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
-  coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
-  prompt(where: PromptWhereUniqueInput!): Prompt
-  prompts(where: PromptWhereInput, orderBy: PromptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Prompt]!
-  promptsConnection(where: PromptWhereInput, orderBy: PromptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PromptConnection!
-  response(where: ResponseWhereUniqueInput!): Response
-  responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response]!
-  responsesConnection(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResponseConnection!
-  session(where: SessionWhereUniqueInput!): Session
-  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
-  sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
-  term(where: TermWhereUniqueInput!): Term
-  terms(where: TermWhereInput, orderBy: TermOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Term]!
-  termsConnection(where: TermWhereInput, orderBy: TermOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TermConnection!
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  node(id: ID!): Node
 }
 
 type Response {
   id: ID!
   student: User!
-  prompt: Prompt!
+  question: Question!
   answer: Answer!
   session: Session!
   createdAt: DateTime!
@@ -955,17 +955,17 @@ type ResponseConnection {
 input ResponseCreateInput {
   id: ID
   student: UserCreateOneInput!
-  prompt: PromptCreateOneWithoutResponsesInput!
+  question: QuestionCreateOneWithoutResponsesInput!
   answer: AnswerCreateOneInput!
   session: SessionCreateOneInput!
 }
 
-input ResponseCreateManyWithoutPromptInput {
-  create: [ResponseCreateWithoutPromptInput!]
+input ResponseCreateManyWithoutQuestionInput {
+  create: [ResponseCreateWithoutQuestionInput!]
   connect: [ResponseWhereUniqueInput!]
 }
 
-input ResponseCreateWithoutPromptInput {
+input ResponseCreateWithoutQuestionInput {
   id: ID
   student: UserCreateOneInput!
   answer: AnswerCreateOneInput!
@@ -1037,37 +1037,37 @@ input ResponseSubscriptionWhereInput {
 
 input ResponseUpdateInput {
   student: UserUpdateOneRequiredInput
-  prompt: PromptUpdateOneRequiredWithoutResponsesInput
+  question: QuestionUpdateOneRequiredWithoutResponsesInput
   answer: AnswerUpdateOneRequiredInput
   session: SessionUpdateOneRequiredInput
 }
 
-input ResponseUpdateManyWithoutPromptInput {
-  create: [ResponseCreateWithoutPromptInput!]
+input ResponseUpdateManyWithoutQuestionInput {
+  create: [ResponseCreateWithoutQuestionInput!]
   delete: [ResponseWhereUniqueInput!]
   connect: [ResponseWhereUniqueInput!]
   set: [ResponseWhereUniqueInput!]
   disconnect: [ResponseWhereUniqueInput!]
-  update: [ResponseUpdateWithWhereUniqueWithoutPromptInput!]
-  upsert: [ResponseUpsertWithWhereUniqueWithoutPromptInput!]
+  update: [ResponseUpdateWithWhereUniqueWithoutQuestionInput!]
+  upsert: [ResponseUpsertWithWhereUniqueWithoutQuestionInput!]
   deleteMany: [ResponseScalarWhereInput!]
 }
 
-input ResponseUpdateWithoutPromptDataInput {
+input ResponseUpdateWithoutQuestionDataInput {
   student: UserUpdateOneRequiredInput
   answer: AnswerUpdateOneRequiredInput
   session: SessionUpdateOneRequiredInput
 }
 
-input ResponseUpdateWithWhereUniqueWithoutPromptInput {
+input ResponseUpdateWithWhereUniqueWithoutQuestionInput {
   where: ResponseWhereUniqueInput!
-  data: ResponseUpdateWithoutPromptDataInput!
+  data: ResponseUpdateWithoutQuestionDataInput!
 }
 
-input ResponseUpsertWithWhereUniqueWithoutPromptInput {
+input ResponseUpsertWithWhereUniqueWithoutQuestionInput {
   where: ResponseWhereUniqueInput!
-  update: ResponseUpdateWithoutPromptDataInput!
-  create: ResponseCreateWithoutPromptInput!
+  update: ResponseUpdateWithoutQuestionDataInput!
+  create: ResponseCreateWithoutQuestionInput!
 }
 
 input ResponseWhereInput {
@@ -1086,7 +1086,7 @@ input ResponseWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   student: UserWhereInput
-  prompt: PromptWhereInput
+  question: QuestionWhereInput
   answer: AnswerWhereInput
   session: SessionWhereInput
   createdAt: DateTime
@@ -1116,7 +1116,7 @@ type Session {
   startsAt: DateTime!
   endsAt: DateTime!
   course: Course!
-  prompts(where: PromptWhereInput, orderBy: PromptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Prompt!]
+  questions(where: QuestionWhereInput, orderBy: QuestionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Question!]
 }
 
 type SessionConnection {
@@ -1130,7 +1130,7 @@ input SessionCreateInput {
   startsAt: DateTime!
   endsAt: DateTime!
   course: CourseCreateOneWithoutSessionsInput!
-  prompts: PromptCreateManyWithoutSessionInput
+  questions: QuestionCreateManyWithoutSessionInput
 }
 
 input SessionCreateManyWithoutCourseInput {
@@ -1143,8 +1143,8 @@ input SessionCreateOneInput {
   connect: SessionWhereUniqueInput
 }
 
-input SessionCreateOneWithoutPromptsInput {
-  create: SessionCreateWithoutPromptsInput
+input SessionCreateOneWithoutQuestionsInput {
+  create: SessionCreateWithoutQuestionsInput
   connect: SessionWhereUniqueInput
 }
 
@@ -1152,10 +1152,10 @@ input SessionCreateWithoutCourseInput {
   id: ID
   startsAt: DateTime!
   endsAt: DateTime!
-  prompts: PromptCreateManyWithoutSessionInput
+  questions: QuestionCreateManyWithoutSessionInput
 }
 
-input SessionCreateWithoutPromptsInput {
+input SessionCreateWithoutQuestionsInput {
   id: ID
   startsAt: DateTime!
   endsAt: DateTime!
@@ -1240,14 +1240,14 @@ input SessionUpdateDataInput {
   startsAt: DateTime
   endsAt: DateTime
   course: CourseUpdateOneRequiredWithoutSessionsInput
-  prompts: PromptUpdateManyWithoutSessionInput
+  questions: QuestionUpdateManyWithoutSessionInput
 }
 
 input SessionUpdateInput {
   startsAt: DateTime
   endsAt: DateTime
   course: CourseUpdateOneRequiredWithoutSessionsInput
-  prompts: PromptUpdateManyWithoutSessionInput
+  questions: QuestionUpdateManyWithoutSessionInput
 }
 
 input SessionUpdateManyDataInput {
@@ -1284,20 +1284,20 @@ input SessionUpdateOneRequiredInput {
   connect: SessionWhereUniqueInput
 }
 
-input SessionUpdateOneRequiredWithoutPromptsInput {
-  create: SessionCreateWithoutPromptsInput
-  update: SessionUpdateWithoutPromptsDataInput
-  upsert: SessionUpsertWithoutPromptsInput
+input SessionUpdateOneRequiredWithoutQuestionsInput {
+  create: SessionCreateWithoutQuestionsInput
+  update: SessionUpdateWithoutQuestionsDataInput
+  upsert: SessionUpsertWithoutQuestionsInput
   connect: SessionWhereUniqueInput
 }
 
 input SessionUpdateWithoutCourseDataInput {
   startsAt: DateTime
   endsAt: DateTime
-  prompts: PromptUpdateManyWithoutSessionInput
+  questions: QuestionUpdateManyWithoutSessionInput
 }
 
-input SessionUpdateWithoutPromptsDataInput {
+input SessionUpdateWithoutQuestionsDataInput {
   startsAt: DateTime
   endsAt: DateTime
   course: CourseUpdateOneRequiredWithoutSessionsInput
@@ -1313,9 +1313,9 @@ input SessionUpsertNestedInput {
   create: SessionCreateInput!
 }
 
-input SessionUpsertWithoutPromptsInput {
-  update: SessionUpdateWithoutPromptsDataInput!
-  create: SessionCreateWithoutPromptsInput!
+input SessionUpsertWithoutQuestionsInput {
+  update: SessionUpdateWithoutQuestionsDataInput!
+  create: SessionCreateWithoutQuestionsInput!
 }
 
 input SessionUpsertWithWhereUniqueWithoutCourseInput {
@@ -1356,9 +1356,9 @@ input SessionWhereInput {
   endsAt_gt: DateTime
   endsAt_gte: DateTime
   course: CourseWhereInput
-  prompts_every: PromptWhereInput
-  prompts_some: PromptWhereInput
-  prompts_none: PromptWhereInput
+  questions_every: QuestionWhereInput
+  questions_some: QuestionWhereInput
+  questions_none: QuestionWhereInput
   AND: [SessionWhereInput!]
   OR: [SessionWhereInput!]
   NOT: [SessionWhereInput!]
@@ -1371,7 +1371,7 @@ input SessionWhereUniqueInput {
 type Subscription {
   answer(where: AnswerSubscriptionWhereInput): AnswerSubscriptionPayload
   course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
-  prompt(where: PromptSubscriptionWhereInput): PromptSubscriptionPayload
+  question(where: QuestionSubscriptionWhereInput): QuestionSubscriptionPayload
   response(where: ResponseSubscriptionWhereInput): ResponseSubscriptionPayload
   session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   term(where: TermSubscriptionWhereInput): TermSubscriptionPayload

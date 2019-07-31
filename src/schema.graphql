@@ -11,8 +11,8 @@ type Query {
   terms(orderBy: TermOrderByInput, where: TermWhereInput): [Term!]!
   session(id: ID!): Session
   sessions(orderBy: SessionOrderByInput, where: SessionWhereInput): [Session!]!
-  prompt(id: ID!): Prompt
-  prompts: [Prompt!]!
+  question(id: ID!): Question
+  questions: [Question!]!
   answer(id: ID!): Answer
   answers: [Answer!]!
   response(id: ID!): Response
@@ -36,9 +36,9 @@ type Mutation {
   addTeacherToCourse(id: ID!, courseId: ID!): Course
   removeTeacherFromCourse(id: ID!, courseId: ID!): Course
   createSession(startsAt: DateTime!, endsAt: DateTime!, courseId: ID!): Session
-  createPrompt(text: String!, order: Int, sessionId: ID!): Prompt
-  updatePrompt(text: String!, order: Int): Prompt
-  deletePrompt(id: ID!): Prompt
+  createQuestion(text: String!, order: Int, sessionId: ID!): Question
+  updateQuestion(text: String!, order: Int): Question
+  deleteQuestion(id: ID!): Question
 }
 
 type AuthPayload {
@@ -51,6 +51,6 @@ type Session {
   startsAt: DateTime!
   endsAt: DateTime!
   course: Course!
-  prompts: [Prompt!]!
+  questions: [Question!]!
   order: Int
 }
