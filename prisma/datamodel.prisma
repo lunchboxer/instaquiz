@@ -46,6 +46,7 @@ type Question {
   answers: [Answer!]!
   responses: [Response!]!
   session: Session! @relation(link: INLINE)
+  asked: DateTime
 }
 
 type Answer {
