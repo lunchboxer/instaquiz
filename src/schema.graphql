@@ -17,7 +17,7 @@ type Query {
     where: QuestionWhereInput
   ): [Question!]!
   answer(id: ID!): Answer
-  answers: [Answer!]!
+  answers(orderBy: AnswerOrderByInput, where: AnswerWhereInput): [Answer!]!
   response(id: ID!): Response
   responses(
     orderBy: ResponseOrderByInput
