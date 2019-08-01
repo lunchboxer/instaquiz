@@ -379,7 +379,9 @@ export type QuestionOrderByInput =
   | "text_ASC"
   | "text_DESC"
   | "order_ASC"
-  | "order_DESC";
+  | "order_DESC"
+  | "asked_ASC"
+  | "asked_DESC";
 
 export type TermOrderByInput =
   | "id_ASC"
@@ -479,6 +481,14 @@ export interface QuestionWhereInput {
   responses_some?: Maybe<ResponseWhereInput>;
   responses_none?: Maybe<ResponseWhereInput>;
   session?: Maybe<SessionWhereInput>;
+  asked?: Maybe<DateTimeInput>;
+  asked_not?: Maybe<DateTimeInput>;
+  asked_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  asked_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  asked_lt?: Maybe<DateTimeInput>;
+  asked_lte?: Maybe<DateTimeInput>;
+  asked_gt?: Maybe<DateTimeInput>;
+  asked_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
   OR?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
   NOT?: Maybe<QuestionWhereInput[] | QuestionWhereInput>;
@@ -784,6 +794,7 @@ export interface QuestionCreateWithoutAnswersInput {
   order: Int;
   responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
   session: SessionCreateOneWithoutQuestionsInput;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface ResponseCreateManyWithoutQuestionInput {
@@ -887,6 +898,7 @@ export interface QuestionCreateWithoutSessionInput {
   order: Int;
   answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface AnswerCreateManyWithoutQuestionInput {
@@ -927,6 +939,7 @@ export interface QuestionCreateWithoutResponsesInput {
   order: Int;
   answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
   session: SessionCreateOneWithoutQuestionsInput;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface SessionCreateOneWithoutQuestionsInput {
@@ -1030,6 +1043,7 @@ export interface QuestionUpdateWithoutAnswersDataInput {
   order?: Maybe<Int>;
   responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
   session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface ResponseUpdateManyWithoutQuestionInput {
@@ -1319,6 +1333,7 @@ export interface QuestionUpdateWithoutSessionDataInput {
   order?: Maybe<Int>;
   answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface AnswerUpdateManyWithoutQuestionInput {
@@ -1396,6 +1411,7 @@ export interface QuestionUpdateWithoutResponsesDataInput {
   order?: Maybe<Int>;
   answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
   session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface SessionUpdateOneRequiredWithoutQuestionsInput {
@@ -1728,6 +1744,14 @@ export interface QuestionScalarWhereInput {
   order_lte?: Maybe<Int>;
   order_gt?: Maybe<Int>;
   order_gte?: Maybe<Int>;
+  asked?: Maybe<DateTimeInput>;
+  asked_not?: Maybe<DateTimeInput>;
+  asked_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  asked_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  asked_lt?: Maybe<DateTimeInput>;
+  asked_lte?: Maybe<DateTimeInput>;
+  asked_gt?: Maybe<DateTimeInput>;
+  asked_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
   OR?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
   NOT?: Maybe<QuestionScalarWhereInput[] | QuestionScalarWhereInput>;
@@ -1741,6 +1765,7 @@ export interface QuestionUpdateManyWithWhereNestedInput {
 export interface QuestionUpdateManyDataInput {
   text?: Maybe<String>;
   order?: Maybe<Int>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface SessionUpsertWithWhereUniqueWithoutCourseInput {
@@ -1869,6 +1894,7 @@ export interface QuestionCreateInput {
   answers?: Maybe<AnswerCreateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseCreateManyWithoutQuestionInput>;
   session: SessionCreateOneWithoutQuestionsInput;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface QuestionUpdateInput {
@@ -1877,11 +1903,13 @@ export interface QuestionUpdateInput {
   answers?: Maybe<AnswerUpdateManyWithoutQuestionInput>;
   responses?: Maybe<ResponseUpdateManyWithoutQuestionInput>;
   session?: Maybe<SessionUpdateOneRequiredWithoutQuestionsInput>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface QuestionUpdateManyMutationInput {
   text?: Maybe<String>;
   order?: Maybe<Int>;
+  asked?: Maybe<DateTimeInput>;
 }
 
 export interface ResponseCreateInput {
@@ -2149,6 +2177,7 @@ export interface Question {
   id: ID_Output;
   text: String;
   order: Int;
+  asked?: DateTimeOutput;
 }
 
 export interface QuestionPromise extends Promise<Question>, Fragmentable {
@@ -2174,6 +2203,7 @@ export interface QuestionPromise extends Promise<Question>, Fragmentable {
     last?: Int;
   }) => T;
   session: <T = SessionPromise>() => T;
+  asked: () => Promise<DateTimeOutput>;
 }
 
 export interface QuestionSubscription
@@ -2201,6 +2231,7 @@ export interface QuestionSubscription
     last?: Int;
   }) => T;
   session: <T = SessionSubscription>() => T;
+  asked: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface QuestionNullablePromise
@@ -2228,6 +2259,7 @@ export interface QuestionNullablePromise
     last?: Int;
   }) => T;
   session: <T = SessionPromise>() => T;
+  asked: () => Promise<DateTimeOutput>;
 }
 
 export interface Response {
@@ -3126,6 +3158,7 @@ export interface QuestionPreviousValues {
   id: ID_Output;
   text: String;
   order: Int;
+  asked?: DateTimeOutput;
 }
 
 export interface QuestionPreviousValuesPromise
@@ -3134,6 +3167,7 @@ export interface QuestionPreviousValuesPromise
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
   order: () => Promise<Int>;
+  asked: () => Promise<DateTimeOutput>;
 }
 
 export interface QuestionPreviousValuesSubscription
@@ -3142,6 +3176,7 @@ export interface QuestionPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
   order: () => Promise<AsyncIterator<Int>>;
+  asked: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ResponseSubscriptionPayload {

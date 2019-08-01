@@ -717,6 +717,7 @@ type Question {
   answers(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Answer!]
   responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response!]
   session: Session!
+  asked: DateTime
 }
 
 type QuestionConnection {
@@ -732,6 +733,7 @@ input QuestionCreateInput {
   answers: AnswerCreateManyWithoutQuestionInput
   responses: ResponseCreateManyWithoutQuestionInput
   session: SessionCreateOneWithoutQuestionsInput!
+  asked: DateTime
 }
 
 input QuestionCreateManyWithoutSessionInput {
@@ -755,6 +757,7 @@ input QuestionCreateWithoutAnswersInput {
   order: Int!
   responses: ResponseCreateManyWithoutQuestionInput
   session: SessionCreateOneWithoutQuestionsInput!
+  asked: DateTime
 }
 
 input QuestionCreateWithoutResponsesInput {
@@ -763,6 +766,7 @@ input QuestionCreateWithoutResponsesInput {
   order: Int!
   answers: AnswerCreateManyWithoutQuestionInput
   session: SessionCreateOneWithoutQuestionsInput!
+  asked: DateTime
 }
 
 input QuestionCreateWithoutSessionInput {
@@ -771,6 +775,7 @@ input QuestionCreateWithoutSessionInput {
   order: Int!
   answers: AnswerCreateManyWithoutQuestionInput
   responses: ResponseCreateManyWithoutQuestionInput
+  asked: DateTime
 }
 
 type QuestionEdge {
@@ -785,12 +790,15 @@ enum QuestionOrderByInput {
   text_DESC
   order_ASC
   order_DESC
+  asked_ASC
+  asked_DESC
 }
 
 type QuestionPreviousValues {
   id: ID!
   text: String!
   order: Int!
+  asked: DateTime
 }
 
 input QuestionScalarWhereInput {
@@ -830,6 +838,14 @@ input QuestionScalarWhereInput {
   order_lte: Int
   order_gt: Int
   order_gte: Int
+  asked: DateTime
+  asked_not: DateTime
+  asked_in: [DateTime!]
+  asked_not_in: [DateTime!]
+  asked_lt: DateTime
+  asked_lte: DateTime
+  asked_gt: DateTime
+  asked_gte: DateTime
   AND: [QuestionScalarWhereInput!]
   OR: [QuestionScalarWhereInput!]
   NOT: [QuestionScalarWhereInput!]
@@ -859,16 +875,19 @@ input QuestionUpdateInput {
   answers: AnswerUpdateManyWithoutQuestionInput
   responses: ResponseUpdateManyWithoutQuestionInput
   session: SessionUpdateOneRequiredWithoutQuestionsInput
+  asked: DateTime
 }
 
 input QuestionUpdateManyDataInput {
   text: String
   order: Int
+  asked: DateTime
 }
 
 input QuestionUpdateManyMutationInput {
   text: String
   order: Int
+  asked: DateTime
 }
 
 input QuestionUpdateManyWithoutSessionInput {
@@ -907,6 +926,7 @@ input QuestionUpdateWithoutAnswersDataInput {
   order: Int
   responses: ResponseUpdateManyWithoutQuestionInput
   session: SessionUpdateOneRequiredWithoutQuestionsInput
+  asked: DateTime
 }
 
 input QuestionUpdateWithoutResponsesDataInput {
@@ -914,6 +934,7 @@ input QuestionUpdateWithoutResponsesDataInput {
   order: Int
   answers: AnswerUpdateManyWithoutQuestionInput
   session: SessionUpdateOneRequiredWithoutQuestionsInput
+  asked: DateTime
 }
 
 input QuestionUpdateWithoutSessionDataInput {
@@ -921,6 +942,7 @@ input QuestionUpdateWithoutSessionDataInput {
   order: Int
   answers: AnswerUpdateManyWithoutQuestionInput
   responses: ResponseUpdateManyWithoutQuestionInput
+  asked: DateTime
 }
 
 input QuestionUpdateWithWhereUniqueWithoutSessionInput {
@@ -988,6 +1010,14 @@ input QuestionWhereInput {
   responses_some: ResponseWhereInput
   responses_none: ResponseWhereInput
   session: SessionWhereInput
+  asked: DateTime
+  asked_not: DateTime
+  asked_in: [DateTime!]
+  asked_not_in: [DateTime!]
+  asked_lt: DateTime
+  asked_lte: DateTime
+  asked_gt: DateTime
+  asked_gte: DateTime
   AND: [QuestionWhereInput!]
   OR: [QuestionWhereInput!]
   NOT: [QuestionWhereInput!]

@@ -35,6 +35,12 @@ exports.question = {
       }
     })
   },
+  askQuestion (_, { id }, context) {
+    return context.prisma.updateQuestion({
+      data: { asked: new Date() },
+      where: { id }
+    })
+  },
   async updateQuestion (_, { id, text, order }, context) {
     if (order) {
       const previous = await context.prisma.question({ id })

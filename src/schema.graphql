@@ -44,9 +44,14 @@ type Mutation {
   createSession(startsAt: DateTime!, endsAt: DateTime!, courseId: ID!): Session
   createQuestion(text: String!, order: Int, sessionId: ID!): Question
   updateQuestion(text: String!, order: Int): Question
+  askQuestion(id: ID!): Question
   deleteQuestion(id: ID!): Question
   createAnswer(text: String!, questionId: ID!): Answer
   deleteAnswer(id: ID!): Answer
+}
+
+type Subscription {
+  questions(sessionId: ID!): Question
 }
 
 type AuthPayload {
