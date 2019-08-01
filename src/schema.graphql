@@ -48,6 +48,12 @@ type Mutation {
   deleteQuestion(id: ID!): Question
   createAnswer(text: String!, questionId: ID!): Answer
   deleteAnswer(id: ID!): Answer
+  answerQuestion(
+    studentId: ID!
+    questionId: ID!
+    answerId: ID!
+    sessionId: ID!
+  ): Response
 }
 
 type Subscription {
