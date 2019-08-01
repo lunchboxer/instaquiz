@@ -10,5 +10,19 @@ exports.Subscription = {
     resolve: payload => {
       return payload
     }
+  },
+  responses: {
+    subscribe: async (_, { sessionId, questionId }, { prisma }) => {
+      return prisma.$subscribe.response({
+        mutation_in: ['CREATED'],
+        node: {
+          session: { id: sessionId },
+          question: { id: questionId }
+        }
+      }).node()
+    },
+    resolve: payload => {
+      return payload
+    }
   }
 }
