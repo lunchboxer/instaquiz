@@ -19,7 +19,10 @@ type Query {
   answer(id: ID!): Answer
   answers: [Answer!]!
   response(id: ID!): Response
-  responses: [Response!]!
+  responses(
+    orderBy: ResponseOrderByInput
+    where: ResponseWhereInput
+  ): [Response!]!
 }
 
 type Mutation {
