@@ -58,6 +58,7 @@ type Mutation {
 
 type Subscription {
   questions(sessionId: ID!): Question
+  responses(sessionId: ID, questionId: ID): Response
 }
 
 type AuthPayload {
