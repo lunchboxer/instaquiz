@@ -47,7 +47,7 @@ exports.Query = {
   response (_, args, context) {
     return context.prisma.response({ id: args.id })
   },
-  responses (_, args, context) {
-    return context.prisma.responses()
+  responses (_, { orderBy, where }, context) {
+    return context.prisma.responses({ orderBy, where })
   }
 }
