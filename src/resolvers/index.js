@@ -6,6 +6,7 @@ const { Term } = require('./Term')
 const { Session } = require('./Session')
 const { Question } = require('./Question')
 const { Answer } = require('./Answer')
+const { Response } = require('./Response')
 const { Subscription } = require('./Subscription')
 
 exports.resolvers = {
@@ -17,5 +18,6 @@ exports.resolvers = {
   Session,
   Question,
   Answer,
+  Response,
   Subscription
 }
