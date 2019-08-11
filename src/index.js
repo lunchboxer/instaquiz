@@ -18,6 +18,11 @@ const server = new GraphQLServer({
 
 server.use(compress, sirv('public'))
 
-server.start(() =>
+const options = {
+  endpoint: '/api',
+  playground: false,
+  subscriptions: '/api'
+}
+server.start(options, () =>
   console.log(`Server is running`)
 )
