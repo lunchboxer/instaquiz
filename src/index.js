@@ -16,7 +16,7 @@ const server = new GraphQLServer({
   }
 })
 
-server.use(compress, sirv('public'))
+server.use(compress, sirv('client/public'))
 
 const options = {
   endpoint: '/api',
