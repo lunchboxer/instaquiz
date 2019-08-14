@@ -11,33 +11,30 @@
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  // if there is a session about to start then update every second
-  $: now = $imminentSession ? $time : $every15Seconds
-  $: soon = new Date(now.getTime() + 10 * 6e4)
+  $: soon = new Date($time.getTime() + 10 * 6e4)
   // keep checking if there is a session currently on
   $: {
-    const ongoing = sessions.find(
-      s => s.startsAt < now.toJSON() && s.endsAt > now.toJSON()
-    )
-    if (ongoing) {
-      nowSession.set(ongoing)
-      imminentSession.set()
-    } else if ($nowSession) {
-      nowSession.set()
-    } else {
-      // if no ongoing session check if there is one soon
-      imminentSession.set(
-        sessions.find(
-          s => s.startsAt < soon.toJSON() && s.startsAt > now.toJSON()
-        )
+    nowSession.set(
+      sessions.find(
+        s => s.startsAt <= $time.toJSON() && s.endsAt >= $time.toJSON()
       )
-    }
+    )
+  }
+
+  $: {
+    imminentSession.set(
+      sessions.find(
+        s => s.startsAt < soon.toJSON() && s.startsAt > $time.toJSON()
+      )
+    )
   }
 
   // also update the upcoming sessions every 15 seconds
   $: in24Hours = new Date($every15Seconds.getTime() + 24 * 3.6e6)
   $: todaySessions = sessions.filter(s => {
-    return s.startsAt > now.toJSON() && s.endsAt < in24Hours.toJSON()
+    return (
+      s.startsAt > $every15Seconds.toJSON() && s.endsAt < in24Hours.toJSON()
+    )
   })
 </script>
 
