@@ -104,7 +104,7 @@ export const COURSE = gql`
   query Course($id: ID!){
     course(id: $id){
       ...CourseFields
-      sessions(orderBy: startsAt_DESC) {
+      sessions {
         ...SessionFields
       }
     }

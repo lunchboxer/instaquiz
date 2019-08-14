@@ -24,8 +24,11 @@ export const SessionFields = gql`
     endsAt
     order
     course {
-      name
       id
+      name
+      teachers {
+      id
+    }
     }
   }`
 

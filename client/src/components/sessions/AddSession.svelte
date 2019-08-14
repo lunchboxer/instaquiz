@@ -4,9 +4,10 @@
   import { client } from '../../data/apollo'
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
-  import { COURSE, GET_MY_SESSIONS } from '../../data/queries'
+  import { COURSE } from '../../data/queries'
   import { CREATE_SESSION } from '../../data/mutations'
   import SessionForm from './SessionForm.svelte'
+  import { sessions } from '../dashboard/stores'
 
   export let courseId
   let loading = false
@@ -35,15 +36,11 @@
         mutation: CREATE_SESSION,
         variables: { ...detail, courseId },
         refetchQueries: [
-          { query: COURSE, variables: { id: courseId } },
-          { query: GET_MY_SESSIONS, variables: { id: $auth.id, now, latest } }
-        ]
-        // update: (cache, { data: { createSession } }) => {
-        //   const data = cache.readQuery({ query: COURSE, variables: { id: courseId } })
-        //   data.course.sessions.push(createSession)
-        //   data.course.sessions.sort((a, b) => a.startsAt.localeCompare(b.startsAt))
-        //   cache.writeQuery({ query: COURSE, data, variables: { id: courseId } })
-        // }
+          { query: COURSE, variables: { id: courseId } }
+        ],
+        update: (cache, { data: { createSession } }) => {
+          sessions.patch(createSession, $auth.id, now, latest)
+        }
       })
       notifications.add({ text: 'Saved new session', type: 'success' })
       reset()
