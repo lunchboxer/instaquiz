@@ -19,10 +19,9 @@
 
 <Navbar />
 
-
 <main>
 
-  {#if $auth.username && !$nowSession}
+  {#if $auth.username && !($nowSession && $location === '/')}
     <UpcomingSessions />
   {/if}
 
