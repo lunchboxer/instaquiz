@@ -6,7 +6,8 @@
   import { ADD_STUDENT_TO_COURSE } from '../../data/mutations'
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
-  import { courses } from './data'
+  import { courses, course } from './data'
+  import { terms } from '../terms/data'
 
   let code = ''
   let form
@@ -26,14 +27,28 @@
     loading = true
     submit.disabled = true
     try {
-      const response = request(ADD_STUDENT_TO_COURSE, { id: $auth.id, code })
-      courses.update(previous => !previous ? [response.addStudentToCourse] : previous.map((course) => {
-        if (course.id !== response.addStudentToCourse.id) return course
-        return response.addStudentToCourse
+      const { addStudentToCourse } = await request(ADD_STUDENT_TO_COURSE, { id: $auth.id, code })
+      courses.update(previous => !previous ? [addStudentToCourse] : previous.map((course) => {
+        if (course.id !== addStudentToCourse.id) return course
+        return addStudentToCourse
       }))
-      // also update terms
+      terms.update(previous => previous && previous.map(term => {
+        const index = term.courses.findIndex(c => c.id === addStudentToCourse.id)
+        if (index === -1) return term
+        return {
+          ...term,
+          courses: courses.map(course => {
+            if (course.id === addStudentToCourse.id) return course
+            return addStudentToCourse
+          })
+        }
+      }))
+      course.update(previous => previous &&
+        previous.id === addStudentToCourse.id && {
+        ...previous, teachers: addStudentToCourse.teachers
+      })
       errors = ''
-      notifications.add({ text: `Student ${$auth.name} added to ${response.addStudentToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Student ${$auth.name} added to ${addStudentToCourse.name}`, type: 'success' })
       push('/')
     } catch (error) {
       errors = error

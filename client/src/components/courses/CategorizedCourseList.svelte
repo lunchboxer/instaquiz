@@ -1,12 +1,16 @@
 <script>
   import { auth } from '../../data/auth'
+  import { me } from '../profile/data'
 
   export let courses = []
 
-  $: teaching = courses && courses.filter(c => c.teachers.find(t => t.id === $auth.id))
-  $: notTeaching = courses.filter(c => !c.teachers.find(t => t.id === $auth.id))
-  $: attending = courses.filter(c => c.students.find(s => s.id === $auth.id))
-  $: notAttending = courses.filter(c => !c.students.find(s => s.id === $auth.id))
+  $: teachingIds = $me ? $me.coursesTeaching.map(c => c.id) : []
+  $: attendingIds = $me ? $me.coursesAttending.map(c => c.id) : []
+
+  $: teaching = courses && courses.filter(c => teachingIds.includes(c.id))
+  $: notTeaching = courses.filter(c => !teachingIds.includes(c.id))
+  $: attending = courses.filter(c => attendingIds.includes(c.id))
+  $: notAttending = courses.filter(c => !attendingIds.includes(c.id))
 </script>
 
 <style>

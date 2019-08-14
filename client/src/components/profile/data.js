@@ -1,11 +1,10 @@
 import { writable } from 'svelte/store'
 import { request } from '../../data/fetch-client'
-import { TERMS_AND_ALL } from '../../data/queries'
-// import { CREATE_TERM } from '../../data/mutations'
+import { ME } from '../../data/queries'
 
-const createTermsStore = () => {
+const createMeStore = () => {
   const { subscribe, set, update } = writable(null, set => {
-    request(TERMS_AND_ALL).then(response => set(response.terms))
+    request(ME).then(response => set(response.me))
   })
 
   return {
@@ -13,7 +12,7 @@ const createTermsStore = () => {
     update,
     get: async (id) => {
       if (!id) {
-        request(TERMS_AND_ALL).then(response => set(response.terms))
+        request(ME).then(response => set(response.me))
       } else {
         // load a term by id and add it to terms
       }
@@ -21,4 +20,4 @@ const createTermsStore = () => {
   }
 }
 
-export const terms = createTermsStore()
+export const me = createMeStore()
