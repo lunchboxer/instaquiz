@@ -5,6 +5,7 @@
   import { client } from '../../data/apollo'
   import { DELETE_COURSE } from '../../data/mutations'
   import { TERMS_AND_ALL } from '../../data/queries'
+  import { courses } from './data'
 
   export let course
   const loading = false
@@ -13,23 +14,11 @@
 
   const remove = async () => {
     try {
-      await mutate(client, {
-        mutation: DELETE_COURSE,
-        variables: { id: course.id },
-        update: (cache, { data: { deleteCourse } }) => {
-          const data = cache.readQuery({ query: TERMS_AND_ALL })
-          let courseIndex = null
-          const termIndex = data.terms.findIndex(t => {
-            courseIndex = t.courses.findIndex(c => c.id === course.id)
-            return courseIndex > -1
-          })
-          data.terms[termIndex].courses.splice(courseIndex, 1)
-          cache.writeQuery({ query: TERMS_AND_ALL, data })
-        }
-      })
+      await courses.remove(course.id)
       notifications.add({ text: 'Course delete successfully', type: 'success' })
       dispatch('delete')
     } catch (error) {
+      console.error(error)
       notifications.add({ text: 'Course could not be deleted', type: 'danger' })
     }
   }

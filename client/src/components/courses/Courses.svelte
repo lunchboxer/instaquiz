@@ -1,14 +1,7 @@
 <script>
-  import { COURSES } from '../../data/queries'
-  import { query } from 'svelte-apollo'
-  import { client } from '../../data/apollo'
+  import { courses } from './data'
   import Loading from '../Loading.svelte'
-  import Error from '../Error.svelte'
   import CourseList from './CourseList.svelte'
-
-  const coursesCache = query(client, {
-    query: COURSES
-  })
 </script>
 
 <svelte:head>
@@ -24,12 +17,8 @@
 
 <h1 class="title is-3">All Courses</h1>
 
-{#await $coursesCache}
+{#if $courses}
+  <CourseList courses={$courses} />
+{:else}
   <Loading what="courses"/>
-{:then result}
-  {#if result && result.data && result.data.courses}
-    <CourseList courses={result.data.courses} />
-  {/if}
-{:catch errors}
-  <Error {errors} />
-{/await}
+{/if}
