@@ -21,7 +21,7 @@
         if (index === -1) return term
         return {
           ...term,
-          courses: courses.map(course => {
+          courses: term.courses.map(course => {
             if (course.id === addTeacherToCourse.id) return course
             return addTeacherToCourse
           })
