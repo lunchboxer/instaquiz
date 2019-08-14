@@ -1,7 +1,11 @@
 <script>
   import TermsLoader from './TermsLoader.svelte'
   import { auth } from '../../data/auth'
+  import { terms } from './data'
   import CreateTerm from './CreateTerm.svelte'
+  import TermsList from './TermsList.svelte'
+  import Loading from '../Loading.svelte'
+  import Error from '../Error.svelte'
 </script>
 
 <svelte:head>
@@ -21,4 +25,8 @@
   <CreateTerm />
 {/if}
 
-<TermsLoader />
+{#if $terms}
+  <TermsList terms={$terms}/>
+{:else}
+  <Loading what="terms and courses" />
+{/if}

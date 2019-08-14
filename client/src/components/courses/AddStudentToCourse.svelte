@@ -1,12 +1,12 @@
 <script>
   import { push } from 'svelte-spa-router'
-  import { mutate } from 'svelte-apollo'
+  import { request } from '../../data/fetch-client'
   import { notifications } from '../notifications'
   import { auth } from '../../data/auth'
   import { ADD_STUDENT_TO_COURSE } from '../../data/mutations'
-  import { client } from '../../data/apollo'
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
+  import { courses } from './data'
 
   let code = ''
   let form
@@ -26,12 +26,14 @@
     loading = true
     submit.disabled = true
     try {
-      const response = await mutate(client, {
-        mutation: ADD_STUDENT_TO_COURSE,
-        variables: { id: $auth.id, code }
-      })
+      const response = request(ADD_STUDENT_TO_COURSE, { id: $auth.id, code })
+      courses.update(previous => !previous ? [response.addStudentToCourse] : previous.map((course) => {
+        if (course.id !== response.addStudentToCourse.id) return course
+        return response.addStudentToCourse
+      }))
+      // also update terms
       errors = ''
-      notifications.add({ text: `Student ${$auth.name} added to ${response.data.addStudentToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Student ${$auth.name} added to ${response.addStudentToCourse.name}`, type: 'success' })
       push('/')
     } catch (error) {
       errors = error

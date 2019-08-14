@@ -2,7 +2,6 @@
   import { auth } from '../../data/auth'
   import AddCourse from '../courses/AddCourse.svelte'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
-  import CreateTerm from './CreateTerm.svelte'
 
   export let terms
 
@@ -42,12 +41,8 @@
 {/if} <!-- !currentTerm -->
 
 {#if $auth.role === 'Teacher'}
-  {#if !nextTerm}
 
-    <p>There are also no upcoming terms recorded yet.</p>
-    <CreateTerm/>
-
-  {:else}
+  {#if nextTerm}
 
     <section class="term">
       {#if nextTerm.courses}
