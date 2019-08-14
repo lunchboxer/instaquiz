@@ -1,12 +1,18 @@
 <script>
   import { NotificationList } from './components/notifications'
   import { auth } from './data/auth'
+  import { terms } from './components/terms/data'
+  import { me } from './components/profile/data'
   import Router, { location } from 'svelte-spa-router'
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
   import { nowSession } from './components/dashboard/stores'
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
+
+  terms.get()
+  me.get()
+  $: console.log($me)
 </script>
 
 <style>
