@@ -1,6 +1,5 @@
 <script>
   import { formatDistanceStrict } from 'date-fns'
-  import TermsLoader from '../terms/TermsLoader.svelte'
   import { nowSession, imminentSession } from './stores'
   import ActiveSession from './ActiveSession.svelte'
 </script>
@@ -31,5 +30,5 @@
     <p class="big">{formatDistanceStrict(new Date($imminentSession.startsAt), new Date(), { addSuffix: true })}</p>
 </section>
   {:else}
-  <TermsLoader />
+<h1 class="title">Dashboard</h1>
 {/if}

@@ -28,12 +28,6 @@
   }
 </script>
 
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
-
 <button class="button" on:click={remove}>
   <i class="fas fa-trash"></i>
   Delete Question

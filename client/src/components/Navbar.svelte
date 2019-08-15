@@ -2,7 +2,9 @@
   import { auth } from '../data/auth'
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
+
   let showMenu = false
+
   const logout = async () => {
     const username = await auth.logout()
     notifications.add({ text: `Logged out user '${username}'`, type: 'success' })
@@ -75,7 +77,7 @@
       class:is-active={showMenu}
     >
       <div class="navbar-start">
-        {#if $auth.username}
+        {#if $auth.role === 'Teacher'}
         <NavbarLink url="#/" text="Dashboard" icon="chalkboard-teacher" />
         <NavbarLink url="#/terms" text="Terms" icon="school" />
         <NavbarLink url="#/courses" text="Courses" icon="book" />

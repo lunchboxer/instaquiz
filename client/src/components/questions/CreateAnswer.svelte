@@ -43,12 +43,6 @@
   }
 </script>
 
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
-
 {#if !show}
   <button class="button is-primary" on:click={() => { show = true }}>
     <i class="fas fa-plus"></i>Add an answer

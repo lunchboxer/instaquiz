@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store'
 import { client } from './apollo'
+import { me } from '../components/profile/data'
 import { mutate } from 'svelte-apollo'
 import { LOGIN, SIGNUP } from './mutations'
 
@@ -49,6 +50,7 @@ const createAuthStore = () => {
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('user')
       set({})
+      me.set()
       client.resetStore()
       return user && user.username
     }
