@@ -11,20 +11,16 @@ const createTermsStore = () => {
   return {
     subscribe,
     update,
-    get: async (id) => {
-      if (!id) {
-        const response = await request(TERMS_AND_ALL)
-        set(response.terms)
-        courses.set(
-          response.terms.reduce((list, term) => {
-            return list.concat(term.courses.map(course => {
-              return { ...course, term: { id: term.id, name: term.name } }
-            }))
-          }, [])
-        )
-      } else {
-        // load a term by id and add it to terms
-      }
+    get: async () => {
+      const response = await request(TERMS_AND_ALL)
+      set(response.terms)
+      courses.set(
+        response.terms.reduce((list, term) => {
+          return list.concat(term.courses.map(course => {
+            return { ...course, term: { id: term.id, name: term.name } }
+          }))
+        }, [])
+      )
     },
     create: async (input) => {
       const { createTerm } = await request(CREATE_TERM, { ...input })

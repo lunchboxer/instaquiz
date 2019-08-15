@@ -10,6 +10,7 @@ const createMeStore = () => {
   return {
     subscribe,
     update,
+    set,
     get: async (id) => {
       if (!id) {
         request(ME).then(response => set(response.me))
