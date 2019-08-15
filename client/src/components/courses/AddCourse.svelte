@@ -34,16 +34,12 @@
 </script>
 
 <style>
-  button i {
-    margin-right: 0.5rem;
-  }
-
   button {
     margin: 1rem 0;
   }
 </style>
 
-<button class="button" on:click={()=> { open = true }}>
+<button class="button" on:click={() => { open = true }}>
   <i class="fas fa-plus"></i>Add a course
 </button>
 <Modal bind:open>

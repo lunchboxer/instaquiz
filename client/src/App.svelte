@@ -12,7 +12,6 @@
 
   terms.get()
   me.get()
-  $: console.log($me)
 </script>
 
 <style>

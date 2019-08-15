@@ -28,7 +28,7 @@
 
 <h2 class="title is-4">{session.questions.length} Questions</h2>
 
-{#if $auth.role === 'Teacher'}
+{#if $auth.role === 'Teacher' && session.endsAt > new Date().toJSON()}
   <CreateQuestion sessionId={session.id} />
 {/if}
 

@@ -9,12 +9,11 @@
   const latest = new Date(now.getTime() + hours * 3.6e+6)
 
   sessions.get($auth.id, now, latest)
-
-  $: sessions.get({
-    id: $auth.id,
-    now: $every2Hours,
-    latest: new Date($every2Hours.getTime() + hours * 3.6e+6)
-  })
+  $: sessions.get(
+    $auth.id,
+    $every2Hours,
+    new Date($every2Hours.getTime() + hours * 3.6e+6)
+  )
 </script>
 
 {#if $sessions && $sessions.length > 0}

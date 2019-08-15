@@ -64,11 +64,12 @@ export const TERMS_AND_ALL = gql`
     endDate
     name
     courses {
-      ...CourseFields
+      id
+      name
     }
   }
 }
-${CourseFields}`
+`
 
 export const TERM = gql`
 query Term($id: ID!){

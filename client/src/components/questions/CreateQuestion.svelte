@@ -42,12 +42,6 @@
   }
 </script>
 
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
-
 <button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a question</button>
 
 <Modal bind:open>

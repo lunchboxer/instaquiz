@@ -56,10 +56,6 @@
     font-size: 1.6rem;
   }
 
-  button i {
-    margin-right: 0.5rem;
-  }
-
   .buttons {
     display: flex;
     justify-content: space-between;
