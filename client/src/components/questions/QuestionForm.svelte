@@ -34,7 +34,7 @@
       <Input label="Order (optional)" type="number" bind:value={order} min=1 />
   
       <div class="buttons">
-          <button class="button is-primary" bind:this={saveButton} type="submit">Save</button>
+          <button class="button is-primary" class:is-loading={loading} bind:this={saveButton} type="submit">Save</button>
           <input class="button" type="reset" value="Cancel" />
       </div>
      
