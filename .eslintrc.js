@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['standard', 'plugin:unicorn/recommended']
+  extends: 'standard'
 }

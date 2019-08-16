@@ -1,5 +1,6 @@
 <script>
   import TeacherQuestionCard from './TeacherQuestionCard.svelte'
+
   export let questions
 </script>
 

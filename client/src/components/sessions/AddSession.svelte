@@ -1,10 +1,9 @@
 <script>
-  import { mutate } from 'svelte-apollo'
-  import { auth } from '../../data/auth'
-  import { client } from '../../data/apollo'
+  import { user } from '../../data/user'
+  import { courses } from '../courses/data'
+  import { request } from '../../data/fetch-client'
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
-  import { COURSE } from '../../data/queries'
   import { CREATE_SESSION } from '../../data/mutations'
   import SessionForm from './SessionForm.svelte'
   import { sessions } from '../dashboard/stores'
@@ -32,16 +31,12 @@
       if (detail.startsAt > detail.endsAt) {
         throw new Error('Session ends before it starts.')
       }
-      await mutate(client, {
-        mutation: CREATE_SESSION,
-        variables: { ...detail, courseId },
-        refetchQueries: [
-          { query: COURSE, variables: { id: courseId } }
-        ],
-        update: (cache, { data: { createSession } }) => {
-          sessions.patch(createSession, $auth.id, now, latest)
-        }
-      })
+      const { createSession } = await request(CREATE_SESSION, { ...detail, courseId })
+      sessions.patch(createSession, $user.id, now, latest)
+      courses.update(previous => previous && previous.map(course => {
+        if (course.id !== createSession.course.id) return course
+        return { ...course, sessions: [...course.sessions, createSession] }
+      }))
       notifications.add({ text: 'Saved new session', type: 'success' })
       reset()
     } catch (error) {
@@ -57,16 +52,12 @@
 </script>
 
 <style>
-  button i {
-    margin-right: 0.5rem;
-  }
-
   button {
     margin: 1rem 0;
   }
 </style>
 
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a new session</button>
+<button class="button is-primary" on:click={()=> { open = true }}><i class="fas fa-plus"></i>Add a new session</button>
 <Modal bind:open>
   <SessionForm on:reset={reset} on:submit={save} {errors} {loading} />
 </Modal>

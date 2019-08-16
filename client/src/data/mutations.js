@@ -1,39 +1,35 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields, QuestionFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
 
 // Auth
 
-export const LOGIN = gql`
+export const LOGIN = /* GraphQL */`
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       token
       user {
-        id
-        username
-        name
-        role
+        ...UserFields
       }
     }
   }
+  ${UserFields}
 `
 
-export const SIGNUP = gql`
+export const SIGNUP = /* GraphQL */`
   mutation Signup($username: String!, $name: String!, $password: String!) {
     signup(username: $username, name: $name, password: $password) {
       token
       user {
-        id
-        username
-        name
-        role
+       ...UserFields
       }
     }
   }
+  ${UserFields}
 `
 
 // Courses
 
-export const CREATE_COURSE = gql`
+export const CREATE_COURSE = /* GraphQL */`
   mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
     createCourse(name:$name, code: $code, termId: $termId){ 
       ...CourseFields
@@ -42,7 +38,7 @@ export const CREATE_COURSE = gql`
   ${CourseFields}
 `
 
-export const DELETE_COURSE = gql`
+export const DELETE_COURSE = /* GraphQL */`
   mutation DeleteCourse($id: ID!) {
     deleteCourse(id: $id){ 
       id
@@ -50,7 +46,7 @@ export const DELETE_COURSE = gql`
   }
 `
 
-export const ADD_STUDENT_TO_COURSE = gql`
+export const ADD_STUDENT_TO_COURSE = /* GraphQL */`
   mutation ($id: ID!, $code: String!){
     addStudentToCourse(id: $id, code: $code ) {
       ...CourseFields
@@ -59,7 +55,7 @@ export const ADD_STUDENT_TO_COURSE = gql`
   ${CourseFields}
 `
 
-export const ADD_TEACHER_TO_COURSE = gql`
+export const ADD_TEACHER_TO_COURSE = /* GraphQL */`
   mutation ($id: ID!, $courseId: ID!){
     addTeacherToCourse(id: $id, courseId: $courseId ) {
       ...CourseFields
@@ -68,7 +64,7 @@ export const ADD_TEACHER_TO_COURSE = gql`
   ${CourseFields}
 `
 
-export const REMOVE_TEACHER_FROM_COURSE = gql`
+export const REMOVE_TEACHER_FROM_COURSE = /* GraphQL */`
   mutation ($id: ID!, $courseId: ID!){
     removeTeacherFromCourse(id: $id, courseId: $courseId ) {
       ...CourseFields
@@ -79,7 +75,7 @@ export const REMOVE_TEACHER_FROM_COURSE = gql`
 
 // Terms
 
-export const CREATE_TERM = gql`
+export const CREATE_TERM = /* GraphQL */`
   mutation CreateTerm($startDate: DateTime!, $endDate: DateTime!, $name: String!) {
     createTerm(startDate: $startDate, endDate: $endDate, name: $name) {
       id
@@ -95,7 +91,7 @@ export const CREATE_TERM = gql`
 
 // Sessions
 
-export const CREATE_SESSION = gql`
+export const CREATE_SESSION = /* GraphQL */`
   mutation CreateSession($startsAt: DateTime!, $endsAt:DateTime!, $courseId:ID!) {
     createSession(startsAt:$startsAt, endsAt:$endsAt, courseId:$courseId) {
       ...SessionFields
@@ -106,7 +102,7 @@ export const CREATE_SESSION = gql`
 
 // Question
 
-export const CREATE_QUESTION = gql`
+export const CREATE_QUESTION = /* GraphQL */`
   mutation CreateQuestion($text: String!, $sessionId: ID!, $order: Int){
     createQuestion(text: $text, sessionId: $sessionId, order: $order) {
       ...QuestionFields
@@ -115,7 +111,7 @@ export const CREATE_QUESTION = gql`
   ${QuestionFields}
 `
 
-export const DELETE_QUESTION = gql`
+export const DELETE_QUESTION = /* GraphQL */`
   mutation deleteQuestion($id: ID!){
     deleteQuestion(id: $id) {
       id
@@ -123,7 +119,7 @@ export const DELETE_QUESTION = gql`
   }
 `
 
-export const ASK_QUESTION = gql`
+export const ASK_QUESTION = /* GraphQL */`
   mutation AskQuestion($id: ID!){
     askQuestion(id: $id){
       ...QuestionFields
@@ -133,16 +129,19 @@ export const ASK_QUESTION = gql`
 
 //  Answer
 
-export const CREATE_ANSWER = gql`
+export const CREATE_ANSWER = /* GraphQL */`
   mutation CreateAnswer($text: String!, $questionId: ID!){
     createAnswer(text: $text, questionId: $questionId) {
       id
       text
+      responses {
+        id
+      }
     }
   }
 `
 
-export const DELETE_ANSWER = gql`
+export const DELETE_ANSWER = /* GraphQL */`
   mutation DeleteAnswer($id: ID!){
     deleteAnswer(id: $id) {
       id
@@ -150,7 +149,7 @@ export const DELETE_ANSWER = gql`
   }
 `
 
-export const ANSWER_QUESTION = gql`
+export const ANSWER_QUESTION = /* GraphQL */`
   mutation AnswerQuestion(
     $studentId: ID!
     $questionId: ID!

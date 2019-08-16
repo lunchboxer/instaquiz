@@ -1,8 +1,7 @@
 <script>
-  import { mutate } from 'svelte-apollo'
-  import { client } from '../../data/apollo'
+  import { request } from '../../data/fetch-client'
   import { CREATE_QUESTION } from '../../data/mutations'
-  import { SESSION } from '../../data/queries'
+  import { session } from '../sessions/data'
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
   import QuestionForm from './QuestionForm.svelte'
@@ -22,11 +21,16 @@
     let order
     detail.order && (order = ((detail.order - 1)))
     try {
-      await mutate(client, {
-        mutation: CREATE_QUESTION,
-        variables: { text: detail.text, order, sessionId },
-        refetchQueries: [{ query: SESSION, variables: { id: sessionId } }]
-      })
+      const response = await request(CREATE_QUESTION,
+        { text: detail.text, order, sessionId }
+      )
+      if (detail.order) session.get(sessionId)
+      else {
+        session.update(previous => previous && ({
+          ...previous,
+          questions: [...previous.questions, response.createQuestion]
+        }))
+      }
       notifications.add({ text: `Saved new question`, type: 'success' })
       reset()
     } catch (error) {
@@ -42,13 +46,7 @@
   }
 </script>
 
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
-
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a question</button>
+<button class="button is-primary" on:click={()=> { open = true }}><i class="fas fa-plus"></i>Add a question</button>
 
 <Modal bind:open>
   <QuestionForm on:reset={reset} on:submit={add} {errors} {loading} />

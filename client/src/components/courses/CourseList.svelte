@@ -1,16 +1,16 @@
 <script>
   import AddCourse from './AddCourse.svelte'
+  import { user } from '../../data/user'
 
   export let courses = []
-
-  $: sortedCourses = [...courses].sort((a, b) => {
-    if (a.term === b.term) return a.name.localeCompare(b.name)
-    return a.term.startDate.localeCompare(b.term.startDate)
-  })
 </script>
 
-<AddCourse />
+{#if $user.role === 'Teacher'}
+  <AddCourse />
+{/if}
 
-{#each sortedCourses as course (courses.id)}
-  <li><a href="#/course/{course.id}">{course.name}</a> {course.term.name}</li>
-{/each}
+{#if courses.length > 0}
+  {#each courses as course (course.id)}
+    <li><a href="#/course/{course.id}">{course.name}</a> {course.term.name}</li>
+  {/each}
+{/if}

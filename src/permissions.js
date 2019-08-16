@@ -2,17 +2,17 @@ const { rule, shield, or } = require('graphql-shield')
 const { getUserId } = require('./utils')
 
 // Rules
-const isAuthenticatedUser = rule()((parent, args, context) => {
+const isAuthenticatedUser = rule()((parent, arguments, context) => {
   const userId = getUserId(context)
   return Boolean(userId)
 })
 
-const isThisUser = rule()((parent, args, context) => {
+const isThisUser = rule()((parent, arguments, context) => {
   const userId = getUserId(context)
-  return userId === args.id
+  return userId === arguments.id
 })
 
-const isTeacher = rule()((parent, args, context) => {
+const isTeacher = rule()((parent, arguments, context) => {
   const userId = getUserId(context)
   return context.prisma.$exists.user({ id: userId, role: 'Teacher' })
 })

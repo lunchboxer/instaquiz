@@ -38,12 +38,6 @@
   })
 </script>
 
-<style>
-  .button i {
-    margin-right: 0.5rem;
-  }
-</style>
-
 {#if $nowSession && $location !== '/'}
 <Warning
   title="{$nowSession.course.name} lesson {$nowSession.order} has started."

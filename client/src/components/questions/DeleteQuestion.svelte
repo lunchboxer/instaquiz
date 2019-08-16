@@ -1,8 +1,7 @@
 <script>
-  import { mutate } from 'svelte-apollo'
-  import { client } from '../../data/apollo'
+  import { request } from '../../data/fetch-client'
   import { DELETE_QUESTION } from '../../data/mutations'
-  import { SESSION } from '../../data/queries'
+  import { session } from '../sessions/data'
   import { notifications } from '../notifications'
   import { push } from 'svelte-spa-router'
 
@@ -12,11 +11,11 @@
 
   const remove = async () => {
     try {
-      await mutate(client, {
-        mutation: DELETE_QUESTION,
-        variables: { id },
-        refetchQueries: [{ query: SESSION, variables: { id: sessionId } }]
-      })
+      await request(DELETE_QUESTION, { id })
+      session.update(previous => previous && ({
+        ...previous,
+        questions: previous.questions.filter(q => q.id !== id)
+      }))
       notifications.add({ text: `Deleted question`, type: 'success' })
       push(next || `/session/${sessionId}`)
     } catch (error) {
@@ -27,12 +26,6 @@
     }
   }
 </script>
-
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
 
 <button class="button" on:click={remove}>
   <i class="fas fa-trash"></i>

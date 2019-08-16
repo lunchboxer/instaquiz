@@ -1,12 +1,12 @@
 <script>
   import { push } from 'svelte-spa-router'
-  import { mutate } from 'svelte-apollo'
+  import { request } from '../../data/fetch-client'
   import { notifications } from '../notifications'
-  import { auth } from '../../data/auth'
   import { ADD_STUDENT_TO_COURSE } from '../../data/mutations'
-  import { client } from '../../data/apollo'
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
+  import { courses } from './data'
+  import { user } from '../../data/user'
 
   let code = ''
   let form
@@ -26,15 +26,12 @@
     loading = true
     submit.disabled = true
     try {
-      const response = await mutate(client, {
-        mutation: ADD_STUDENT_TO_COURSE,
-        variables: { id: $auth.id, code }
-      })
+      const course = await courses.addStudent($user.id, code)
       errors = ''
-      notifications.add({ text: `Student ${$auth.name} added to ${response.data.addStudentToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Student ${$user.name} added to ${course.name}`, type: 'success' })
       push('/')
     } catch (error) {
-      errors = error
+      if (error[0].code === 3039) errors = 'No course with that code was found.'
       notifications.add({ text: 'registration failed.', type: 'danger' })
     } finally {
       loading = false
