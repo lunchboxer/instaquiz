@@ -6,7 +6,7 @@
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
   import { courses } from './data'
-  import { me } from '../profile/data'
+  import { user } from '../../data/user'
 
   let code = ''
   let form
@@ -26,25 +26,12 @@
     loading = true
     submit.disabled = true
     try {
-      const { addStudentToCourse } = await request(ADD_STUDENT_TO_COURSE,
-        { id: $me.id, code }
-      )
-      courses.update(previous => !previous
-        ? [addStudentToCourse]
-        : previous.map((course) => {
-          if (course.id !== addStudentToCourse.id) return course
-          return { ...course, students: addStudentToCourse.teachers }
-        })
-      )
-      me.update(previous => {
-        const added = { id: addStudentToCourse.id, name: addStudentToCourse.name }
-        return { ...previous, coursesAttending: [...previous.coursesAttending, added] }
-      })
+      const course = await courses.addStudent($user.id, code)
       errors = ''
-      notifications.add({ text: `Student ${$me.name} added to ${addStudentToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Student ${$user.name} added to ${course.name}`, type: 'success' })
       push('/')
     } catch (error) {
-      errors = error
+      if (error[0].code === 3039) errors = 'No course with that code was found.'
       notifications.add({ text: 'registration failed.', type: 'danger' })
     } finally {
       loading = false

@@ -1,14 +1,11 @@
 <script>
   import Loading from '../Loading.svelte'
-  import Error from '../Error.svelte'
   import QuestionDetails from './QuestionDetails.svelte'
   import { question } from './data'
 
   export let params = {}
 
   question.get(params.id)
-
-  $: console.log($question)
 </script>
 
 <svelte:head>

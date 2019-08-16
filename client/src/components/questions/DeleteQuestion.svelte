@@ -19,7 +19,6 @@
       notifications.add({ text: `Deleted question`, type: 'success' })
       push(next || `/session/${sessionId}`)
     } catch (error) {
-      console.error(error)
       notifications.add({
         text: 'Could not delete question.',
         type: 'danger'

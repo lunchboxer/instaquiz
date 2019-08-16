@@ -17,6 +17,7 @@ const createUserStore = () => {
 
   return {
     subscribe,
+    update,
     login: async (username, password) => {
       const { login } = await request(LOGIN, { username, password })
       window.localStorage.setItem('user', JSON.stringify(login.user))

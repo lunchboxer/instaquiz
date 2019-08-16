@@ -21,7 +21,6 @@
       notifications.add({ text: `Saved new course '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {
-      console.error(error)
       errors = error
       notifications.add({
         text: 'Could not save new course.',
@@ -39,7 +38,7 @@
   }
 </style>
 
-<button class="button" on:click={() => { open = true }}>
+<button class="button" on:click={()=> { open = true }}>
   <i class="fas fa-plus"></i>Add a course
 </button>
 <Modal bind:open>

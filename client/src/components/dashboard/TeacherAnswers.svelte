@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte'
-  import { client } from '../../data/apollo'
+  import { request } from '../../data/fetch-client'
+  import { ws } from '../../data/ws-client'
   import { RESPONSES, RESPONSE_SUBSCRIPTION } from '../../data/queries'
   import TeacherAnswerRow from './TeacherAnswerRow.svelte'
 
@@ -8,16 +9,13 @@
   let responses = []
 
   onMount(async () => {
-    const responsesResult = await client.query({
-      query: RESPONSES,
-      variables: { questionId: question.id }
-    })
-    responses = responsesResult.data.responses
-    client.subscribe({
+    const responsesResult = await request(RESPONSES, { questionId: question.id })
+    responses = responsesResult.responses
+    ws.request({
       query: RESPONSE_SUBSCRIPTION,
       variables: { questionId: question.id }
     }).subscribe({
-      next (result) {
+      next(result) {
         responses = [...responses, result.data.responses]
       }
     })
