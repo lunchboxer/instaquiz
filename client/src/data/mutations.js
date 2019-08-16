@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields, QuestionFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
 
 // Auth
 
@@ -8,13 +8,11 @@ export const LOGIN = gql`
     login(username: $username, password: $password) {
       token
       user {
-        id
-        username
-        name
-        role
+        ...UserFields
       }
     }
   }
+  ${UserFields}
 `
 
 export const SIGNUP = gql`
@@ -22,13 +20,11 @@ export const SIGNUP = gql`
     signup(username: $username, name: $name, password: $password) {
       token
       user {
-        id
-        username
-        name
-        role
+       ...UserFields
       }
     }
   }
+  ${UserFields}
 `
 
 // Courses

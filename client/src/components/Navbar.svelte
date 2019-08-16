@@ -1,12 +1,12 @@
 <script>
-  import { auth } from '../data/auth'
+  import { user } from '../data/user'
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
 
   let showMenu = false
 
   const logout = async () => {
-    const username = await auth.logout()
+    const username = await user.logout()
     notifications.add({ text: `Logged out user '${username}'`, type: 'success' })
   }
 </script>
@@ -52,7 +52,7 @@
       <span class="title is-4">InstaQuiz</span>
     </a>
 
-    {#if $auth.username}
+    {#if $user.username}
       <div
         role="button"
         class="navbar-burger burger"
@@ -77,7 +77,7 @@
       class:is-active={showMenu}
     >
       <div class="navbar-start">
-        {#if $auth.role === 'Teacher'}
+        {#if $user.role === 'Teacher'}
         <NavbarLink url="#/" text="Dashboard" icon="chalkboard-teacher" />
         <NavbarLink url="#/terms" text="Terms" icon="school" />
         <NavbarLink url="#/courses" text="Courses" icon="book" />
@@ -85,9 +85,9 @@
       </div>
   
       <div class="navbar-end">
-        {#if $auth.name}
+        {#if $user.name}
         
-          <NavbarLink url="#/me" icon="user-circle" text={$auth.name}/>
+          <NavbarLink url="#/me" icon="user-circle" text={$user.name}/>
          
           <div class="buttons">
             <button class="button is-text" on:click={logout}>

@@ -1,6 +1,6 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
   import AddCourse from '../courses/AddCourse.svelte'
 
@@ -28,7 +28,7 @@
 <section class="term">
   <CategorizedCourseList courses={term.courses} />
 
-  {#if $auth.role === 'Teacher'}
+  {#if $user.role === 'Teacher'}
     <AddCourse termId={term.id} />
   {/if}
 </section>

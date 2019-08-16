@@ -1,5 +1,5 @@
 <script>
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import { me } from '../profile/data'
 
   export let courses = []
@@ -34,14 +34,14 @@
     {/each}
   {/if}
 
-  {#if $auth.role === 'Teacher' && notTeaching.length > 0}
+  {#if $user.role === 'Teacher' && notTeaching.length > 0}
     <h2 class="title is-5">Not teaching</h2>
     {#each notTeaching as course (course.id)}
       <li><a href="#/course/{course.id}">{course.name}</a></li>
     {/each}
   {/if}
 
-  {#if $auth.role === 'Student' && notAttending.length > 0}
+  {#if $user.role === 'Student' && notAttending.length > 0}
     <h2 class="title is-5">Not attending</h2>
     {#each notAttending as course (course.id)}
       <li><a href="#/course/{course.id}">{course.name}</a></li>

@@ -1,5 +1,22 @@
 import gql from 'graphql-tag'
 
+export const UserFields = gql`
+  fragment UserFields on User {
+    username
+    name
+    role
+    id
+    coursesTeaching {
+      id
+      name
+    }
+    coursesAttending {
+      id
+      name
+    }
+  }
+`
+
 export const CourseFields = gql`
   fragment CourseFields on Course {
     id

@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store'
 import { request } from './fetch-client'
-import { me } from '../components/profile/data'
 import { LOGIN, SIGNUP } from './mutations'
 
 const getAuthFromStorage = () => {
@@ -11,7 +10,7 @@ const getAuthFromStorage = () => {
   return { user, token }
 }
 
-const createAuthStore = () => {
+const createUserStore = () => {
   // pull token and user from localStorage if it's there
   const { user, token } = getAuthFromStorage()
   const { subscribe, set, update } = writable({ ...user, token })
@@ -42,12 +41,10 @@ const createAuthStore = () => {
       const { user } = getAuthFromStorage()
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('user')
-      set({})
-      me.set()
-      client.resetStore()
+      set()
       return user && user.username
     }
   }
 }
 
-export const auth = createAuthStore()
+export const user = createUserStore()

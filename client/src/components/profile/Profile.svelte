@@ -1,38 +1,38 @@
 <script>
-  import { me } from './data'
+  import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import DL from '../DL.svelte'
 </script>
 
 <h1 class="title">User Profile</h1>
 
-{#if $me}
+{#if $user}
 <DL>
     <dt>Role:</dt>
-    <dd>{$me.role}</dd>
+    <dd>{$user.role}</dd>
 
-    <dt>{$me.role === 'Student' ? 'Student ID:' : 'Username:'}</dt>
-    <dd>{$me.username}</dd>
+    <dt>{$user.role === 'Student' ? 'Student ID:' : 'Username:'}</dt>
+    <dd>{$user.username}</dd>
 
     <dt>Name:</dt>
-    <dd>{$me.name}</dd>
+    <dd>{$user.name}</dd>
     
     <dt>ID:</dt>
-    <dd>{$me.id}</dd>
+    <dd>{$user.id}</dd>
 
-    {#if $me.coursesAttending.length > 0}
+    {#if $user.coursesAttending.length > 0}
     <dt>Courses attending:</dt>
-    <dd>{$me.coursesAttending.length} total 
-      {#each $me.coursesAttending as course (course.id)}
+    <dd>{$user.coursesAttending.length} total 
+      {#each $user.coursesAttending as course (course.id)}
         <li>{course.name}</li>
       {/each}
     </dd>
     {/if}
 
-    {#if $me.coursesTeaching.length > 0}
+    {#if $user.coursesTeaching.length > 0}
     <dt>Courses teaching:</dt>
-    <dd>{$me.coursesTeaching.length} total 
-      {#each $me.coursesTeaching as course (course.id)}
+    <dd>{$user.coursesTeaching.length} total 
+      {#each $user.coursesTeaching as course (course.id)}
         <li>{course.name}</li>
       {/each}
     </dd>
