@@ -21,6 +21,7 @@ export const CourseFields = gql`
   fragment CourseFields on Course {
     id
     name
+    code
     term {
       id
       name

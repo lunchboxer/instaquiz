@@ -41,7 +41,7 @@ const createUserStore = () => {
       const { user } = getAuthFromStorage()
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('user')
-      set()
+      set({})
       return user && user.username
     }
   }
