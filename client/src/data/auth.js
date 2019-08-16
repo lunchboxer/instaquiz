@@ -1,7 +1,6 @@
 import { writable } from 'svelte/store'
-import { client } from './apollo'
+import { request } from './fetch-client'
 import { me } from '../components/profile/data'
-import { mutate } from 'svelte-apollo'
 import { LOGIN, SIGNUP } from './mutations'
 
 const getAuthFromStorage = () => {
@@ -20,29 +19,23 @@ const createAuthStore = () => {
   return {
     subscribe,
     login: async (username, password) => {
-      const response = await mutate(client, {
-        mutation: LOGIN,
-        variables: { username, password }
-      })
-      window.localStorage.setItem('user', JSON.stringify(response.data.login.user))
-      window.localStorage.setItem('token', JSON.stringify(response.data.login.token))
+      const { login } = await request(LOGIN, { username, password })
+      window.localStorage.setItem('user', JSON.stringify(login.user))
+      window.localStorage.setItem('token', JSON.stringify(login.token))
       update(previous => ({
         ...previous,
-        ...response.data.login.user,
-        token: response.data.login.token
+        ...login.user,
+        token: login.token
       }))
     },
     signup: async (username, name, password) => {
-      const response = await mutate(client, {
-        mutation: SIGNUP,
-        variables: { username, name, password }
-      })
-      window.localStorage.setItem('user', JSON.stringify(response.data.signup.user))
-      window.localStorage.setItem('token', JSON.stringify(response.data.signup.token))
+      const { signup } = await request(SIGNUP, { username, name, password })
+      window.localStorage.setItem('user', JSON.stringify(signup.user))
+      window.localStorage.setItem('token', JSON.stringify(signup.token))
       update(previous => ({
         ...previous,
-        ...response.data.signup.user,
-        token: response.data.signup.token
+        ...signup.user,
+        token: signup.token
       }))
     },
     logout: () => {

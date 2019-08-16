@@ -138,6 +138,9 @@ export const CREATE_ANSWER = gql`
     createAnswer(text: $text, questionId: $questionId) {
       id
       text
+      responses {
+        id
+      }
     }
   }
 `
