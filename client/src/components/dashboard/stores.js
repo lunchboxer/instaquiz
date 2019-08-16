@@ -1,5 +1,5 @@
 import { readable, writable } from 'svelte/store'
-import { client } from '../../data/apollo'
+import { request } from '../../data/fetch-client'
 import { GET_MY_SESSIONS } from '../../data/queries'
 
 export function sleep (ms) {
@@ -46,11 +46,8 @@ const createSessionsStore = () => {
     update,
     get: async (id, now, latest) => {
       if (!id || !now || !latest) return
-      const response = await client.query({
-        query: GET_MY_SESSIONS,
-        variables: { id, now, latest }
-      })
-      if (response.data && response.data.sessions) set(response.data.sessions)
+      const response = await request(GET_MY_SESSIONS, { id, now, latest })
+      if (response && response.sessions) set(response.sessions)
     },
     patch: (newSession, id, now, latest) => {
       if (!newSession.course.teachers.find(t => t.id === id)) return

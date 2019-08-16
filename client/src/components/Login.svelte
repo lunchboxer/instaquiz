@@ -1,5 +1,5 @@
 <script>
-  import { auth } from '../data/auth'
+  import { user } from '../data/user'
   import { notifications } from './notifications'
   import Input from './Input.svelte'
   import Error from './Error.svelte'
@@ -25,7 +25,7 @@
     loading = true
     submit.disabled = true
     try {
-      await auth.login(username, password)
+      await user.login(username, password)
       notifications.add({ text: `Logged in as '${username}'`, type: 'success' })
     } catch (error) {
       errors = error

@@ -1,7 +1,9 @@
 <script>
-  import TermsLoader from './TermsLoader.svelte'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
+  import { terms } from './data'
   import CreateTerm from './CreateTerm.svelte'
+  import TermsList from './TermsList.svelte'
+  import Loading from '../Loading.svelte'
 </script>
 
 <svelte:head>
@@ -17,8 +19,12 @@
 
 <h1 class="title is-3">All Terms</h1>
 
-{#if $auth.role === 'Teacher'}
+{#if $user.role === 'Teacher'}
   <CreateTerm />
 {/if}
 
-<TermsLoader />
+{#if $terms}
+  <TermsList terms={$terms}/>
+{:else}
+  <Loading what="terms and courses" />
+{/if}

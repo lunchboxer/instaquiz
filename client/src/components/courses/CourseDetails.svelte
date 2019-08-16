@@ -1,22 +1,24 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { pop } from 'svelte-spa-router'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
+  import Loading from '../Loading.svelte'
   import AddTeacherToCourse from './AddTeacherToCourse.svelte'
   import RemoveTeacherFromCourse from './RemoveTeacherFromCourse.svelte'
-  import DeleteCourse from './DeleteCourse.svelte'
   import AddSession from '../sessions/AddSession.svelte'
+  import DeleteItem from '../DeleteItem.svelte'
+  import { courses } from './data'
 
-  export let course
+  export let course = {}
+  let showDelete = false
 
-  $: isCourseTeacher = course.teachers.find(t => t.id === $auth.id)
-  $: isEnrolled = course.students.find(t => t.id === $auth.id)
-  $: teacherNames = course.teachers.map(teacher => {
-    return $auth.id === teacher.id ? 'You' : teacher.name
+  $: isCourseTeacher = course.teachers && course.teachers.find(t => t.id === $user.id)
+  $: isEnrolled = course.students && course.students.find(t => t.id === $user.id)
+  $: teacherNames = course.teachers && course.teachers.map(teacher => {
+    return $user.id === teacher.id ? 'You' : teacher.name
   })
   const now = new Date().toJSON()
-  $: past = course.sessions.filter(s => s.endsAt < now).sort((a, b) => b.startsAt.localeCompare(a.startsAt))
-  $: future = course.sessions.filter(s => s.endsAt > now).sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+  $: past = course.sessions && course.sessions.filter(s => s.endsAt < now).sort((a, b) => b.startsAt.localeCompare(a.startsAt))
+  $: future = course.sessions && course.sessions.filter(s => s.endsAt > now).sort((a, b) => a.startsAt.localeCompare(b.startsAt))
 
   const formatDate = (date) => {
     const string = formatRelative(new Date(date), new Date())
@@ -70,22 +72,34 @@
 </svelte:head>
 
 <h1 class="title is-3">{course.name}</h1>
+
+{#if course.teachers && course.students}
 <p class="subtitle">
-  {#if $auth.role === 'Teacher'}
+  {#if $user.role === 'Teacher'}
       <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
     {#if !isCourseTeacher}
-      <AddTeacherToCourse user={$auth.id} {course} />
+      <AddTeacherToCourse courseId={course.id} />
     {:else}
-      <RemoveTeacherFromCourse user={$auth.id} {course} />
+      <RemoveTeacherFromCourse courseId={course.id} />
     {/if}
   {:else}
     You are{!isEnrolled ? "n't" : ''} enrolled in this class.
   {/if}
 </p>
+{:else}
+  <Loading what="course enrollment"/>
+{/if}
 
 
 <div class="course-details">
+  {#if course.teachers && course.students}
   <dl>
+    {#if $user.role === 'Teacher'}
+    <dt>Code:</dt>
+    <dd>
+     {course.code}
+    </dd>
+    {/if}
     <dt>Teacher(s):</dt>
     <dd>
       {teacherNames.length > 0 ? teacherNames.join(', ') : 'none'}
@@ -93,8 +107,10 @@
     <dt>Students:</dt>
     <dd>{course.students.length}</dd>
   </dl>
+  {/if}
 
-  {#if $auth.role === 'Teacher'}
+  {#if course.sessions}
+  {#if $user.role === 'Teacher'}
     <div class="sessions">
       <h3 class="title is-5">Current and future sessions</h3>
       {#if future.length > 0}
@@ -106,7 +122,9 @@
           </li>
         {/each}
       {/if}
-      <AddSession courseId={course.id} />
+      {#if isCourseTeacher}
+        <AddSession courseId={course.id} />
+      {/if}
     </div>
   {/if}  
 
@@ -124,13 +142,24 @@
   {/if}
 
   <div class="buttons">
-    {#if $auth.role === 'Teacher'}
+    {#if isCourseTeacher}
         <!-- Can't be deleted if it has session connection -->
       {#if !course.sessions || course.sessions.length === 0}
-        <DeleteCourse {course} on:delete={() => pop('/')} />
+        <button class="button is-danger" on:click={() => { showDelete = true }}>
+          <i class="fas fa-trash"></i>Delete
+        </button>
+        <DeleteItem 
+        id={course.id} 
+        store={courses} 
+        type="course" 
+        name={course.name} 
+        bind:open={showDelete} 
+        next="/courses"/>
       {/if}
    
     {/if}
   </div>
-  
+  {:else}
+    <Loading what="course sessions" />
+  {/if}
 </div>

@@ -1,12 +1,12 @@
 <script>
-  import { mutate } from 'svelte-apollo'
+  import { request } from '../../data/fetch-client'
   import { notifications } from '../notifications'
-  import { client } from '../../data/apollo'
   import Error from '../Error.svelte'
   import { REMOVE_TEACHER_FROM_COURSE } from '../../data/mutations'
+  import { courses } from './data'
+  import { user } from '../../data/user'
 
-  export let user
-  export let course
+  export let courseId
 
   let loading = false
   let errors = ''
@@ -14,12 +14,24 @@
   const leaveCourse = async () => {
     loading = true
     try {
-      const response = await mutate(client, {
-        mutation: REMOVE_TEACHER_FROM_COURSE,
-        variables: { id: user, courseId: course.id }
+      const { removeTeacherFromCourse } = await request(REMOVE_TEACHER_FROM_COURSE,
+        { id: $user.id, courseId }
+      )
+      courses.update(previous => !previous
+        ? [removeTeacherFromCourse]
+        : previous.map((course) => {
+          if (course.id !== removeTeacherFromCourse.id) return course
+          return { ...course, teachers: removeTeacherFromCourse.teachers }
+        })
+      )
+      user.update(previous => {
+        return {
+          ...previous,
+          coursesTeaching: previous.coursesTeaching.filter(c => c.id === courseId)
+        }
       })
       errors = ''
-      notifications.add({ text: `Successfully removed teacher from ${response.data.removeTeacherFromCourse.name}`, type: 'success' })
+      notifications.add({ text: `Successfully removed teacher from ${removeTeacherFromCourse.name}`, type: 'success' })
     } catch (error) {
       errors = error
       notifications.add({ text: 'Failed remove teacher from course course', type: 'danger' })
@@ -29,5 +41,7 @@
   }
 </script>
 
-<button class="button is-small" class:is-loading={loading} on:click={leaveCourse}>Leave</button>
+<button class="button is-small" class:is-loading={loading} on:click={leaveCourse}>
+  Leave
+</button>
 <Error {errors} />

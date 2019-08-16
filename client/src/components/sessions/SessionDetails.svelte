@@ -1,7 +1,7 @@
 <script>
   import { formatRelative } from 'date-fns'
   import CreateQuestion from '../questions/CreateQuestion.svelte'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
 
   export let session
 
@@ -9,6 +9,10 @@
     const string = formatRelative(new Date(date), new Date())
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
+
+  $: questions = session && session.questions.slice(0).sort((a, b) => {
+    return a.order - b.order
+  })
 </script>
 
 <style>
@@ -26,15 +30,15 @@
 
 <br>
 
-<h2 class="title is-4">{session.questions.length} Questions</h2>
+<h2 class="title is-4">{questions.length} Questions</h2>
 
-{#if $auth.role === 'Teacher'}
+{#if $user.role === 'Teacher' && session.endsAt > new Date().toJSON()}
   <CreateQuestion sessionId={session.id} />
 {/if}
 
 <section class="question-list">
-  {#if session.questions && session.questions.length > 0}
-    {#each session.questions as question (question.id)}
+  {#if questions && questions.length > 0}
+    {#each questions as question (question.id)}
       <li>
         {question.order + 1}. <a href="#/question/{question.id}">{question.text}</a>
       </li>

@@ -1,13 +1,10 @@
 <script>
-  import { mutate } from 'svelte-apollo'
-  import gql from 'graphql-tag'
-  import { client } from '../../data/apollo'
   import { CREATE_ANSWER } from '../../data/mutations'
-  import { QUESTION } from '../../data/queries'
-  import { QuestionFields } from '../../data/fragments'
   import { notifications } from '../notifications'
   import Error from '../Error.svelte'
   import Input from '../Input.svelte'
+  import { question } from './data'
+  import { request } from '../../data/fetch-client'
 
   export let questionId
   let show = false
@@ -18,16 +15,13 @@
   const reset = () => {
     errors = ''
     show = false
+    text = ''
   }
 
   const add = async () => {
     loading = true
     try {
-      await mutate(client, {
-        mutation: CREATE_ANSWER,
-        variables: { text, questionId },
-        refetchQueries: [{ query: QUESTION, variables: { id: questionId } }]
-      })
+      await question.addAnswer(text, questionId)
       notifications.add({ text: `Saved new answer`, type: 'success' })
       reset()
     } catch (error) {
@@ -42,12 +36,6 @@
     loading = false
   }
 </script>
-
-<style>
-  button i {
-    margin-right: 0.5rem;
-  }
-</style>
 
 {#if !show}
   <button class="button is-primary" on:click={() => { show = true }}>

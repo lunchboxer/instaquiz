@@ -1,9 +1,27 @@
 import gql from 'graphql-tag'
 
-export const CourseFields = gql`
+export const UserFields = /* GraphQL */`
+  fragment UserFields on User {
+    username
+    name
+    role
+    id
+    coursesTeaching {
+      id
+      name
+    }
+    coursesAttending {
+      id
+      name
+    }
+  }
+`
+
+export const CourseFields = /* GraphQL */`
   fragment CourseFields on Course {
     id
     name
+    code
     term {
       id
       name
@@ -17,7 +35,7 @@ export const CourseFields = gql`
     }
   }`
 
-export const SessionFields = gql`
+export const SessionFields = /* GraphQL */`
   fragment SessionFields on Session {
     id
     startsAt
@@ -32,7 +50,7 @@ export const SessionFields = gql`
     }
   }`
 
-export const QuestionFields = gql`
+export const QuestionFields = /* GraphQL */`
   fragment QuestionFields on Question {
     id
     text
@@ -47,7 +65,7 @@ export const QuestionFields = gql`
     }
   }`
 
-export const ResponseFields = gql`
+export const ResponseFields = /* GraphQL */`
   fragment ResponseFields on Response {
     id
     createdAt

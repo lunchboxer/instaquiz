@@ -1,25 +1,15 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields, QuestionFields, ResponseFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
 
-export const ME = gql`
+export const ME = /* GraphQL */`
 {
   me {
-    username
-    name
-    role
-    id
-    coursesTeaching {
-      id
-      name
-    }
-    coursesAttending {
-      id
-      name
-    }
+    ...UserFields
   }
-}`
+}
+${UserFields}`
 
-export const GET_MY_SESSIONS = gql`
+export const GET_MY_SESSIONS = /* GraphQL */`
 query GetMYSessions($id: ID!, $now: DateTime!, $latest: DateTime!){
   sessions( orderBy: startsAt_ASC, where: { AND: [ 
     { OR: [
@@ -33,7 +23,7 @@ query GetMYSessions($id: ID!, $now: DateTime!, $latest: DateTime!){
 }
 ${SessionFields}`
 
-export const SESSION = gql`
+export const SESSION = /* GraphQL */`
 query Session($id: ID!){
   session(id: $id){
     id
@@ -56,7 +46,7 @@ query Session($id: ID!){
   }
 }`
 
-export const TERMS_AND_ALL = gql`
+export const TERMS_AND_ALL = /* GraphQL */`
 {
   terms(orderBy: startDate_ASC) {
     id
@@ -64,13 +54,14 @@ export const TERMS_AND_ALL = gql`
     endDate
     name
     courses {
-      ...CourseFields
+      id
+      name
     }
   }
 }
-${CourseFields}`
+`
 
-export const TERM = gql`
+export const TERM = /* GraphQL */`
 query Term($id: ID!){
   term(id:$id) {
     id
@@ -84,7 +75,7 @@ query Term($id: ID!){
 }
 ${CourseFields}`
 
-export const TERMS = gql`
+export const TERMS = /* GraphQL */`
 {
   terms(orderBy: startDate_ASC) {
     id
@@ -92,7 +83,7 @@ export const TERMS = gql`
   }
 }`
 
-export const COURSE_SESSIONS = gql`
+export const COURSE_SESSIONS = /* GraphQL */`
   query CourseSessions($courseId: ID!){
     sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
       ...SessionFields
@@ -100,7 +91,7 @@ export const COURSE_SESSIONS = gql`
   }
 ${SessionFields}`
 
-export const COURSE = gql`
+export const COURSE = /* GraphQL */`
   query Course($id: ID!){
     course(id: $id){
       ...CourseFields
@@ -112,7 +103,7 @@ export const COURSE = gql`
   ${SessionFields}
   ${CourseFields}`
 
-export const COURSES = gql`
+export const COURSES = /* GraphQL */`
 query Courses {
   courses{
     id
@@ -132,7 +123,7 @@ query Courses {
   }
 }`
 
-export const QUESTION = gql`
+export const QUESTION = /* GraphQL */`
 query Question($id: ID!){
   question(id: $id){
     id
@@ -164,7 +155,7 @@ query Question($id: ID!){
   }
 }`
 
-export const ACTIVE_TEACHER_SESSION = gql`
+export const ACTIVE_TEACHER_SESSION = /* GraphQL */`
   query Session($id: ID!){
     session(id: $id){
       id
@@ -182,7 +173,7 @@ export const ACTIVE_TEACHER_SESSION = gql`
   }
 `
 
-export const RESPONSES = gql`
+export const RESPONSES = /* GraphQL */`
   query Responses($questionId: ID!){
     responses(where:{question:{id: $questionId}}){
       ...ResponseFields
@@ -190,18 +181,18 @@ export const RESPONSES = gql`
   }
 ${ResponseFields}`
 
-export const QUESTION_SUB = gql`
-  subscription Questions($sessionId: ID!) {
+export const QUESTION_SUB = /* GraphQL */`
+subscription Questions($sessionId: ID!) {
   questions(sessionId: $sessionId) {
     ...QuestionFields
   }
 }
 ${QuestionFields}`
 
-export const RESPONSE_SUBSCRIPTION = gql`
-  subscription Reponses($questionId: ID!) {
-    responses(questionId: $questionId) {
+export const RESPONSE_SUBSCRIPTION = /* GraphQL */`
+subscription Reponses($questionId: ID!) {
+  responses(questionId: $questionId) {
       ...ResponseFields
-    }
   }
-${ResponseFields}`
+}
+${ ResponseFields} `

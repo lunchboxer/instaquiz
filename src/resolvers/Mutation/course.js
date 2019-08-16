@@ -18,7 +18,7 @@ exports.course = {
       where: { code }
     })
   },
-  async addTeacherToCourse (_, { id, courseId }, context) {
+  addTeacherToCourse (_, { id, courseId }, context) {
     return context.prisma.updateCourse({
       data: {
         teachers: { connect: { id } }
@@ -26,7 +26,7 @@ exports.course = {
       where: { id: courseId }
     })
   },
-  async removeTeacherFromCourse (_, { id, courseId }, context) {
+  removeTeacherFromCourse (_, { id, courseId }, context) {
     return context.prisma.updateCourse({
       data: {
         teachers: { disconnect: { id } }
