@@ -46,7 +46,7 @@
   }
 </script>
 
-<button class="button is-primary" on:click={()=> { open = true }}><i class="fas fa-plus"></i>Add a question</button>
+<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a question</button>
 
 <Modal bind:open>
   <QuestionForm on:reset={reset} on:submit={add} {errors} {loading} />
