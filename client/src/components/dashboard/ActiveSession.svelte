@@ -1,6 +1,6 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import { nowSession, every15Seconds } from './stores'
   import ActiveTeacherSession from './ActiveTeacherSession.svelte'
   import ActiveStudentSession from './ActiveStudentSession.svelte'
@@ -26,10 +26,10 @@
   <button class="button is-primary" on:click={exit}>Exit class</button>
 {/if}
 
-{#if $auth.role === 'Teacher'}
+{#if $user.role === 'Teacher'}
   <ActiveTeacherSession/>
 {/if}
 
-{#if $auth.role === 'Student'}
+{#if $user.role === 'Student'}
   <ActiveStudentSession/>
 {/if}

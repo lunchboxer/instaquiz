@@ -2,7 +2,7 @@
   import DeleteQuestion from './DeleteQuestion.svelte'
   import CreateAnswer from './CreateAnswer.svelte'
   import DeleteAnswer from './DeleteAnswer.svelte'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
 
   export let question
 </script>
@@ -22,7 +22,7 @@
 
 <h2 class="title is-5">{question.text}</h2>
 
-{#if $auth.role === 'Teacher'}
+{#if $user.role === 'Teacher'}
   <CreateAnswer questionId={question.id} />
 {/if}
 
@@ -31,7 +31,7 @@
     <ul>
       {#each question.answers as answer (answer.id)}
         <li>{answer.text} 
-          {#if answer.responses.length === 0 && $auth.role === 'Teacher'}
+          {#if answer.responses.length === 0 && $user.role === 'Teacher'}
             <DeleteAnswer id={answer.id} questionId={question.id} />
           {/if}
         </li>
@@ -40,7 +40,7 @@
   {/if}
 </section>
 
-{#if question.answers.length === 0 && $auth.role === 'Teacher'}
+{#if question.answers.length === 0 && $user.role === 'Teacher'}
   <DeleteQuestion id={question.id} sessionId={question.session.id} />
 {/if}
 

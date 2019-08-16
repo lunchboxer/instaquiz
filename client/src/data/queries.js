@@ -1,23 +1,13 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields, QuestionFields, ResponseFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
 
 export const ME = gql`
 {
   me {
-    username
-    name
-    role
-    id
-    coursesTeaching {
-      id
-      name
-    }
-    coursesAttending {
-      id
-      name
-    }
+    ...UserFields
   }
-}`
+}
+${UserFields}`
 
 export const GET_MY_SESSIONS = gql`
 query GetMYSessions($id: ID!, $now: DateTime!, $latest: DateTime!){

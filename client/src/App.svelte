@@ -1,8 +1,7 @@
 <script>
   import { NotificationList } from './components/notifications'
-  import { auth } from './data/auth'
+  import { user } from './data/user'
   import { terms } from './components/terms/data'
-  import { me } from './components/profile/data'
   import Router, { location } from 'svelte-spa-router'
   import routes from './routes'
   import Login from './components/Login.svelte'
@@ -11,7 +10,7 @@
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
 
   terms.get()
-  me.get()
+  $: console.log($user)
 </script>
 
 <style>
@@ -26,11 +25,11 @@
 
 <main>
 
-  {#if $auth.username && !($nowSession && $location === '/')}
+  {#if $user.username && !($nowSession && $location === '/')}
     <UpcomingSessions />
   {/if}
 
-  {#if $auth.username || $location === '/signup'}
+  {#if $user.username || $location === '/signup'}
     <Router {routes}/>
   {:else}
     <Login/>

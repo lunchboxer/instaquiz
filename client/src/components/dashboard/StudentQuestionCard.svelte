@@ -2,7 +2,7 @@
   import { mutate } from 'svelte-apollo'
   import { ANSWER_QUESTION } from '../../data/mutations'
   import { client } from '../../data/apollo'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
 
@@ -19,7 +19,7 @@
         variables: {
           questionId: question.id,
           answerId: answer.id,
-          studentId: $auth.id,
+          studentId: $user.id,
           sessionId: question.session.id
         }
       })

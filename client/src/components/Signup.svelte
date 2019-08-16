@@ -1,5 +1,5 @@
 <script>
-  import { auth } from '../data/auth'
+  import { user } from '../data/user'
   import { notifications } from './notifications'
   import Input from './Input.svelte'
   import Error from './Error.svelte'
@@ -30,7 +30,7 @@
     loading = true
     submit.disabled = true
     try {
-      await auth.signup(username, name, password)
+      await user.signup(username, name, password)
       errors = ''
       notifications.add({ text: `Created account for '${username}'`, type: 'success' })
       push('/join-course')

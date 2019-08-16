@@ -1,5 +1,5 @@
 <script>
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import AddCourse from '../courses/AddCourse.svelte'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
 
@@ -31,7 +31,7 @@
     {#if currentTerm.courses}
       <h2 class="title is-4">Current term: {currentTerm.name} </h2>
       <CategorizedCourseList courses={currentTerm.courses} />
-      {#if $auth.role === 'Teacher'}
+      {#if $user.role === 'Teacher'}
         <AddCourse termId={currentTerm.id} />
       {/if}
     {/if} <!-- currentTerm.courses -->
@@ -40,7 +40,7 @@
 
 {/if} <!-- !currentTerm -->
 
-{#if $auth.role === 'Teacher'}
+{#if $user.role === 'Teacher'}
 
   {#if nextTerm}
 
@@ -63,8 +63,8 @@
       <AddCourse termId={term.id} />
     </section>
   {/each}
-{/if} <!-- $auth.role === 'Teacher -->
+{/if} <!-- $user.role === 'Teacher -->
 
-{#if $auth.role === 'Student'}
+{#if $user.role === 'Student'}
   <a href="#/join-course" class="button">Join a course</a>
 {/if}

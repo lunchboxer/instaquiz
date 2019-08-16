@@ -1,6 +1,6 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import AddTeacherToCourse from './AddTeacherToCourse.svelte'
   import RemoveTeacherFromCourse from './RemoveTeacherFromCourse.svelte'
@@ -11,10 +11,10 @@
   export let course = {}
   let showDelete = false
 
-  $: isCourseTeacher = course.teachers && course.teachers.find(t => t.id === $auth.id)
-  $: isEnrolled = course.students && course.students.find(t => t.id === $auth.id)
+  $: isCourseTeacher = course.teachers && course.teachers.find(t => t.id === $user.id)
+  $: isEnrolled = course.students && course.students.find(t => t.id === $user.id)
   $: teacherNames = course.teachers && course.teachers.map(teacher => {
-    return $auth.id === teacher.id ? 'You' : teacher.name
+    return $user.id === teacher.id ? 'You' : teacher.name
   })
   const now = new Date().toJSON()
   $: past = course.sessions && course.sessions.filter(s => s.endsAt < now).sort((a, b) => b.startsAt.localeCompare(a.startsAt))
@@ -75,7 +75,7 @@
 
 {#if course.teachers && course.students}
 <p class="subtitle">
-  {#if $auth.role === 'Teacher'}
+  {#if $user.role === 'Teacher'}
       <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
     {#if !isCourseTeacher}
       <AddTeacherToCourse courseId={course.id} />
@@ -94,6 +94,12 @@
 <div class="course-details">
   {#if course.teachers && course.students}
   <dl>
+    {#if $user.role === 'Teacher'}
+    <dt>Code:</dt>
+    <dd>
+     {course.code}
+    </dd>
+    {/if}
     <dt>Teacher(s):</dt>
     <dd>
       {teacherNames.length > 0 ? teacherNames.join(', ') : 'none'}
@@ -104,7 +110,7 @@
   {/if}
 
   {#if course.sessions}
-  {#if $auth.role === 'Teacher'}
+  {#if $user.role === 'Teacher'}
     <div class="sessions">
       <h3 class="title is-5">Current and future sessions</h3>
       {#if future.length > 0}
@@ -134,7 +140,7 @@
   {/if}
 
   <div class="buttons">
-    {#if $auth.role === 'Teacher'}
+    {#if $user.role === 'Teacher'}
         <!-- Can't be deleted if it has session connection -->
       {#if !course.sessions || course.sessions.length === 0}
         <button class="button is-danger" on:click={() => { showDelete = true }}>

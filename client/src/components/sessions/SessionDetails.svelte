@@ -1,7 +1,7 @@
 <script>
   import { formatRelative } from 'date-fns'
   import CreateQuestion from '../questions/CreateQuestion.svelte'
-  import { auth } from '../../data/auth'
+  import { user } from '../../data/user'
 
   export let session
 
@@ -32,7 +32,7 @@
 
 <h2 class="title is-4">{questions.length} Questions</h2>
 
-{#if $auth.role === 'Teacher' && session.endsAt > new Date().toJSON()}
+{#if $user.role === 'Teacher' && session.endsAt > new Date().toJSON()}
   <CreateQuestion sessionId={session.id} />
 {/if}
 
