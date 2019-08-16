@@ -1,8 +1,9 @@
 import { writable } from 'svelte/store'
 import { request } from '../../data/fetch-client'
 import { COURSE } from '../../data/queries'
-import { CREATE_COURSE, DELETE_COURSE } from '../../data/mutations'
+import { CREATE_COURSE, DELETE_COURSE, ADD_STUDENT_TO_COURSE } from '../../data/mutations'
 import { terms } from '../terms/data'
+import { user } from '../../data/user'
 
 const createCoursesStore = () => {
   const { subscribe, set, update } = writable()
@@ -35,6 +36,20 @@ const createCoursesStore = () => {
         if (term.courses.findIndex(course => course.id === id) === -1) return term
         return { term, courses: term.courses.filter(c => c.id !== id) }
       }))
+    },
+    addStudent: async (id, code) => {
+      const { addStudentToCourse } = await request(ADD_STUDENT_TO_COURSE,
+        { id, code }
+      )
+      update(previous => !previous ? [addStudentToCourse] : previous.map(course => {
+        if (course.id !== addStudentToCourse.id) return course
+        return { ...course, students: addStudentToCourse.teachers }
+      }))
+      user.update(previous => {
+        const added = { id: addStudentToCourse.id, name: addStudentToCourse.name }
+        return { ...previous, coursesAttending: [...previous.coursesAttending, added] }
+      })
+      return addStudentToCourse
     }
   }
 }

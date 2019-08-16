@@ -1,27 +1,23 @@
 <script>
-  import { mutate } from 'svelte-apollo'
   import { ANSWER_QUESTION } from '../../data/mutations'
-  import { client } from '../../data/apollo'
+  import { request } from '../../data/fetch-client'
   import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
 
   export let question
-  let answered = ''
+  export let answered = ''
   let loading = false
   let errors = ''
 
   const respond = async (answer) => {
     loading = true
     try {
-      await mutate(client, {
-        mutation: ANSWER_QUESTION,
-        variables: {
-          questionId: question.id,
-          answerId: answer.id,
-          studentId: $user.id,
-          sessionId: question.session.id
-        }
+      request(ANSWER_QUESTION, {
+        questionId: question.id,
+        answerId: answer.id,
+        studentId: $user.id,
+        sessionId: question.session.id
       })
       answered = answer.text
     } catch (error) {

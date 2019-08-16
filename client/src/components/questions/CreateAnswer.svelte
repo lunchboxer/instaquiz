@@ -15,6 +15,7 @@
   const reset = () => {
     errors = ''
     show = false
+    text = ''
   }
 
   const add = async () => {

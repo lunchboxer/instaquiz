@@ -1,11 +1,10 @@
 <script>
   import { user } from '../../data/user'
-  import { me } from '../profile/data'
 
   export let courses = []
 
-  $: teachingIds = $me ? $me.coursesTeaching.map(c => c.id) : []
-  $: attendingIds = $me ? $me.coursesAttending.map(c => c.id) : []
+  $: teachingIds = $user ? $user.coursesTeaching.map(c => c.id) : []
+  $: attendingIds = $user ? $user.coursesAttending.map(c => c.id) : []
 
   $: teaching = courses && courses.filter(c => teachingIds.includes(c.id))
   $: notTeaching = courses.filter(c => !teachingIds.includes(c.id))

@@ -7,10 +7,10 @@
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
   import { nowSession } from './components/dashboard/stores'
+  import ActiveSession from './components/dashboard/ActiveSession.svelte'
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
 
   terms.get()
-  $: console.log($user)
 </script>
 
 <style>
@@ -29,7 +29,9 @@
     <UpcomingSessions />
   {/if}
 
-  {#if $user.username || $location === '/signup'}
+  {#if $user.role === 'Student' && $nowSession}
+    <ActiveSession />
+  {:else if $user.username || $location === '/signup'}
     <Router {routes}/>
   {:else}
     <Login/>

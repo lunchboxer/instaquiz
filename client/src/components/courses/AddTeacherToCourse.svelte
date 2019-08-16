@@ -3,7 +3,7 @@
   import { notifications } from '../notifications'
   import { ADD_TEACHER_TO_COURSE } from '../../data/mutations'
   import { courses } from './data'
-  import { me } from '../profile/data'
+  import { user } from '../../data/user'
 
   let loading = false
   export let courseId
@@ -12,7 +12,7 @@
     loading = true
     try {
       const { addTeacherToCourse } = await request(ADD_TEACHER_TO_COURSE, {
-        id: $me.id, courseId
+        id: $user.id, courseId
       })
       courses.update(previous => !previous
         ? [addTeacherToCourse]
@@ -21,13 +21,12 @@
           return { ...course, teachers: addTeacherToCourse.teachers }
         })
       )
-      me.update(previous => {
+      user.update(previous => {
         const added = { id: courseId, name: addTeacherToCourse.name }
         return { ...previous, coursesTeaching: [...previous.coursesTeaching, added] }
       })
       notifications.add({ text: `Successfully added teacher to ${addTeacherToCourse.name}`, type: 'success' })
     } catch (error) {
-      console.error(error)
       notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })
     } finally {
       loading = false

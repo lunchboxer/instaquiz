@@ -4,7 +4,7 @@
   import Error from '../Error.svelte'
   import { REMOVE_TEACHER_FROM_COURSE } from '../../data/mutations'
   import { courses } from './data'
-  import { me } from '../profile/data'
+  import { user } from '../../data/user'
 
   export let courseId
 
@@ -15,7 +15,7 @@
     loading = true
     try {
       const { removeTeacherFromCourse } = await request(REMOVE_TEACHER_FROM_COURSE,
-        { id: $me.id, courseId }
+        { id: $user.id, courseId }
       )
       courses.update(previous => !previous
         ? [removeTeacherFromCourse]
@@ -24,7 +24,7 @@
           return { ...course, teachers: removeTeacherFromCourse.teachers }
         })
       )
-      me.update(previous => {
+      user.update(previous => {
         return {
           ...previous,
           coursesTeaching: previous.coursesTeaching.filter(c => c.id === courseId)

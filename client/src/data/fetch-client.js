@@ -22,6 +22,7 @@ export const request = async (query, variables) => {
   if (response && response.ok && !result.errors && result.data) {
     return result.data
   } else {
+    if (process.env.NODE_ENV === 'development') console.error(result)
     throw result.errors
   }
 }

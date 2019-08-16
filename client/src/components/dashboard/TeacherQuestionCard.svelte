@@ -1,8 +1,7 @@
 <script>
   import { notifications } from '../notifications'
   import { formatRelative } from 'date-fns'
-  import { mutate } from 'svelte-apollo'
-  import { client } from '../../data/apollo'
+  import { request } from '../../data/fetch-client'
   import { currentQuestion } from './stores'
   import { ASK_QUESTION } from '../../data/mutations'
   import TeacherAnswers from './TeacherAnswers.svelte'
@@ -19,14 +18,10 @@
   const send = async () => {
     loading = true
     try {
-      mutate(client, {
-        mutation: ASK_QUESTION,
-        variables: { id: question.id }
-      })
+      await request(ASK_QUESTION, { id: question.id })
       asked = true
       notifications.add({ text: 'Successfully sent question', type: 'success' })
     } catch (error) {
-      console.error(error)
       notifications.add({ text: 'Could not send question', type: 'danger' })
     } finally {
       loading = false
@@ -66,7 +61,7 @@
 
   <div class="question" on:click={select}>
     {question.order + 1}. {question.text}
-    {#if !isCurrent}
+    {#if !isCurrent && asked}
       <span class="is-pulled-right"><i class="fas fa-check"></i></span>
     {/if}
   </div>

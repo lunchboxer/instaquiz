@@ -122,7 +122,9 @@
           </li>
         {/each}
       {/if}
-      <AddSession courseId={course.id} />
+      {#if isCourseTeacher}
+        <AddSession courseId={course.id} />
+      {/if}
     </div>
   {/if}  
 
@@ -140,7 +142,7 @@
   {/if}
 
   <div class="buttons">
-    {#if $user.role === 'Teacher'}
+    {#if isCourseTeacher}
         <!-- Can't be deleted if it has session connection -->
       {#if !course.sessions || course.sessions.length === 0}
         <button class="button is-danger" on:click={() => { showDelete = true }}>
