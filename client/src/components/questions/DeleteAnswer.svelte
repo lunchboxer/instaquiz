@@ -1,20 +1,13 @@
 <script>
-  import { mutate } from 'svelte-apollo'
-  import { client } from '../../data/apollo'
-  import { DELETE_ANSWER } from '../../data/mutations'
-  import { QUESTION } from '../../data/queries'
   import { notifications } from '../notifications'
+  import { question } from './data'
 
   export let id
   export let questionId
 
   const remove = async () => {
     try {
-      await mutate(client, {
-        mutation: DELETE_ANSWER,
-        variables: { id },
-        refetchQueries: [{ query: QUESTION, variables: { id: questionId } }]
-      })
+      await question.deleteAnswer(id)
       notifications.add({ text: `Deleted answer`, type: 'success' })
     } catch (error) {
       notifications.add({

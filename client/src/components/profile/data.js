@@ -3,20 +3,15 @@ import { request } from '../../data/fetch-client'
 import { ME } from '../../data/queries'
 
 const createMeStore = () => {
-  const { subscribe, set, update } = writable(null, set => {
-    request(ME).then(response => set(response.me))
-  })
+  const { subscribe, set, update } = writable()
 
   return {
     subscribe,
     update,
     set,
-    get: async (id) => {
-      if (!id) {
-        request(ME).then(response => set(response.me))
-      } else {
-        // load a term by id and add it to terms
-      }
+    get: async () => {
+      const response = await request(ME)
+      set(response.me)
     }
   }
 }
