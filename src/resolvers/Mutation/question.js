@@ -100,7 +100,7 @@ exports.question = {
     // delete the item
     const deleted = await context.prisma.deleteQuestion({ id })
     // then close the gap by shifting the order of the other items
-    await shiftOrderUp(null, previous.session.id, context.prisma, previous.order)
+    await shiftOrderDown(undefined, previous.session.id, context.prisma, previous.order)
 
     return deleted
   }
