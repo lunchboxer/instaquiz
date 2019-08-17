@@ -15,7 +15,7 @@
     "nodemon": "nodemon --config nodemon.json",
     "build": "run-p build:client build:server",
     "build:client": "rollup -c client/rollup.config.js",
-    "build:server": "export $(cat .env | xargs) && prisma deploy"
+    "build:server": "export $(cat .env | xargs) && prisma generate"
   },
   "keywords": [],
   "author": "",
