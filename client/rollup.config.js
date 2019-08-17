@@ -5,11 +5,12 @@ import replace from 'rollup-plugin-replace'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
+import sass from 'rollup-plugin-sass'
 require('dotenv').config()
 
 const production = !process.env.ROLLUP_WATCH
 
-export default {
+module.exports = [{
   input: 'client/src/main.js',
   output: {
     sourcemap: true,
@@ -58,4 +59,19 @@ export default {
   watch: {
     clearScreen: false
   }
+},
+{
+  input: 'client/src/main.scss',
+  output: {
+    name: 'main',
+    format: 'iife',
+    dir: 'client/public'
+  },
+  plugins: sass({
+    output: 'client/public/main.css',
+    options: {
+      outputStyle: production ? 'compressed' : 'expanded'
+    }
+  })
 }
+]
