@@ -31,13 +31,9 @@
   }
 </script>
 
-<style>
-  button {
-    margin: 1rem 0;
-  }
-</style>
-
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Create a term</button>
+<button on:click={() => { open = true }}>
+  Create a term
+</button>
 <Modal bind:open>
   <TermForm on:reset={reset} on:submit={save} {errors} {loading} />
 </Modal>

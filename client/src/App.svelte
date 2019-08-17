@@ -5,6 +5,7 @@
   import Router, { location } from 'svelte-spa-router'
   import routes from './routes'
   import Login from './components/Login.svelte'
+  import Loading from './components/Loading.svelte'
   import Navbar from './components/Navbar.svelte'
   import { activeSession } from './components/dashboard/stores'
   import ActiveSession from './components/dashboard/ActiveSession.svelte'
@@ -15,8 +16,7 @@
 
 <style>
   main {
-    height: calc(100% - 5rem);
-    padding: 1rem;
+    padding: 2rem;
     margin: 0;
   }
 </style>

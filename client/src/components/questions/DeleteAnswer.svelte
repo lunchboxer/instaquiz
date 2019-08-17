@@ -18,4 +18,4 @@
   }
 </script>
 
-<button class="delete" on:click={remove}></button>
+<button class="delete" on:click={remove}>&times;</button>

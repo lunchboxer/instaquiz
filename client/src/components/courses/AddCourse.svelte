@@ -32,14 +32,8 @@
   }
 </script>
 
-<style>
-  button {
-    margin: 1rem 0;
-  }
-</style>
-
-<button class="button" on:click={()=> { open = true }}>
-  <i class="fas fa-plus"></i>Add a course
+<button on:click={() => { open = true }}>
+  Add a course
 </button>
 <Modal bind:open>
   <CourseForm on:reset={reset} on:submit={save} {errors} {termId} {loading} />

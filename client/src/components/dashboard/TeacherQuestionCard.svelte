@@ -32,17 +32,15 @@
 <style>
   li {
     list-style: none;
-    padding: 0.5rem;
+    padding: 1rem;
     cursor: pointer;
   }
 
   li:hover {
     background: black;
-    border: 1px solid grey;
   }
 
   li.current {
-    border: 1px solid grey;
     background: black;
     cursor: inherit;
   }
@@ -54,6 +52,7 @@
   .buttons {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 </style>
 
@@ -62,7 +61,7 @@
   <div class="question" on:click={select}>
     {question.order + 1}. {question.text}
     {#if !isCurrent && asked}
-      <span class="is-pulled-right"><i class="fas fa-check"></i></span>
+      <span>&check;</span>
     {/if}
   </div>
 
@@ -72,8 +71,7 @@
       {#if question.asked}
         <span>Asked {formatRelative(new Date(question.asked), new Date())}</span>
       {/if}
-      <button class:is-loading={loading} class="button is-primary" on:click={send}>
-        <i class="fas fa-paper-plane"></i>
+      <button class:is-loading={loading} on:click={send}>
         {asked || question.asked ? 'Send again' : 'Send'}
       </button>
     </div>
