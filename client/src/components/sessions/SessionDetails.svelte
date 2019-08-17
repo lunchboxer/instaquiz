@@ -16,10 +16,6 @@
 </script>
 
 <style>
-  section {
-    margin: 1rem;
-  }
-
   li {
     list-style-type: none;
   }
