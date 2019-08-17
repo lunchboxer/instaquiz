@@ -1,9 +1,8 @@
 <script>
   import { formatDistanceStrict } from 'date-fns'
-  import { nowSession, imminentSession, activeSession } from './stores'
+  import { imminentSession, activeSession } from './stores'
   import ActiveSession from './ActiveSession.svelte'
   import Terms from '../terms/Terms.svelte'
-  import { user } from '../../data/user'
 </script>
 
 <style>
@@ -32,9 +31,5 @@
     <p class="big">{formatDistanceStrict(new Date($imminentSession.startsAt), new Date(), { addSuffix: true })}</p>
   </section>
 {:else}
-  {#if $user.role === 'Student'}
-    <Terms />
-    {:else}
-    <h1 class="title">Dashboard</h1>
-  {/if}
+  <Terms />
 {/if}
