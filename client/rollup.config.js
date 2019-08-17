@@ -29,10 +29,8 @@ export default {
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
-      'process.env.DEV_API_ENDPOINT': JSON.stringify(process.env.DEV_API_ENDPOINT),
-      'process.env.DEV_SUBSCRIPTION_ENDPOINT': JSON.stringify(process.env.DEV_SUBSCRIPTION_ENDPOINT),
-      'process.env.PROD_API_ENDPOINT': JSON.stringify(process.env.PROD_API_ENDPOINT),
-      'process.env.PROD_SUBSCRIPTION_ENDPOINT': JSON.stringify(process.env.PROD_SUBSCRIPTION_ENDPOINT)
+      'process.env.API_ENDPOINT': JSON.stringify(process.env.API_ENDPOINT),
+      'process.env.SUBSCRIPTION_ENDPOINT': JSON.stringify(process.env.SUBSCRIPTION_ENDPOINT)
     }),
 
     // If you have external dependencies installed from
