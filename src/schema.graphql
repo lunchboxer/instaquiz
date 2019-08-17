@@ -74,3 +74,12 @@ type Session {
   questions: [Question!]!
   order: Int
 }
+
+type User {
+id: ID!
+username: String!
+name: String!
+coursesAttending: [Course!]
+coursesTeaching: [Course!]
+role: Role!
+}
