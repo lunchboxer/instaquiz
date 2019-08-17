@@ -48,5 +48,5 @@
 <Error {errors} />
 <form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset>
   <Input label="Text" type="text" bind:value={text} required />
-  <button type="submit" class="button is-primary" class:is-loading={loading}>Add answer</button>
+  <button type="submit" class:is-loading={loading}>Add answer</button>
 </form>

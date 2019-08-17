@@ -16,12 +16,6 @@
   })
 </script>
 
-<style>
-  section.term {
-    margin: 2rem 1rem;
-  }
-</style>
-
 {#if !currentTerm}
   <p>There is no term currently in session.</p>
 {:else}
@@ -29,7 +23,7 @@
   <section class="term">
 
     {#if currentTerm.courses}
-      <h2 class="title is-4">Current term: {currentTerm.name} </h2>
+      <h2>Current term: {currentTerm.name} </h2>
       <CategorizedCourseList courses={currentTerm.courses} />
       {#if $user.role === 'Teacher'}
         <AddCourse termId={currentTerm.id} />
@@ -46,7 +40,7 @@
 
     <section class="term">
       {#if nextTerm.courses}
-        <h2 class="title is-4">Next term: {nextTerm.name}</h2>
+        <h2>Next term: {nextTerm.name}</h2>
         <CategorizedCourseList courses={nextTerm.courses} />
         <AddCourse termId={nextTerm.id} />
       {/if} <!-- nextTerm.courses -->
@@ -56,7 +50,7 @@
 
   {#each otherTerms as term (term.id)}
     <section class="term">
-      <h2 class="title is-4">{term.name}</h2>
+      <h2>{term.name}</h2>
       {#if term.courses && term.courses.length > 0}
         <CategorizedCourseList courses={term.courses} />
       {/if}

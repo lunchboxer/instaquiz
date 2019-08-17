@@ -3,28 +3,32 @@
   import { CREATE_QUESTION } from '../../data/mutations'
   import { session } from '../sessions/data'
   import { notifications } from '../notifications'
-  import Modal from '../Modal.svelte'
-  import QuestionForm from './QuestionForm.svelte'
+  import Input from '../Input.svelte'
+  import Error from '../Error.svelte'
 
   export let sessionId
-  let open = false
   let errors = ''
   let loading = false
+  let form
+  let saveButton
+  export let text = ''
+  export let order = null
 
   const reset = () => {
     errors = ''
-    open = false
+    text = ''
+    order = null
   }
 
-  const add = async ({ detail }) => {
+  const add = async () => {
     loading = true
-    let order
-    detail.order && (order = ((detail.order - 1)))
+    order && order--
+    console.log(order)
     try {
       const response = await request(CREATE_QUESTION,
-        { text: detail.text, order, sessionId }
+        { text, order, sessionId }
       )
-      if (detail.order) session.get(sessionId)
+      if (order !== null) session.get(sessionId)
       else {
         session.update(previous => previous && ({
           ...previous,
@@ -44,10 +48,30 @@
     }
     loading = false
   }
+
+  const handleSubmit = () => {
+    const isValid = form.checkValidity()
+    if (!isValid) {
+      notifications.add({
+        text: 'Please fix form errors first.',
+        type: 'danger'
+      })
+      return
+    }
+    add()
+  }
 </script>
 
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a question</button>
+<h2>Add a Question</h2>
 
-<Modal bind:open>
-  <QuestionForm on:reset={reset} on:submit={add} {errors} {loading} />
-</Modal>
+<Error {errors} />
+
+<form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset>
+
+  <Input label="Text" type="text" bind:value={text} required />
+  <Input label="Order (optional)" type="number" bind:value={order} min=1 />
+
+  <input class="button button-outline" type="reset" value="Cancel" />
+  <button class:is-loading={loading} bind:this={saveButton} type="submit">Save</button>
+
+</form>

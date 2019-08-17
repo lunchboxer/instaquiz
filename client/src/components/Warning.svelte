@@ -21,10 +21,6 @@
     font-size: 1.2rem;
   }
 
-  .warning-message-header i {
-    margin-right: 0.3rem;
-  }
-
   .warning-message-body {
     padding: 0.3rem 0.6rem;
   }
@@ -32,7 +28,6 @@
 
 <div class="warning">
   <p class="warning-message-header">
-    <i class="fas fa-exclamation-triangle"></i>
     {title}
   </p>
   <section class="warning-message-body">

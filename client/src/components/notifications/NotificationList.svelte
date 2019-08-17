@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 3rem;
+    top: 4rem;
     right: 0;
     margin: 0.5rem;
     width: auto;
