@@ -27,7 +27,7 @@
       user.update(previous => {
         return {
           ...previous,
-          coursesTeaching: previous.coursesTeaching.filter(c => c.id === courseId)
+          coursesTeaching: previous.coursesTeaching.filter(c => c.id !== courseId)
         }
       })
       errors = ''

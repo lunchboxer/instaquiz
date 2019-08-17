@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import { CourseFields, SessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
 
 export const ME = /* GraphQL */`
@@ -195,4 +194,4 @@ subscription Reponses($questionId: ID!) {
       ...ResponseFields
   }
 }
-${ ResponseFields} `
+${ResponseFields} `
