@@ -4,9 +4,8 @@
 
 <style>
   .warning {
-    color: #ffdd57;
     margin-bottom: 1rem;
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 0;
   }
 
@@ -14,24 +13,23 @@
     color: inherit;
   }
 
-  .warning-message-header {
-    margin: 0;
-    padding: 0.5rem 1rem;
-    color: #ffdd57;
-    background: black;
-    border-radius: 4px 4px 0 0;
-    border: 1px solid #ffdd57;
+  .warning-message-body {
+    padding: 0.5rem;
   }
 
-  .warning-message-body {
+  .warning-message-header {
+    margin: 0;
+    color: var(--background);
     padding: 0.5rem 1rem;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 2px solid var(--background);
   }
 </style>
 
 <div class="warning">
-  <h3 class="warning-message-header">
+  <h4 class="warning-message-header">
     {title}
-  </h3>
+  </h4>
   <section class="warning-message-body">
     <slot></slot>
   </section>
