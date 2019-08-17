@@ -1,5 +1,3 @@
-import gql from 'graphql-tag'
-
 export const UserFields = /* GraphQL */`
   fragment UserFields on User {
     username

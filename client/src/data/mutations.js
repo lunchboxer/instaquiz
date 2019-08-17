@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
 
 // Auth
