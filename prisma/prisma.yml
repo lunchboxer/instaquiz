@@ -1,5 +1,5 @@
-# endpoint: ${env:ENDPOINT}
-endpoint: 'http://localhost:4467'
+endpoint: ${env:ENDPOINT}
+# endpoint: 'http://localhost:4467'
 datamodel: datamodel.prisma
 generate:
   - generator: javascript-client
