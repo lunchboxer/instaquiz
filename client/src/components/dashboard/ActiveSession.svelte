@@ -11,7 +11,7 @@
   }
 
   const exit = () => {
-    $nowSession.set()
+    nowSession.set()
   }
   $: classIsOver = $nowSession.endsAt < $every15Seconds.toJSON()
 </script>
