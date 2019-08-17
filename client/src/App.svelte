@@ -6,7 +6,7 @@
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-  import { nowSession } from './components/dashboard/stores'
+  import { activeSession } from './components/dashboard/stores'
   import ActiveSession from './components/dashboard/ActiveSession.svelte'
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
 
@@ -25,11 +25,11 @@
 
 <main>
 
-  {#if $user.username && !($nowSession && $location === '/')}
+  {#if $user.username}
     <UpcomingSessions />
   {/if}
 
-  {#if $user.role === 'Student' && $nowSession}
+  {#if $user.role === 'Student' && $activeSession}
     <ActiveSession />
   {:else if $user.username || $location === '/signup'}
     <Router {routes}/>

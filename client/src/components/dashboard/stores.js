@@ -7,6 +7,7 @@ export function sleep (ms) {
 }
 
 export const nowSession = writable()
+export const activeSession = writable()
 export const imminentSession = writable()
 export const currentQuestion = writable()
 
@@ -44,6 +45,7 @@ const createSessionsStore = () => {
   return {
     subscribe,
     update,
+    set,
     get: async (id, now, latest) => {
       if (!id || !now || !latest) return
       const response = await request(GET_MY_SESSIONS, { id, now, latest })

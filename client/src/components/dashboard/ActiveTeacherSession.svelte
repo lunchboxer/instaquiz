@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { request } from '../../data/fetch-client'
-  import { nowSession } from './stores'
+  import { activeSession } from './stores'
   import { ACTIVE_TEACHER_SESSION } from '../../data/queries'
   import Error from '../Error.svelte'
   import Loading from '../Loading.svelte'
@@ -11,8 +11,8 @@
 
   onMount(async () => {
     try {
-      const { session } = await request(ACTIVE_TEACHER_SESSION, { id: $nowSession.id })
-      nowSession.update(previous => {
+      const { session } = await request(ACTIVE_TEACHER_SESSION, { id: $activeSession.id })
+      activeSession.update(previous => {
         return { ...previous, ...session }
       })
     } catch (error) {
@@ -23,8 +23,8 @@
 
 <Error {errors} />
 
-{#if $nowSession.questions}
-  <TeachersQuestions questions={$nowSession.questions} />
+{#if $activeSession.questions}
+  <TeachersQuestions questions={$activeSession.questions} />
 {:else}
   <Loading what="Session data and questions" />
 {/if}
