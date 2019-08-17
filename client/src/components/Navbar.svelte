@@ -3,8 +3,6 @@
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
 
-  let showMenu = false
-
   const logout = async () => {
     const username = await user.logout()
     notifications.add({ text: `Logged out user '${username}'`, type: 'success' })
@@ -34,6 +32,7 @@
     display: flex;
     align-items: stretch;
     padding: 0.5rem;
+    justify-content: space-between;
   }
 
   .navbar-item {
@@ -50,48 +49,9 @@
     font-weight: 600;
   }
 
-  .navbar-menu {
-    display: flex;
-    align-items: stretch;
-    flex-grow: 1;
-    flex-shrink: 0;
-  }
-
-  .navbar-start {
-    justify-content: flex-start;
-    margin-right: auto;
-    align-items: stretch;
-    display: flex;
-  }
-
   .navbar-end {
-    justify-content: flex-end;
-    margin-left: auto;
     align-items: stretch;
     display: flex;
-  }
-
-  @media only screen and (max-width: 1024px) {
-    #navmenu {
-      padding: 1rem;
-      position: fixed;
-      right: -15rem;
-      width: 15rem;
-      display: inherit;
-      top: 0;
-      bottom: 0;
-      transition: 200ms ease-in-out;
-      height: 100%;
-      background: black;
-    }
-
-    .navbar-burger {
-      z-index: 10;
-    }
-
-    #navmenu.is-active {
-      transform: translate(-15rem);
-    }
   }
 </style>
 
@@ -101,51 +61,17 @@
       <img class="logo" src="/kumu-logo.png" height="28" alt="levitation logo" />
       <span class="title">InstaQuiz</span>
     </a>
+  </div>
 
-    {#if $user.username}
-      <div
-        role="button"
-        class="navbar-burger burger"
-        class:is-active={showMenu}
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navmenu"
-        on:click={() => { showMenu = !showMenu }}
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+  <div class="navbar-end">
+    {#if $user.name}
+      <NavbarLink url="#/me" icon="user-circle" text={$user.name}/>
+        
+      <div class="buttons">
+        <button class="button-clear" on:click={logout}>
+          <strong>Log out</strong>
+        </button>
       </div>
     {/if}
-    </div>
-  
-  
-    <div
-      id="navmenu"
-      class="navbar-menu"
-      on:click={() => { showMenu = !showMenu }}
-      class:is-active={showMenu}
-    >
-      <div class="navbar-start">
-        {#if $user.role === 'Teacher'}
-        <NavbarLink url="#/" text="Dashboard" icon="chalkboard-teacher" />
-        <NavbarLink url="#/terms" text="Terms" icon="school" />
-        <NavbarLink url="#/courses" text="Courses" icon="book" />
-        {/if}
-      </div>
-  
-      <div class="navbar-end">
-        {#if $user.name}
-        
-          <NavbarLink url="#/me" icon="user-circle" text={$user.name}/>
-         
-          <div class="buttons">
-            <button class="button-clear" on:click={logout}>
-                  <strong>Log out</strong>
-              </button>
-          </div>
-
-        {/if}
-      </div>
-    </div>
-  </nav>
+  </div>
+</nav>
