@@ -2,7 +2,7 @@ exports.course = {
   async createCourse (_, { name, termId, code }, context) {
     return context.prisma.createCourse({
       name,
-      code,
+      code: code.toUpperCase(),
       term: {
         connect: {
           id: termId
@@ -15,7 +15,7 @@ exports.course = {
       data: {
         students: { connect: { id } }
       },
-      where: { code }
+      where: { code: code.toUpperCase() }
     })
   },
   addTeacherToCourse (_, { id, courseId }, context) {
