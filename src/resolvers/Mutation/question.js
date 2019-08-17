@@ -1,3 +1,45 @@
+
+const shiftOrderUp = async (order, sessionId, prisma, max) => {
+  const questionsToChange = await prisma.questions({
+    where: {
+      order_gte: order,
+      order_lt: max,
+      session: { id: sessionId }
+    }
+  })
+  questionsToChange.forEach(async question => {
+    await prisma.updateQuestion({
+      data: { order: question.order + 1 },
+      where: { id: question.id }
+    })
+  })
+}
+
+const shiftOrderDown = async (order, sessionId, prisma, min) => {
+  const questionsToChange = await prisma.questions({
+    where: {
+      order_gt: min,
+      order_lte: order,
+      session: { id: sessionId }
+    }
+  })
+  questionsToChange.forEach(async question => {
+    await prisma.updateQuestion({
+      data: { order: question.order - 1 },
+      where: { id: question.id }
+    })
+  })
+}
+
+const fragmentWithSession = `
+fragment QuestionWithSession on Question {
+  id
+  order
+  session {
+    id
+  }
+}`
+
 exports.question = {
   async createQuestion (_, { text, order, sessionId }, context) {
     let newOrder = null
@@ -5,13 +47,7 @@ exports.question = {
       const existing = await context.prisma.questions({ where: { order } })
       if (existing && existing.length > 0) {
         newOrder = order
-        const query = `UPDATE default$default."Question" set "order" = "order" + 1 where "order" >= ${order};`
-          .replace(/"/g, '\\"').replace(/\n/g, ' ').replace(/\s+/g, ' ')
-        await context.prisma.$graphql(`
-          mutation {
-            executeRaw(query: "${query}")
-          }
-        `)
+        await shiftOrderUp(order, sessionId, context.prisma)
       }
     }
     // order on server side should count from 0
@@ -43,26 +79,14 @@ exports.question = {
   },
   async updateQuestion (_, { id, text, order }, context) {
     if (order) {
-      const previous = await context.prisma.question({ id })
+      const previous = await context.prisma.question({ id }).$fragment(fragmentWithSession)
       // if previous order was 0 and new order is 5 then we need to shift down all prompts where order > 0 && order <= 5
       if (previous.order < order) {
-        const query = `UPDATE default$default."Question" set "order" = "order" - 1 where "order" > ${previous.order} and "order" <= ${order};`
-          .replace(/"/g, '\\"').replace(/\n/g, ' ').replace(/\s+/g, ' ')
-        await context.prisma.$graphql(`
-          mutation {
-            executeRaw(query: "${query}")
-          }
-        `)
+        await shiftOrderDown(order, previous.session.id, context.prisma, previous.order)
       }
       // if previous order was 5 and new order is 0 then we need to shift up all prompts where order >= 0 && order < 5
       if (previous.order > order) {
-        const query = `UPDATE default$default."Question" set "order" = "order" + 1 where "order" >= ${order} and "order" < ${previous.order};`
-          .replace(/"/g, '\\"').replace(/\n/g, ' ').replace(/\s+/g, ' ')
-        await context.prisma.$graphql(`
-          mutation {
-            executeRaw(query: "${query}")
-          }
-        `)
+        await shiftOrderUp(order, previous.session.id, context.prisma, previous.order)
       }
     }
     return context.prisma.updateQuestion({
@@ -72,17 +96,12 @@ exports.question = {
   },
   async deleteQuestion (_, { id }, context) {
     // find out what order it was
-    const previous = await context.prisma.question({ id })
+    const previous = await context.prisma.question({ id }).$fragment(fragmentWithSession)
     // delete the item
     const deleted = await context.prisma.deleteQuestion({ id })
     // then close the gap by shifting the order of the other items
-    const query = `UPDATE default$default."Question" set "order" = "order" - 1 where "order" > ${previous.order};`
-      .replace(/"/g, '\\"').replace(/\n/g, ' ').replace(/\s+/g, ' ')
-    await context.prisma.$graphql(`
-      mutation {
-        executeRaw(query: "${query}")
-      }
-    `)
+    await shiftOrderUp(null, previous.session.id, context.prisma, previous.order)
+
     return deleted
   }
 }
