@@ -16,14 +16,14 @@
   $: classIsOver = $activeSession.endsAt < $every15Seconds.toJSON()
 </script>
 
-<h1 class="title">{$activeSession.course.name}</h1>
-<p class="subtitle">Lesson {$activeSession.order}</p>
+<h1>{$activeSession.course.name}</h1>
+<p>Lesson {$activeSession.order}</p>
 
 <p>Started {formatDate(new Date($activeSession.startsAt), { addSuffix: true })}</p>
 
 {#if classIsOver}
   <p>This class was scheduled to end {formatDate(new Date($activeSession.endsAt))}.</p>
-  <button class="button is-primary" on:click={exit}>Exit class</button>
+  <button on:click={exit}>Exit class</button>
 {/if}
 
 {#if $user.role === 'Teacher'}

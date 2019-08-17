@@ -60,13 +60,13 @@
 <form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset >
   <Error {errors}/>
   <Input bind:value={name} label="Name" placeholder="i.e. 'Autumn 1978'" required />
-  <label class="label" >
+  <label>
     Start and end dates
   </label>
   <DatePicker bind:value={defaultDate} placeholder="Pick two dates below" className="input" {options} on:change={(event) =>
     handleChange(...event.detail)} />
   <div class="buttons">
-    <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save term</button>
-    <input type="reset" class="button" value="Cancel">
+    <input type="reset" class="button button-outline" value="Cancel">
+    <button type="submit" class:is-loading={loading} bind:this={saveButton}>Save term</button>
   </div>
 </form>

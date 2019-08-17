@@ -51,13 +51,7 @@
   }
 </script>
 
-<style>
-  button {
-    margin: 1rem 0;
-  }
-</style>
-
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Add a new session</button>
+<button on:click={() => { open = true }}>Add a new session</button>
 <Modal bind:open>
   <SessionForm on:reset={reset} on:submit={save} {errors} {loading} />
 </Modal>

@@ -25,8 +25,8 @@
   <ActiveSession />
 {:else if $imminentSession}
   <section class="countdown">
-    <h2 class="title is-3">{$imminentSession.course.name}</h2> 
-      <h2 class="subtitle is-5">Lesson {$imminentSession.order}</h2>
+    <h2>{$imminentSession.course.name}</h2> 
+      <h2>Lesson {$imminentSession.order}</h2>
       <p>starts in...</p>
     <p class="big">{formatDistanceStrict(new Date($imminentSession.startsAt), new Date(), { addSuffix: true })}</p>
   </section>

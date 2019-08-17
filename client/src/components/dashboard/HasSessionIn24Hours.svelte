@@ -49,9 +49,7 @@
     includeSeconds: true, addSuffix: true })}. Ends
     {formatDate($nowSession.endsAt, { addSuffix: true })}.
   </p>
-  <a class="button is-link" href="#/"
-    ><i class="fas fa-running"></i>Go there now</a
-  >
+  <a class="button" href="#/">Go there now</a>
 </Warning>
 {:else if !$nowSession && $imminentSession && $location !== '/'}
 <Warning
@@ -62,8 +60,7 @@
     includeSeconds: true, addSuffix: true })}. Ends
     {formatDate($imminentSession.endsAt, { addSuffix: true })}.
   </p>
-  <a class="button is-link" href="#/"
-    ><i class="fas fa-running"></i>Go there now</a
+  <a class="button" href="#/">Go there now</a
   >
 </Warning>
 {:else if !$nowSession && !$imminentSession && todaySessions.length > 0}

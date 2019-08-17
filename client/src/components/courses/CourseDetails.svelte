@@ -27,18 +27,6 @@
 </script>
 
 <style>
-  .subtitle span {
-    margin-right: 0.5rem;
-  }
-
-  .course-details {
-    padding: 1rem;
-  }
-
-  .buttons {
-    margin-top: 0.5rem;
-  }
-
   li {
     list-style: none;
   }
@@ -61,20 +49,16 @@
     grid-column: value;
     justify-self: start;
   }
-
-  .sessions {
-    margin: 2rem 0 1rem 0;
-  }
 </style>
 
 <svelte:head>
   <title>{course.name}</title>
 </svelte:head>
 
-<h1 class="title is-3">{course.name}</h1>
+<h1>{course.name}</h1>
 
 {#if course.teachers && course.students}
-<p class="subtitle">
+<p>
   {#if $user.role === 'Teacher'}
       <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
     {#if !isCourseTeacher}
@@ -112,7 +96,7 @@
   {#if course.sessions}
   {#if $user.role === 'Teacher'}
     <div class="sessions">
-      <h3 class="title is-5">Current and future sessions</h3>
+      <h3>Current and future sessions</h3>
       {#if future.length > 0}
         {#each future as session (session.id)}
           <li>
@@ -130,7 +114,7 @@
 
   {#if past.length > 0}
     <div class="sessions">
-      <h3 class="title is-5">Past sessions</h3>
+      <h3>Past sessions</h3>
       {#each past as session (session.id)}
         <li>
           <a href="#/session/{session.id}">
@@ -145,8 +129,8 @@
     {#if isCourseTeacher}
         <!-- Can't be deleted if it has session connection -->
       {#if !course.sessions || course.sessions.length === 0}
-        <button class="button is-danger" on:click={() => { showDelete = true }}>
-          <i class="fas fa-trash"></i>Delete
+        <button class="button button-outline" on:click={() => { showDelete = true }}>
+          Delete course
         </button>
         <DeleteItem 
         id={course.id} 

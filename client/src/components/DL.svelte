@@ -1,7 +1,6 @@
 <style>
   dl {
     display: grid;
-    grid-column-gap: 0.5rem;
     grid-template-columns: [key] auto [value] auto;
     grid-template-rows: auto;
     justify-content: start;

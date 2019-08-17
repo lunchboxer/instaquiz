@@ -22,14 +22,14 @@
   }
 </style>
 
-<h1 class="title">Delete {name}</h1>
+<h1>Delete {name}</h1>
 <Error {errors} />
 <p>Permanently delete <slot>
     <span class="placeholder">item</span>
   </slot>
   ?</p>
 <div class="buttons">
-  <button class="button is-primary" disabled={loading} class:is-loading={loading}
+  <button class="button button-clear" disabled={loading} class:is-loading={loading}
     on:click={handleDelete}>Delete</button>
-  <button class="button" on:click={close}>Keep it</button>
+  <button class="button success" on:click={close}>Keep it</button>
 </div>
