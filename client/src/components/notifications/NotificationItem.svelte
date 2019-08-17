@@ -12,7 +12,7 @@
 
 <style>
   .notification {
-    padding: 1rem 2.5rem 1.25rem 1.5rem;
+    padding: 1.25rem 2.5rem 1.5rem 1.5rem;
     position: relative;
     margin-bottom: 0.5rem;
     border-radius: 4px;
@@ -37,8 +37,8 @@
     min-width: 20px;
     outline: 0;
     position: absolute;
-    right: .5rem;
-    top: .5rem;
+    right: 0.8rem;
+    top: 0.8rem;
     vertical-align: top;
     width: 20px
   }

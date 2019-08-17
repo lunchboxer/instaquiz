@@ -45,7 +45,6 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-svelte3": "^2.7.3",
     "eslint-plugin-unicorn": "^10.0.0",
-    "flatpickr": "^4.6.2",
     "graphql-subscriptions-client": "^0.12.0",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
