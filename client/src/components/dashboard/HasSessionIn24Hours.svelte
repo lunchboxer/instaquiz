@@ -1,8 +1,9 @@
 <script>
   import { location } from 'svelte-spa-router'
+  import { user } from '../../data/user'
   import { formatRelative, formatDistanceToNow } from 'date-fns'
   import Warning from '../Warning.svelte'
-  import { every15Seconds, time, imminentSession, nowSession } from './stores'
+  import { every15Seconds, time, imminentSession, nowSession, activeSession } from './stores'
 
   export let sessions
 
@@ -28,6 +29,7 @@
       )
     )
   }
+  $: if ($nowSession && !$activeSession) activeSession.set($nowSession)
 
   // also update the upcoming sessions every 15 seconds
   $: in24Hours = new Date($every15Seconds.getTime() + 24 * 3.6e6)
@@ -38,7 +40,7 @@
   })
 </script>
 
-{#if $nowSession && $location !== '/'}
+{#if $nowSession && $location !== '/' && $user.role !== 'Student'}
 <Warning
   title="{$nowSession.course.name} lesson {$nowSession.order} has started."
 >

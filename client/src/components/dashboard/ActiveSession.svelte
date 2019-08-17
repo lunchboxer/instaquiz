@@ -1,7 +1,7 @@
 <script>
   import { formatRelative } from 'date-fns'
   import { user } from '../../data/user'
-  import { nowSession, every15Seconds } from './stores'
+  import { activeSession, every15Seconds, sessions } from './stores'
   import ActiveTeacherSession from './ActiveTeacherSession.svelte'
   import ActiveStudentSession from './ActiveStudentSession.svelte'
 
@@ -11,18 +11,18 @@
   }
 
   const exit = () => {
-    nowSession.set()
+    activeSession.set()
   }
-  $: classIsOver = $nowSession.endsAt < $every15Seconds.toJSON()
+  $: classIsOver = $activeSession.endsAt < $every15Seconds.toJSON()
 </script>
 
-<h1 class="title">{$nowSession.course.name}</h1>
-<p class="subtitle">Lesson {$nowSession.order}</p>
+<h1 class="title">{$activeSession.course.name}</h1>
+<p class="subtitle">Lesson {$activeSession.order}</p>
 
-<p>Started {formatDate(new Date($nowSession.startsAt), { addSuffix: true })}</p>
+<p>Started {formatDate(new Date($activeSession.startsAt), { addSuffix: true })}</p>
 
 {#if classIsOver}
-  <p>This class was scheduled to end {formatDate(new Date($nowSession.endsAt))}.</p>
+  <p>This class was scheduled to end {formatDate(new Date($activeSession.endsAt))}.</p>
   <button class="button is-primary" on:click={exit}>Exit class</button>
 {/if}
 

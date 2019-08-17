@@ -16,6 +16,7 @@
     "build": "run-p copyfonts build:client build:server",
     "build:client": "rollup -c client/rollup.config.js",
     "build:server": "export $(cat .env | xargs) && prisma generate",
+    "deploy": "export $(cat .env | xargs) && prisma deploy",
     "copyfonts": "cp node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.* client/public/font-awesome/"
   },
   "keywords": [],
