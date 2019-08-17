@@ -1,8 +1,6 @@
 const fetch = window.fetch
 
-const endpoint = process.env.NODE_ENV === 'production'
-  ? process.env.PROD_API_ENDPOINT
-  : process.env.DEV_API_ENDPOINT
+const endpoint = process.env.API_ENDPOINT
 
 export const request = async (query, variables) => {
   const coldToken = window.localStorage.getItem('token')
