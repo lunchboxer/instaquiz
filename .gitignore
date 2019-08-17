@@ -7,4 +7,3 @@ node_modules
 yarn.lock
 .env*
 src/generated
-client/node_modules

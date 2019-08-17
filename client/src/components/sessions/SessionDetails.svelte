@@ -28,15 +28,12 @@
 <h1 class="title is-3">Lesson {session.order}</h1>
 <p class="subtitle">{formatDate(session.startsAt)} to {formatDate(session.endsAt)}</p>
 
-<br>
-
-<h2 class="title is-4">{questions.length} Questions</h2>
-
 {#if $user.role === 'Teacher' && session.endsAt > new Date().toJSON()}
   <CreateQuestion sessionId={session.id} />
 {/if}
 
 <section class="question-list">
+    <h2 class="title is-4">{questions.length} Questions</h2>
   {#if questions && questions.length > 0}
     {#each questions as question (question.id)}
       <li>

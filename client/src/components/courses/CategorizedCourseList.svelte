@@ -17,6 +17,7 @@
     margin: 2rem 0 1rem;
   }
 </style>
+
 {#if courses.length > 0}
 
   {#if teaching && teaching.length}
