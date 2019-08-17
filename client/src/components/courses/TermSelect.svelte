@@ -10,12 +10,6 @@
   }
 </script>
 
-<style>
-  .select {
-    margin-bottom: 1rem;
-  }
-</style>
-
 <div class="select">
   {#if $terms}
     <select bind:value={termId} on:change={handleChange} bind:this={termSelect}>

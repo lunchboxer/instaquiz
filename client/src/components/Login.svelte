@@ -8,9 +8,7 @@
   let password = ''
   let errors = ''
   let loading = false
-  let show = false
   let submit
-  let passInput
   let form
 
   const login = async () => {
@@ -35,10 +33,6 @@
       loading = false
     }
   }
-  const showPassword = () => {
-    passInput.type = !show ? 'text' : 'password'
-    show = !show
-  }
 </script>
 
 <style>
@@ -46,11 +40,6 @@
     margin-top: 10vh;
     display: flex;
     justify-content: center;
-  }
-
-  .button.showhide {
-    width: 2.4rem;
-    border: none;
   }
 </style>
 
@@ -60,45 +49,24 @@
 
 <div class="container-centered">
   <div class="login">
-    <h1 class="title">Login</h1>
-    <h3 class="subtitle">gotta log in to continue.</h3>
+
+    <h1>Login</h1>
+    <p>gotta log in to continue.</p>
 
     <Error {errors} />
     <form bind:this={form} novalidate on:submit|preventDefault={login}>
-      <Input type="text" bind:value={username} label="Student ID" required leftIcon="user" />
 
-      <label class="label" for="passwordField">Password</label>
+      <Input type="text" bind:value={username} label="Student ID" required />
 
-      <div class="field has-addons">
-        <div class="control has-icons-left">
-          <input bind:this={passInput} class="input" bind:value={password} type="password" required />
-          <span class="icon is-small is-left">
-            <i class="fas fa-key"></i>
-          </span>
-        </div>
-        <div class="control">
-          <span class="button is-white showhide" on:click={showPassword}>
-            {#if show}
-            <i class="fas fa-eye"></i>
-            {:else}
-            <i class="fas fa-eye-slash"></i>
-            {/if}
-          </span>
-        </div>
+      <Input type="password" bind:value={password} label="Password" required />
+
+      <div class="buttons">
+        <a href="#/signup" class="button button-clear">Create account</a>
+        <button type="submit" class:is-loading={loading} bind:this={submit}>
+          Let me in!
+        </button>
       </div>
-      <div class="field">
-        <div class="control">
-          <button type="submit"
-            class="button is-primary"
-            class:is-loading={loading}
-            bind:this={submit}
-          >
-            Let me in!
-          </button>
-          <p>or</p>
-          <a href="#/signup" class="button">Create account</a>
-        </div>
-      </div>
+
     </form>
-    </div>
   </div>
+</div>

@@ -4,7 +4,7 @@
   import DL from '../DL.svelte'
 </script>
 
-<h1 class="title">User Profile</h1>
+<h1>User Profile</h1>
 
 {#if $user}
 <DL>
@@ -22,7 +22,7 @@
 
     {#if $user.coursesAttending.length > 0}
     <dt>Courses attending:</dt>
-    <dd>{$user.coursesAttending.length} total 
+    <dd>{$user.coursesAttending.length} total
       {#each $user.coursesAttending as course (course.id)}
         <li>{course.name}</li>
       {/each}

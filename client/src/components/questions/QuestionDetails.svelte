@@ -7,25 +7,15 @@
   export let question
 </script>
 
-<style>
-  li {
-    list-style-type: none;
-    margin: 1rem;
-  }
+<h1>Question {question.order + 1}</h1>
 
-  .answers {
-    padding: 1rem;
-  }
-</style>
-
-<h1 class="title">Question {question.order + 1}</h1>
-
-<h2 class="title is-5">{question.text}</h2>
+<h2>{question.text}</h2>
 
 {#if $user.role === 'Teacher'}
   <CreateAnswer questionId={question.id} />
 {/if}
 
+<h2>Answers</h2>
 <section class="answers">
   {#if question.answers.length > 0}
     <ul>
@@ -41,7 +31,7 @@
 </section>
 
 {#if question.answers.length === 0 && $user.role === 'Teacher'}
-  <DeleteQuestion id={question.id} sessionId={question.session.id} />
+  <DeleteQuestion {question} />
 {/if}
 
  

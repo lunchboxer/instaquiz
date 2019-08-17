@@ -28,6 +28,17 @@
   }
 </script>
 
+<style>
+  input {
+    max-width: 40rem;
+  }
+
+  .input-error {
+    font-size: 1.2rem;
+    color: #ff2240;
+  }
+</style>
+
 <div class="field">
   <label class="label">{label} {#if description}
     <p class="help is-info" id="{descriptionId}">{description}</p>
@@ -124,23 +135,9 @@
         on:invalid|preventDefault="{checkValidity}"
       />
       {/if}
-      {#if leftIcon}
-      <span class="icon is-small is-left">
-        <i class="fas fa-{leftIcon}"></i>
-      </span>
-      {/if} {#if rightIcon}
-      <span class="icon is-small is-right">
-        <i class="fas fa-{rightIcon}"></i>
-      </span>
-      {/if} {#if error}
-      <p class="help is-danger">{error}</p>
+     {#if error}
+      <p class="input-error">{error}</p>
       {/if}
     </div>
   </div>
 </div>
-
-<style>
-  input {
-    max-width: 40rem;
-  }
-</style>

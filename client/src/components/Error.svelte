@@ -29,6 +29,6 @@
 
 {#if getMessage(errors)}
 <p class="error">
-    <span class="error-message"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong>&nbsp;{getMessage(errors)}</span>
+    <span class="error-message"><strong>Error:</strong>&nbsp;{getMessage(errors)}</span>
 </p>
 {/if}

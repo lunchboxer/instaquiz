@@ -34,6 +34,6 @@
   }
 </script>
 
-<button class="button is-small" class:is-loading={loading} on:click={joinCourse}>
-  <i class="fas fa-user-plus"></i>Join
+<button class="button button-clear" class:is-loading={loading} on:click={joinCourse}>
+  Join
 </button>

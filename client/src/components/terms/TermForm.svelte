@@ -2,36 +2,21 @@
   import { createEventDispatcher } from 'svelte'
   import { notifications } from '../notifications'
   import Input from '../Input.svelte'
-  import DatePicker from '../DatePicker.svelte'
   import Error from '../Error.svelte'
 
   let saveButton
   let form
-  let startDate
-  let endDate
+  export let name = ''
+  export let startDate = ''
+  export let endDate = ''
+  export let edit = false
   export let errors
   export let loading
-  export let name = ''
-  export let defaultDate = null
-  const options = {
-    inline: true,
-    mode: 'range',
-    enableTime: false,
-    altInput: true,
-    altFormat: 'M j, Y',
-    dateFormat: 'Y-m-d'
-  }
 
   const dispatch = createEventDispatcher()
 
   $: if (saveButton) { saveButton.disabled = loading }
 
-  const handleChange = (selectedDates) => {
-    if (selectedDates.length === 2) {
-      startDate = selectedDates[0].toISOString()
-      endDate = new Date(selectedDates[1].setHours(23, 59, 59, 999)).toISOString()
-    }
-  }
   const handleSubmit = () => {
     const isValid = form.checkValidity()
     if (!isValid) {
@@ -55,18 +40,17 @@
   }
 </style>
 
-<h1 class="title">{#if defaultDate}Edit{:else}Create{/if} semester</h1>
+<h1>{#if edit}Edit{:else}Create{/if} semester</h1>
 
 <form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset >
   <Error {errors}/>
   <Input bind:value={name} label="Name" placeholder="i.e. 'Autumn 1978'" required />
-  <label class="label" >
-    Start and end dates
-  </label>
-  <DatePicker bind:value={defaultDate} placeholder="Pick two dates below" className="input" {options} on:change={(event) =>
-    handleChange(...event.detail)} />
+  
+  <Input bind:value={startDate} type="date" label="Start date" required />
+  <Input bind:value={endDate} type="date" label="End date" required />
+
   <div class="buttons">
-    <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save term</button>
-    <input type="reset" class="button" value="Cancel">
+    <input type="reset" class="button button-outline" value="Cancel">
+    <button type="submit" class:is-loading={loading} bind:this={saveButton}>Save term</button>
   </div>
 </form>

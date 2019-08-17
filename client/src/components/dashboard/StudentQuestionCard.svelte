@@ -45,7 +45,7 @@
 </style>
 
 <section class="question">
-  <h2 class="title"> {question.text}</h2>
+  <h2> {question.text}</h2>
 
   <Error {errors} />
   {#if loading}
@@ -56,7 +56,7 @@
     <ul>
       {#each question.answers as answer (answer.id)}
         <li>
-          <button class="button is-primary" on:click={() => { respond(answer) }}>{answer.text}</button>
+          <button on:click={() => { respond(answer) }}>{answer.text}</button>
         </li>
       {/each}
     </ul>

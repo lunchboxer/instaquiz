@@ -9,21 +9,12 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 3rem;
+    top: 4rem;
     right: 0;
     margin: 0.5rem;
     width: auto;
     max-width: calc(100% - 4rem);
     z-index: 99;
-  }
-
-  .notification {
-    list-style: none;
-    /* padding: 0 1rem; */
-    /* margin: 0.5rem; */
-    /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); */
-    width: 100%;
-    background-color: var(--background);
   }
 </style>
 

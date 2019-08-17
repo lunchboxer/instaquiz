@@ -15,9 +15,13 @@
 
 <style>
   main {
-    height: calc(100% - 5rem);
     padding: 1rem;
-    margin: 0;
+  }
+
+  @media only screen and (min-width: 768px) {
+    main {
+      padding: 2rem;
+    }
   }
 </style>
 

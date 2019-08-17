@@ -29,20 +29,21 @@
   }
 </script>
 
-<h2 class="title">{#if id}Edit{:else}Add{/if} a course</h2>
+<h2>{#if id}Edit{:else}Add{/if} a course</h2>
   <Error {errors} />
   <form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset>
     <Input label="Name" type="text" bind:value={name} required />
     <Input label="Code" type="text" bind:value={code} required />
 
-    <label class="label">
+    <label>
       Term
     </label>
     <TermSelect bind:termId />
 
     <div class="buttons">
-        <button class="button is-primary" class:is-loading={loading} bind:this={saveButton} type="submit">Save</button>
-        <input class="button" type="reset" value="Cancel" />
+        <input class="button button-outline" type="reset" value="Cancel" />
+        <button class:is-loading={loading} bind:this={saveButton} type="submit">Save</button>
+        
     </div>
    
   </form>

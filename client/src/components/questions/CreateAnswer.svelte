@@ -1,20 +1,17 @@
 <script>
-  import { CREATE_ANSWER } from '../../data/mutations'
   import { notifications } from '../notifications'
   import Error from '../Error.svelte'
   import Input from '../Input.svelte'
   import { question } from './data'
-  import { request } from '../../data/fetch-client'
 
   export let questionId
-  let show = false
   let errors = ''
   let loading = false
   let text = ''
+  let form
 
   const reset = () => {
     errors = ''
-    show = false
     text = ''
   }
 
@@ -33,16 +30,23 @@
     } finally {
       loading = false
     }
-    loading = false
+  }
+
+  const handleSubmit = () => {
+    const isValid = form.checkValidity()
+    if (!isValid) {
+      notifications.add({
+        text: 'Please fix form errors first.',
+        type: 'danger'
+      })
+      return
+    }
+    add()
   }
 </script>
 
-{#if !show}
-  <button class="button is-primary" on:click={() => { show = true }}>
-    <i class="fas fa-plus"></i>Add an answer
-  </button>
-{:else}
-  <Error {errors} />
+<Error {errors} />
+<form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset>
   <Input label="Text" type="text" bind:value={text} required />
-  <button class="button is-primary" class:is-loading={loading} on:click={add}>Save answer</button>
-{/if}
+  <button type="submit" class:is-loading={loading}>Add answer</button>
+</form>

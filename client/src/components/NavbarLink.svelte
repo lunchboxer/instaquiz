@@ -19,10 +19,17 @@
       background-color: inherit;
     }
   }
+
+  .navbar-item {
+    line-height: 1.5;
+    padding: 1rem;
+    position: relative;
+    align-items: center;
+    display: flex;
+    font-weight: 400;
+  }
 </style>
 
 <a class="navbar-item" href="{url}">
-  {#if icon}
-  <i class="fas fa-{icon}"></i>
-  {/if} {text}
+  {text}
 </a>

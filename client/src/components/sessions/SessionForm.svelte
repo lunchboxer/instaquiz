@@ -30,24 +30,15 @@
   }
 </script>
 
-<style>
-  .buttons {
-    padding-top: 1rem;
-  }
 
-  form {
-    max-width: 308px;
-  }
-</style>
-
-<h1 class="title">{#if session.id}Edit{:else}Create{/if} Session</h1>
+<h1>{#if session.id}Edit{:else}Create{/if} Session</h1>
   
   <form novalidate bind:this={form} on:submit|preventDefault={handleSubmit} on:reset >
     <Error {errors}/>
     <Input label="Start time" type="datetime-local" bind:value={startsAt} required min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} />
     <Input label="End time" type="datetime-local" bind:value={endsAt} required min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} />
     <div class="buttons">
-      <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save session</button>
-      <input type="reset" class="button" value="Cancel">
+      <input type="reset" class="button button-outline" value="Cancel">
+      <button type="submit" class:is-loading={loading} bind:this={saveButton}>Save session</button>
     </div>
   </form>

@@ -51,7 +51,7 @@
 <div class="container-centered">
   <div class="join-course">
 
-    <h1 class="title">Join a course</h1>
+    <h1>Join a course</h1>
 
     <p>
       Simply enter the code word given by your instructor and you'll be added to
@@ -62,11 +62,13 @@
 
     <Error {errors} />
     <form bind:this="{form}" novalidate on:submit|preventDefault="{join}">
+
       <Input label="Code word" bind:value="{code}" required />
 
-      <button type="submit" class="button is-primary" class:is-loading="{loading}" bind:this="{submit}">
+      <button type="submit" class:is-loading="{loading}" bind:this="{submit}">
         Join!
       </button>
+
     </form>
   </div>
 </div>

@@ -15,7 +15,7 @@
   </ul>
 </nav>
 
-<h1 class="title is-3">All Courses</h1>
+<h1>All Courses</h1>
 
 {#if $courses}
   <CourseList courses={$courses} />

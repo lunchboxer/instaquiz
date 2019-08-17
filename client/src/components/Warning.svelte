@@ -4,37 +4,32 @@
 
 <style>
   .warning {
-    border: 1px solid #ffdd57;
-    color: #ffdd57;
     margin-bottom: 1rem;
+    border-radius: 4px;
+    padding: 0;
   }
 
   .warning :global(strong) {
     color: inherit;
   }
 
+  .warning-message-body {
+    padding: 0.5rem;
+  }
+
   .warning-message-header {
     margin: 0;
-    padding: 0.3rem 0.5rem;
-    background: #ffdd57;
-    color: black;
-    font-size: 1.2rem;
-  }
-
-  .warning-message-header i {
-    margin-right: 0.3rem;
-  }
-
-  .warning-message-body {
-    padding: 0.3rem 0.6rem;
+    color: var(--background);
+    padding: 0.5rem 1rem;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 2px solid var(--background);
   }
 </style>
 
 <div class="warning">
-  <p class="warning-message-header">
-    <i class="fas fa-exclamation-triangle"></i>
+  <h4 class="warning-message-header">
     {title}
-  </p>
+  </h4>
   <section class="warning-message-body">
     <slot></slot>
   </section>

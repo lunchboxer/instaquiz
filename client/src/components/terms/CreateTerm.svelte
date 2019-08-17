@@ -15,8 +15,12 @@
 
   const save = async ({ detail }) => {
     loading = true
+    const end = new Date(detail.endDate).setHours(23, 59, 59, 999)
+    const endDate = new Date(end).toJSON()
+    const start = new Date(detail.startDate).setHours(0, 0, 0, 1)
+    const startDate = new Date(start).toJSON()
     try {
-      await terms.create(detail)
+      await terms.create({ name: detail.name, endDate, startDate })
       notifications.add({ text: `Saved new term '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {
@@ -31,13 +35,9 @@
   }
 </script>
 
-<style>
-  button {
-    margin: 1rem 0;
-  }
-</style>
-
-<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Create a term</button>
+<button on:click={() => { open = true }}>
+  Create a term
+</button>
 <Modal bind:open>
   <TermForm on:reset={reset} on:submit={save} {errors} {loading} />
 </Modal>
