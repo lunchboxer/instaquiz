@@ -95,7 +95,7 @@
 
   {#if course.sessions}
   {#if $user.role === 'Teacher'}
-    <div class="sessions">
+    <section class="sessions">
       <h3>Current and future sessions</h3>
       {#if future.length > 0}
         {#each future as session (session.id)}
@@ -109,11 +109,11 @@
       {#if isCourseTeacher}
         <AddSession courseId={course.id} />
       {/if}
-    </div>
+    </section>
   {/if}  
 
   {#if past.length > 0}
-    <div class="sessions">
+    <section class="sessions">
       <h3>Past sessions</h3>
       {#each past as session (session.id)}
         <li>
@@ -122,7 +122,7 @@
           </a>
         </li>
       {/each}
-    </div>
+    </section>
   {/if}
 
   <div class="buttons">

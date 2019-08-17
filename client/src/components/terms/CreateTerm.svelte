@@ -15,8 +15,12 @@
 
   const save = async ({ detail }) => {
     loading = true
+    const end = new Date(detail.endDate).setHours(23, 59, 59, 999)
+    const endDate = new Date(end).toJSON()
+    const start = new Date(detail.startDate).setHours(0, 0, 0, 1)
+    const startDate = new Date(start).toJSON()
     try {
-      await terms.create(detail)
+      await terms.create({ name: detail.name, endDate, startDate })
       notifications.add({ text: `Saved new term '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {

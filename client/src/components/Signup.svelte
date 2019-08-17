@@ -72,7 +72,7 @@
 
       <div class="buttons">
         <a href="#/login" class="button button-clear">I have an account!</a>
-        <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={submit}>
+        <button type="submit" class:is-loading={loading} bind:this={submit}>
           Register
         </button>
       </div>
