@@ -43,7 +43,6 @@ export const every2Hours = readable(new Date(), set => {
 
 const createSessionsStore = () => {
   const { subscribe, set, update } = writable()
-
   return {
     subscribe,
     update,

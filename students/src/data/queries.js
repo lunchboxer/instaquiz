@@ -79,26 +79,6 @@ export const COURSE = /* GraphQL */`
   ${SessionFields}
   ${CourseFields}`
 
-export const COURSES = /* GraphQL */`
-query Courses {
-  courses{
-    id
-    name
-    term {
-      name
-      id
-      startDate
-    }
-    teachers {
-      id
-      name
-    }
-    students {
-      id
-    }
-  }
-}`
-
 export const QUESTION = /* GraphQL */`
 query Question($id: ID!){
   question(id: $id){
@@ -130,24 +110,6 @@ query Question($id: ID!){
     }
   }
 }`
-
-export const ACTIVE_TEACHER_SESSION = /* GraphQL */`
-  query Session($id: ID!){
-    session(id: $id){
-      id
-      questions {
-        id
-        text
-        order
-        asked
-        answers {
-          id
-          text
-        }
-      }
-    }
-  }
-`
 
 export const RESPONSES = /* GraphQL */`
   query Responses($questionId: ID!){
