@@ -1,9 +1,7 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { user } from '../../data/user'
   import { activeSession, every15Seconds } from './stores'
   import ActiveTeacherSession from './ActiveTeacherSession.svelte'
-  import ActiveStudentSession from './ActiveStudentSession.svelte'
 
   const formatDate = (date) => {
     const string = formatRelative(new Date(date), new Date())
