@@ -1,16 +1,15 @@
 <script>
   import { NotificationList } from './components/notifications'
   import { user } from './data/user'
-  import { terms } from './components/terms/data'
-  import Router, { location } from 'svelte-spa-router'
-  import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-  import { activeSession } from './components/dashboard/stores'
-  import ActiveSession from './components/dashboard/ActiveSession.svelte'
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
+  import { activeSession, term } from './data/stores'
+  import ActiveSession from './components/dashboard/ActiveSession.svelte'
+  import Router, { location } from 'svelte-spa-router'
+  import routes from './routes'
 
-  terms.get()
+  term.get()
 </script>
 
 <style>
@@ -32,7 +31,9 @@
     <UpcomingSessions />
   {/if}
 
-  {#if $user.username || $location === '/signup'}
+  {#if $activeSession}
+    <ActiveSession />
+  {:else if $user.username || $location === '/signup'}
     <Router {routes}/>
   {:else}
     <Login/>

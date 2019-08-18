@@ -26,10 +26,4 @@
   <button on:click={exit}>Exit class</button>
 {/if}
 
-{#if $user.role === 'Teacher'}
-  <ActiveTeacherSession/>
-{/if}
-
-{#if $user.role === 'Student'}
-  <ActiveStudentSession/>
-{/if}
+<ActiveTeacherSession/>

@@ -2,8 +2,7 @@ const { GraphQLServer } = require('graphql-yoga')
 const { prisma } = require('./generated/prisma-client')
 const { resolvers } = require('./resolvers')
 const { permissions } = require('./permissions')
-const sirv = require('sirv')
-const compress = require('compression')()
+const serveStatic = require('serve-static')
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -19,7 +18,10 @@ const server = new GraphQLServer({
   }
 })
 
-server.use(compress, sirv('client/public'))
+server.use('/teachers', serveStatic('teachers/public'))
+server.use('/students', serveStatic('students/public'))
+
+server.get('/', (_, response) => response.redirect('/students/'))
 
 const options = {
   endpoint: '/api',

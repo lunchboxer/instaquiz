@@ -11,12 +11,12 @@ require('dotenv').config()
 const production = !process.env.ROLLUP_WATCH
 
 export default {
-  input: 'teachers/src/main.js',
+  input: 'students/src/main.js',
   output: {
     sourcemap: true,
     format: 'iife',
     name: 'app',
-    file: 'teachers/public/bundle.js'
+    file: 'students/public/bundle.js'
   },
   plugins: [
     svelte({
@@ -25,7 +25,7 @@ export default {
       // we'll extract any component CSS out into
       // a separate file — better for performance
       css: css => {
-        css.write('teachers/public/bundle.css')
+        css.write('students/public/bundle.css')
       }
     }),
     replace({
@@ -51,7 +51,7 @@ export default {
     image(),
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
-    !production && livereload('teachers/public'),
+    !production && livereload('students/public'),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify

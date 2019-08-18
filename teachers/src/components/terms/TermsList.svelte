@@ -25,16 +25,12 @@
     {#if currentTerm.courses}
       <h2>Current term: {currentTerm.name} </h2>
       <CategorizedCourseList courses={currentTerm.courses} />
-      {#if $user.role === 'Teacher'}
-        <AddCourse termId={currentTerm.id} />
-      {/if}
+      <AddCourse termId={currentTerm.id} />
     {/if} <!-- currentTerm.courses -->
 
   </section>
 
 {/if} <!-- !currentTerm -->
-
-{#if $user.role === 'Teacher'}
 
   {#if nextTerm}
 
@@ -57,8 +53,3 @@
       <AddCourse termId={term.id} />
     </section>
   {/each}
-{/if} <!-- $user.role === 'Teacher -->
-
-{#if $user.role === 'Student'}
-  <a href="#/join-course" class="button">Join a course</a>
-{/if}
