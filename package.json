@@ -16,7 +16,7 @@
     "dev:server": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
     "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config src/index.js",
     "nodemon": "nodemon --config nodemon.json",
-    "build": "build:teachers && build:students && build:server",
+    "build": "npm run build:teachers && npm run build:students && npm run build:server",
     "build:teachers": "rollup -c teachers/rollup.config.js",
     "build:students": "rollup -c students/rollup.config.js",
     "build:server": "export $(cat .env | xargs) && prisma generate",
