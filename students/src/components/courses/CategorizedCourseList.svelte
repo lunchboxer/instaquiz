@@ -9,8 +9,6 @@
   $: notAttending = courses.filter(c => !attendingIds.includes(c.id))
 </script>
 
-<h2>Courses</h2>
-
 {#if courses.length > 0}
 
   {#if attending && attending.length}

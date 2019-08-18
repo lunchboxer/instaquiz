@@ -11,11 +11,11 @@
 </script>
 
 <svelte:head>
-  <title>{term.name}</title>
+  <title>Courses</title>
 </svelte:head>
 
-<h1>{term.name}</h1>
-<p>{format(term.startDate)} to {format(term.endDate)}</p>
+<h1>Courses</h1>
+<p>{term.name}: {format(term.startDate)} to {format(term.endDate)}</p>
 
 <section class="term">
   <CategorizedCourseList courses={term.courses} />
