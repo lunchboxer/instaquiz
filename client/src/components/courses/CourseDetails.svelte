@@ -105,6 +105,8 @@
             </a>
           </li>
         {/each}
+      {:else}
+      <p>none</p>
       {/if}
       {#if isCourseTeacher}
         <AddSession courseId={course.id} />

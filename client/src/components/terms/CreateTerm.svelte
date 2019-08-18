@@ -1,28 +1,25 @@
 <script>
   import { terms } from './data'
   import { notifications } from '../notifications'
-  import Modal from '../Modal.svelte'
-  import TermForm from './TermForm.svelte'
+  import ModalForm from '../ModalForm.svelte'
+  import Input from '../Input.svelte'
 
   let loading = false
   let errors = ''
   let open = false
+  let name = ''
+  let startDate = ''
+  let endDate = ''
 
-  const reset = () => {
-    errors = ''
-    open = false
-  }
-
-  const save = async ({ detail }) => {
+  const save = async () => {
     loading = true
-    const end = new Date(detail.endDate).setHours(23, 59, 59, 999)
-    const endDate = new Date(end).toJSON()
-    const start = new Date(detail.startDate).setHours(0, 0, 0, 1)
-    const startDate = new Date(start).toJSON()
+    endDate = new Date(endDate + 'T23:59:59.999').toJSON()
+    startDate = new Date(startDate + 'T00:00:00.001').toJSON()
     try {
-      await terms.create({ name: detail.name, endDate, startDate })
-      notifications.add({ text: `Saved new term '${detail.name}'`, type: 'success' })
-      reset()
+      await terms.create({ name, endDate, startDate })
+      notifications.add({ text: `Saved new term '${name}'`, type: 'success' })
+      errors = ''
+      open = false
     } catch (error) {
       errors = error
       notifications.add({
@@ -38,6 +35,9 @@
 <button on:click={() => { open = true }}>
   Create a term
 </button>
-<Modal bind:open>
-  <TermForm on:reset={reset} on:submit={save} {errors} {loading} />
-</Modal>
+
+<ModalForm bind:open on:submit={save} {errors} {loading}>
+  <Input bind:value={name} label="Name" placeholder="i.e. 'Autumn 1978'" required />
+  <Input bind:value={startDate} type="date" label="Start date" required />
+  <Input bind:value={endDate} type="date" label="End date" required />
+</ModalForm>

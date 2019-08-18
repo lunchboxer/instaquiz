@@ -11,7 +11,7 @@
 
   .spinner {
     color: #14a098;
-    width: 5rem;
+    width: 4rem;
     padding: 0.5rem;
     animation: spin 1.5s linear infinite;
   }

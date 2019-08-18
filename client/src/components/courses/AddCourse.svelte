@@ -1,25 +1,24 @@
 <script>
-  import Modal from '../Modal.svelte'
-  import CourseForm from './CourseForm.svelte'
   import { notifications } from '../notifications'
   import { courses } from './data'
+  import ModalForm from '../ModalForm.svelte'
+  import Input from '../Input.svelte'
+  import TermSelect from './TermSelect.svelte'
 
   let errors = ''
   let open = false
   let loading = false
+  let name = ''
+  let code = ''
   export let termId = ''
 
-  const reset = () => {
-    errors = ''
-    open = false
-  }
-
-  const save = async ({ detail }) => {
+  const save = async () => {
     loading = true
     try {
-      await courses.create(detail)
-      notifications.add({ text: `Saved new course '${detail.name}'`, type: 'success' })
-      reset()
+      await courses.create({ name, termId, code })
+      notifications.add({ text: `Saved new course '${name}'`, type: 'success' })
+      open = false
+      errors = ''
     } catch (error) {
       errors = error
       notifications.add({
@@ -35,6 +34,11 @@
 <button on:click={() => { open = true }}>
   Add a course
 </button>
-<Modal bind:open>
-  <CourseForm on:reset={reset} on:submit={save} {errors} {termId} {loading} />
-</Modal>
+
+<ModalForm bind:open on:submit={save} {errors} {loading}>
+  <Input label="Name" type="text" bind:value={name} required />
+  <Input label="Code" type="text" bind:value={code} required />
+
+  <label>Term</label>
+  <TermSelect bind:termId />
+</ModalForm>

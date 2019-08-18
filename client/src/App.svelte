@@ -28,7 +28,6 @@
 <Navbar />
 
 <main>
-
   {#if $user.username}
     <UpcomingSessions />
   {/if}

@@ -5,6 +5,7 @@ import replace from 'rollup-plugin-replace'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
+import image from 'rollup-plugin-image'
 require('dotenv').config()
 
 const production = !process.env.ROLLUP_WATCH
@@ -47,6 +48,7 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
+    image(),
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
     !production && livereload('client/public'),

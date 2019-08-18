@@ -673,7 +673,7 @@ form div.buttons {
   width: 100%;
   flex-wrap: wrap;
 }
-form div.buttons button, form div.buttons .button {
+form div.buttons :not(:first-child) {
   margin-left: 0.5rem;
 }
 button.success, .button.success, button.danger, .button.danger {
@@ -694,4 +694,33 @@ nav.breadcrumb ul li+li:before {
 }
 section {
   margin: 2rem 1rem;
+}
+
+button, .button {
+  position: relative;
+}
+
+button.is-loading::after, .button.is-loading::after {
+  animation: spin .5s infinite linear;
+  border: 2px solid white;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  right: 1rem;
+  top: calc(50% - (1em / 2));
+  content: "";
+  height: 1em;
+  width: 1em;
+  z-index: 400;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
