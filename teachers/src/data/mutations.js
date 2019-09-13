@@ -45,15 +45,6 @@ export const DELETE_COURSE = /* GraphQL */`
   }
 `
 
-export const ADD_STUDENT_TO_COURSE = /* GraphQL */`
-  mutation ($id: ID!, $code: String!){
-    addStudentToCourse(id: $id, code: $code ) {
-      ...CourseFields
-    }
-  }
-  ${CourseFields}
-`
-
 export const ADD_TEACHER_TO_COURSE = /* GraphQL */`
   mutation ($id: ID!, $courseId: ID!){
     addTeacherToCourse(id: $id, courseId: $courseId ) {

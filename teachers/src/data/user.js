@@ -14,13 +14,15 @@ const createUserStore = () => {
   // pull token and user from localStorage if it's there
   const { user, token } = getAuthFromStorage()
   const { subscribe, set, update } = writable({ ...user, token })
+  const coldUpdate = (newUser) => window.localStorage.setItem('user', JSON.stringify(newUser))
 
   return {
     subscribe,
     update,
+    coldUpdate,
     login: async (username, password) => {
       const { login } = await request(LOGIN, { username, password })
-      window.localStorage.setItem('user', JSON.stringify(login.user))
+      coldUpdate(login.user)
       window.localStorage.setItem('token', JSON.stringify(login.token))
       update(previous => ({
         ...previous,
@@ -30,7 +32,7 @@ const createUserStore = () => {
     },
     signup: async (username, name, password) => {
       const { signup } = await request(SIGNUP, { username, name, password })
-      window.localStorage.setItem('user', JSON.stringify(signup.user))
+      coldUpdate(signup.user)
       window.localStorage.setItem('token', JSON.stringify(signup.token))
       update(previous => ({
         ...previous,

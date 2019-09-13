@@ -1,5 +1,4 @@
 <script>
-  import { user } from '../../data/user'
   import AddCourse from '../courses/AddCourse.svelte'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
 

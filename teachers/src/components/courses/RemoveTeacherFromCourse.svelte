@@ -25,10 +25,12 @@
         })
       )
       user.update(previous => {
-        return {
+        const newUser = {
           ...previous,
           coursesTeaching: previous.coursesTeaching.filter(c => c.id !== courseId)
         }
+        user.coldUpdate(newUser)
+        return newUser
       })
       errors = ''
       notifications.add({ text: `Successfully removed teacher from ${removeTeacherFromCourse.name}`, type: 'success' })

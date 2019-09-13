@@ -11,21 +11,8 @@
   const joinCourse = async () => {
     loading = true
     try {
-      const { addTeacherToCourse } = await request(ADD_TEACHER_TO_COURSE, {
-        id: $user.id, courseId
-      })
-      courses.update(previous => !previous
-        ? [addTeacherToCourse]
-        : previous.map((course) => {
-          if (course.id !== addTeacherToCourse.id) return course
-          return { ...course, teachers: addTeacherToCourse.teachers }
-        })
-      )
-      user.update(previous => {
-        const added = { id: courseId, name: addTeacherToCourse.name }
-        return { ...previous, coursesTeaching: [...previous.coursesTeaching, added] }
-      })
-      notifications.add({ text: `Successfully added teacher to ${addTeacherToCourse.name}`, type: 'success' })
+      const course = await courses.addTeacher($user.id, courseId)
+      notifications.add({ text: `Successfully added teacher to ${course.name}`, type: 'success' })
     } catch (error) {
       notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })
     } finally {

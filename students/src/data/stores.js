@@ -99,7 +99,9 @@ const createCoursesStore = () => {
       }))
       user.update(previous => {
         const added = { id: addStudentToCourse.id, name: addStudentToCourse.name }
-        return { ...previous, coursesAttending: [...previous.coursesAttending, added] }
+        const newUser = { ...previous, coursesAttending: [...previous.coursesAttending, added] }
+        window.localStorage.setItem('user', JSON.stringify(newUser))
+        return newUser
       })
       return addStudentToCourse
     }

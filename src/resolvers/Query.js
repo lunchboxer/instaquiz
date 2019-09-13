@@ -14,7 +14,7 @@ exports.Query = {
   course (_, args, context) {
     return context.prisma.course({ id: args.id })
   },
-  courses (_, { orderBy, where }, context) {
+  courses (_, { orderBy = 'name_ASC', where }, context) {
     return context.prisma.courses({
       orderBy,
       where

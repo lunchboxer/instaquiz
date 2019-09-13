@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 import { request } from '../../data/fetch-client'
 import { COURSE } from '../../data/queries'
-import { CREATE_COURSE, DELETE_COURSE, ADD_STUDENT_TO_COURSE } from '../../data/mutations'
+import { CREATE_COURSE, DELETE_COURSE, ADD_STUDENT_TO_COURSE, ADD_TEACHER_TO_COURSE } from '../../data/mutations'
 import { terms } from '../terms/data'
 import { user } from '../../data/user'
 
@@ -37,19 +37,21 @@ const createCoursesStore = () => {
         return { term, courses: term.courses.filter(c => c.id !== id) }
       }))
     },
-    addStudent: async (id, code) => {
-      const { addStudentToCourse } = await request(ADD_STUDENT_TO_COURSE,
-        { id, code }
+    addTeacher: async (id, courseId) => {
+      const { addTeacherToCourse } = await request(ADD_TEACHER_TO_COURSE,
+        { id, courseId }
       )
-      update(previous => !previous ? [addStudentToCourse] : previous.map(course => {
-        if (course.id !== addStudentToCourse.id) return course
-        return { ...course, students: addStudentToCourse.teachers }
+      update(previous => !previous ? [addTeacherToCourse] : previous.map(course => {
+        if (course.id !== addTeacherToCourse.id) return course
+        return { ...course, teachers: addTeacherToCourse.teachers }
       }))
       user.update(previous => {
-        const added = { id: addStudentToCourse.id, name: addStudentToCourse.name }
-        return { ...previous, coursesAttending: [...previous.coursesAttending, added] }
+        const added = { id: addTeacherToCourse.id, name: addTeacherToCourse.name }
+        const newUser = { ...previous, coursesTeaching: [...previous.coursesTeaching, added] }
+        user.coldUpdate(newUser)
+        return newUser
       })
-      return addStudentToCourse
+      return addTeacherToCourse
     }
   }
 }
