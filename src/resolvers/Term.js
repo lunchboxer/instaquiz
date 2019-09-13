@@ -1,5 +1,5 @@
 exports.Term = {
   courses (root, args, context) {
-    return context.prisma.term({ id: root.id }).courses()
+    return context.prisma.term({ id: root.id }).courses({ orderBy: 'name_ASC' })
   }
 }

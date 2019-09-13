@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 import { request } from '../../data/fetch-client'
 import { COURSE } from '../../data/queries'
-import { CREATE_COURSE, DELETE_COURSE, ADD_STUDENT_TO_COURSE, ADD_TEACHER_TO_COURSE } from '../../data/mutations'
+import { CREATE_COURSE, DELETE_COURSE, ADD_TEACHER_TO_COURSE } from '../../data/mutations'
 import { terms } from '../terms/data'
 import { user } from '../../data/user'
 
