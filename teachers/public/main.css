@@ -707,7 +707,7 @@ button.is-loading::after, .button.is-loading::after {
   border-right-color: transparent;
   border-top-color: transparent;
   position: absolute;
-  right: 1rem;
+  right: 0.5rem;
   top: calc(50% - (1em / 2));
   content: "";
   height: 1em;
