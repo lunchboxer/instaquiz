@@ -8,6 +8,7 @@ const createSessionStore = () => {
   return {
     subscribe,
     update,
+    set,
     get: async (id) => {
       const response = await request(SESSION, { id })
       set(response.session)

@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, AllSessionFields, QuestionFields, UserFields } from './fragments'
 
 // Auth
 
@@ -88,6 +88,15 @@ export const CREATE_SESSION = /* GraphQL */`
     }
   }
   ${SessionFields}
+`
+
+export const IMPORT_QUESTIONS = /* GraphQL */`
+  mutation ImportQuestions($fromSessionId: ID!, $toSessionId: ID!) {
+    importQuestions(fromSessionId: $fromSessionId, toSessionId: $toSessionId) {
+      ...AllSessionFields
+    }
+  }
+  ${AllSessionFields}
 `
 
 // Question

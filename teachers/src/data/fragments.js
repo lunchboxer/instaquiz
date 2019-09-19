@@ -48,6 +48,28 @@ export const SessionFields = /* GraphQL */`
     }
   }`
 
+export const AllSessionFields = /* GraphQL */`
+  fragment AllSessionFields on Session {
+    id
+    startsAt
+    endsAt
+    order
+    course {
+      id
+      name
+      term {
+        id
+        name
+      }
+    }
+    questions {
+      id
+      text
+      order
+    }
+  }
+`
+
 export const QuestionFields = /* GraphQL */`
   fragment QuestionFields on Question {
     id

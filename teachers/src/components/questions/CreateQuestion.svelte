@@ -34,7 +34,7 @@
           questions: [...previous.questions, response.createQuestion]
         }))
       }
-      notifications.add({ text: `Saved new question`, type: 'success' })
+      notifications.add({ text: 'Saved new question', type: 'success' })
       reset()
     } catch (error) {
       errors = error

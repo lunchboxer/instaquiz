@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, AllSessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
 
 export const ME = /* GraphQL */`
 {
@@ -23,27 +23,13 @@ query GetMYSessions($id: ID!, $now: DateTime!, $latest: DateTime!){
 ${SessionFields}`
 
 export const SESSION = /* GraphQL */`
-query Session($id: ID!){
-  session(id: $id){
-    id
-    startsAt
-    endsAt
-    order
-    course {
-      id
-      name
-      term {
-        id
-        name
-      }
-    }
-    questions {
-      id
-      text
-      order
+  query Session($id: ID!){
+    session(id: $id){
+      ...AllSessionFields
     }
   }
-}`
+  ${AllSessionFields}
+`
 
 export const TERMS_AND_ALL = /* GraphQL */`
 {

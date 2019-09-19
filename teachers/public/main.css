@@ -724,3 +724,7 @@ button.is-loading::after, .button.is-loading::after {
     transform: rotate(360deg);
   }
 }
+
+option {
+  color: var(--background);
+}

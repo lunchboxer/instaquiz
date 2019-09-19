@@ -2,6 +2,7 @@
   import { formatRelative } from 'date-fns'
   import CreateQuestion from '../questions/CreateQuestion.svelte'
   import { user } from '../../data/user'
+  import ImportQuestions from './ImportQuestions.svelte'
 
   export let session
 
@@ -25,6 +26,7 @@
 <p>{formatDate(session.startsAt)} to {formatDate(session.endsAt)}</p>
 
 {#if $user.role === 'Teacher' && session.endsAt > new Date().toJSON()}
+  <ImportQuestions sessionId={session.id} />
   <CreateQuestion sessionId={session.id} />
 {/if}
 
