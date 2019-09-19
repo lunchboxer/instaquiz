@@ -23,7 +23,6 @@
   const add = async () => {
     loading = true
     order && order--
-    console.log(order)
     try {
       const response = await request(CREATE_QUESTION,
         { text, order, sessionId }
