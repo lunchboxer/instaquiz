@@ -14,6 +14,8 @@
   let submit
   let form
 
+  if ($user && $user.id) push('/')
+
   const signup = async () => {
     let isValid = form.checkValidity()
     if (password !== confirmpass) {
