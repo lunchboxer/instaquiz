@@ -62,16 +62,3 @@ export const QuestionFields = /* GraphQL */`
       id
     }
   }`
-
-export const ResponseFields = /* GraphQL */`
-  fragment ResponseFields on Response {
-    id
-    createdAt
-    answer {
-      id
-    }
-    student {
-      id
-    }
-  }
-`

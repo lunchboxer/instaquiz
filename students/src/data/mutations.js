@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
+import { CourseFields, UserFields } from './fragments'
 
 // Auth
 
