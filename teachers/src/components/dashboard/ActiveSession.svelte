@@ -14,10 +14,14 @@
   $: classIsOver = $activeSession.endsAt < $every15Seconds.toJSON()
 </script>
 
-<h1>{$activeSession.course.name}</h1>
-<p>Lesson {$activeSession.order}</p>
+<style>
+  h4 {
+    margin-bottom: 0;
+  }
+</style>
 
-<p>Started {formatDate(new Date($activeSession.startsAt), { addSuffix: true })}</p>
+<h4>{$activeSession.course.name}</h4>
+<p>Lesson {$activeSession.order}, Started {formatDate(new Date($activeSession.startsAt), { addSuffix: true })}</p>
 
 {#if classIsOver}
   <p>This class was scheduled to end {formatDate(new Date($activeSession.endsAt))}.</p>

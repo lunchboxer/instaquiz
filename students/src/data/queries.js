@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, QuestionFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields, UserFields, ResponseFields } from './fragments'
 
 export const ME = /* GraphQL */`
 {
@@ -78,3 +78,15 @@ subscription Questions($sessionId: ID!) {
   }
 }
 ${QuestionFields}`
+
+export const MY_SESSION_RESPONSES_AND_QUESTIONS = /* GraphQL */ `
+ query ResponsesAndQuestions($studentId: ID!, $sessionId: ID!){
+   questions(first: 1, where: {asked_not:null, session: {id: $sessionId}}, orderBy: asked_DESC) {
+    ...QuestionFields
+   }
+   responses(where: {student: {id: $studentId}, session: {id: $sessionId}}) {
+     ...ResponseFields
+   }
+ }
+ ${QuestionFields}
+ ${ResponseFields}`

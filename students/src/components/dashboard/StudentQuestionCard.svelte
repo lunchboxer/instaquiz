@@ -4,22 +4,29 @@
   import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
+  import { myResponses } from '../../data/stores'
 
   export let question
-  export let answered = ''
   let loading = false
   let errors = ''
+  let change = false
 
+  $: latestResponse = $myResponses && $myResponses.find(r => r.question.id === question.id)
+  $: answered = latestResponse && latestResponse.answer.text
   const respond = async (answer) => {
     loading = true
     try {
-      request(ANSWER_QUESTION, {
+      const response = await request(ANSWER_QUESTION, {
         questionId: question.id,
         answerId: answer.id,
         studentId: $user.id,
         sessionId: question.session.id
       })
-      answered = answer.text
+      myResponses.update(previous => {
+        const filteredResponses = previous.filter(r => r.question.id !== question.id)
+        return [...filteredResponses, response.answerQuestion]
+      })
+      change = false
     } catch (error) {
       errors = error
     } finally {
@@ -45,13 +52,15 @@
 </style>
 
 <section class="question">
-  <h2> {question.text}</h2>
+  <h3> {question.text}</h3>
 
   <Error {errors} />
   {#if loading}
     <Loading what="response" />
-  {:else if answered}
+  {:else if answered && change === false}
     <p>You Answered: {answered}</p>
+
+    <button on:click={() => { change = true }}>Change</button>
   {:else}
     <ul>
       {#each question.answers as answer (answer.id)}

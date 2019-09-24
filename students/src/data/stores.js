@@ -4,7 +4,7 @@ import { GET_MY_SESSIONS, CURRENT_TERM, COURSE } from './queries'
 import { ADD_STUDENT_TO_COURSE } from './mutations'
 import { user } from './user'
 
-export function sleep (ms) {
+export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -109,3 +109,5 @@ const createCoursesStore = () => {
 }
 
 export const courses = createCoursesStore()
+
+export const myResponses = writable()

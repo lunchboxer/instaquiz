@@ -35,8 +35,8 @@ exports.Query = {
   question (_, args, context) {
     return context.prisma.question({ id: args.id })
   },
-  questions (_, { orderBy, where }, context) {
-    return context.prisma.questions({ orderBy: orderBy || 'order_ASC', where })
+  questions (_, { orderBy, where, first, last }, context) {
+    return context.prisma.questions({ orderBy: orderBy || 'order_ASC', where, first, last })
   },
   answer (_, args, context) {
     return context.prisma.answer({ id: args.id })

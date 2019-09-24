@@ -14,7 +14,9 @@ type Query {
   question(id: ID!): Question
   questions(
     orderBy: QuestionOrderByInput
-    where: QuestionWhereInput
+    where: QuestionWhereInput,
+    first: Int,
+    last: Int
   ): [Question!]!
   answer(id: ID!): Answer
   answers(orderBy: AnswerOrderByInput, where: AnswerWhereInput): [Answer!]!

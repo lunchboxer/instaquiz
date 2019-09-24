@@ -1,4 +1,4 @@
-import { CourseFields, UserFields } from './fragments'
+import { CourseFields, UserFields, ResponseFields } from './fragments'
 
 // Auth
 
@@ -49,7 +49,8 @@ export const ANSWER_QUESTION = /* GraphQL */`
       questionId: $questionId
       answerId: $answerId
       sessionId: $sessionId) {
-        id
+        ...ResponseFields
       }
   }
+  ${ResponseFields}
 `
