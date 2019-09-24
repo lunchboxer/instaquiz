@@ -4,6 +4,10 @@
   import DL from './DL.svelte'
 </script>
 
+<svelte:head>
+  <title>User Profile</title>
+</svelte:head>
+
 <h1>User Profile</h1>
 
 {#if $user}
@@ -27,6 +31,8 @@
     {/if}
 
   </DL>
+
+ 
 {:else}
   <Loading what="User" />
 {/if}

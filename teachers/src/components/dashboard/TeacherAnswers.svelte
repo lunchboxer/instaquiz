@@ -15,8 +15,9 @@
       query: RESPONSE_SUBSCRIPTION,
       variables: { questionId: question.id }
     }).subscribe({
-      next(result) {
-        responses = [...responses, result.data.responses]
+      next (result) {
+        const filteredResponses = responses.filter(r => r.id !== result.data.responses.id)
+        responses = [...filteredResponses, result.data.responses]
       }
     })
   })

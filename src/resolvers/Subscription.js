@@ -14,7 +14,7 @@ exports.Subscription = {
   responses: {
     subscribe: async (_, { sessionId, questionId }, { prisma }) => {
       return prisma.$subscribe.response({
-        mutation_in: ['CREATED'],
+        mutation_in: ['CREATED', 'UPDATED'],
         node: {
           session: { id: sessionId },
           question: { id: questionId }
