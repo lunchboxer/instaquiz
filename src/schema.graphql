@@ -30,6 +30,8 @@ type Query {
 type Mutation {
   signup(username: String!, name: String!, password: String!): AuthPayload!
   login(username: String!, password: String!): AuthPayload!
+  changePassword(username:String!, oldPassword: String!, newPassword: String!): User
+  resetPassword(username: String!): String
   createTerm(startDate: DateTime!, endDate: DateTime!, name: String!): Term
   updateTerm(
     startDate: DateTime!
