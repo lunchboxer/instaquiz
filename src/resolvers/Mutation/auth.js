@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { getUserId } = require('../../utils')
 
 const auth = {
   async signup (root, args, context) {
@@ -29,10 +30,11 @@ const auth = {
       user
     }
   },
-  async changePassword (root, { username, oldPassword, newPassword }, context) {
-    const user = await context.prisma.user({ username })
+  async changePassword (_, { id, oldPassword, newPassword }, context) {
+    if (!id) id = getUserId()
+    const user = await context.prisma.user({ id })
     if (!user) {
-      throw new Error(`User '${username}' not found`)
+      throw new Error(`User '${id}' not found`)
     }
     const passwordValid = await bcrypt.compare(oldPassword, user.password)
     if (!passwordValid) {
@@ -40,7 +42,7 @@ const auth = {
     }
     const password = await bcrypt.hash(newPassword, 10)
     return context.prisma.updateUser({
-      where: { username },
+      where: { id },
       data: { password }
     })
   },
