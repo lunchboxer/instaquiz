@@ -12,6 +12,7 @@
   let termId = ''
   let courseId = ''
   let importFromSessionId = ''
+  let loading = false
 
   $: if (courseId) courses.get(courseId)
   $: thisCourse = $courses && $courses.find(c => c.id === courseId)
@@ -23,6 +24,7 @@
   }
 
   const copyQuestions = async () => {
+    loading = true
     try {
       const response = await request(IMPORT_QUESTIONS, {
         toSessionId: sessionId,
@@ -36,6 +38,9 @@
       importFromSessionId = ''
     } catch (error) {
       console.error(error)
+      notifications.add({ text: 'Copying questions failed', type: 'danger' })
+    } finally {
+      loading = false
     }
   }
 </script>
@@ -76,5 +81,5 @@
     {/if}
   {/if}
 {:else}
-  <button on:click={() => { show = true }}>Import questions from another session</button>
+  <button class:is-loading={loading} disabled={loading} on:click={() => { show = true }}>Import questions from another session</button>
 {/if}
