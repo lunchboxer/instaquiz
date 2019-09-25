@@ -22,7 +22,7 @@
   }, 0)
 
   const percentage = value => (value === 0 || !totalResponses) ? 0
-    : parseInt((length / totalResponses) * 100)
+    : parseInt((value / totalResponses) * 100)
 
   const formatCount = length => {
     if (!length) return ''
