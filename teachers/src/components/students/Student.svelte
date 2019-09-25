@@ -25,8 +25,8 @@
     } finally {
       resetting = false
     }
+  }
 
- }
   const updateUser = async (property) => {
     const inputField = event.target
     const input = {}
@@ -56,11 +56,18 @@
   <input type="text" value={thisStudent.name} on:change={() => updateUser('name')} />
 
   <h2>Courses Attending</h2>
-
-  {#each thisStudent.coursesAttending as course (course.id)}
-    <li>{course.name}</li>
-  {/each}
-
+  {#if thisStudent.coursesAttending}
+    {#if thisStudent.coursesAttending.length > 0}
+      {#each thisStudent.coursesAttending as course (course.id)}
+        <li>{course.name}</li>
+      {/each}
+    {:else}
+      <p>None</p>
+    {/if}
+  {:else}
+    <Loading what="student courses" />
+  {/if}
+  
   <section>
       {#if newPassword}
       <p>New Password is "{newPassword}".</p>
