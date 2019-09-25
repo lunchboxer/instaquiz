@@ -38,6 +38,7 @@
     width: 50%;
     height: 50%;
     max-height: 450px;
+    max-width: 450px;
   }
 </style>
 

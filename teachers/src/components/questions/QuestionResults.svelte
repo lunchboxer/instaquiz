@@ -38,6 +38,7 @@
 <style>
   section {
     display: flex;
+    justify-content: center;
     width: 100%;
   }
 
@@ -58,7 +59,6 @@
     padding: 5rem;
     display: flex;
     align-items: center;
-    width: 50%;
   }
 </style>
 <h3>{totalResponses} Responses</h3>
