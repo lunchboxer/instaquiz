@@ -8,6 +8,8 @@ import Course from './components/courses/Course.svelte'
 import Session from './components/sessions/Session.svelte'
 import Courses from './components/courses/Courses.svelte'
 import Question from './components/questions/Question.svelte'
+import CourseStudents from './components/courses/CourseStudents.svelte'
+import Student from './components/students/Student.svelte'
 
 export default {
   '/': Dashboard,
@@ -19,5 +21,7 @@ export default {
   '/courses': Courses,
   '/session/:id': Session,
   '/question/:id': Question,
+  '/course-students/:id': CourseStudents,
+  '/student/:id': Student,
   '*': NotFound
 }

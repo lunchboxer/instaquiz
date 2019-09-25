@@ -171,3 +171,26 @@ export const CHANGE_PASSWORD = /* GraphQL */ `
    }
   }
 `
+
+export const RESET_PASSWORD = /* GraphQL */ `
+ mutation ResetPassword($username: String!) {
+   resetPassword(username:$username)
+ }`
+
+export const UPDATE_USER = /* GraphQL */ `
+ mutation UpdateUser ($id: ID!, $input: UserUpdateInput!) {
+   updateUser (id:$id, input: $input){
+    id
+     username
+     name
+     coursesAttending {
+       id
+       name
+       term {
+         id
+         name
+         startDate
+       }
+     }
+   }
+ }`

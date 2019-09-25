@@ -54,6 +54,9 @@ const auth = {
       data: { password }
     })
     return newPassword
+  },
+  updateUser (_, { id, input }, context) {
+    return context.prisma.updateUser({ where: { id }, data: input })
   }
 }
 

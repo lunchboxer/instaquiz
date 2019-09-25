@@ -88,6 +88,36 @@ export const COURSE = /* GraphQL */`
   ${SessionFields}
   ${CourseFields}`
 
+export const COURSE_STUDENTS = /* GraphQL */`
+  query CourseStudents($courseId: ID!){
+    course(id: $courseId){
+      students {
+        id
+        username
+        name
+      }
+    }
+  }
+`
+
+export const STUDENT = /* GraphQL */ `
+  query Student ($id: ID!){
+   user(id: $id) {
+     id
+     username
+     name
+     coursesAttending {
+       id
+       name
+       term {
+         id
+         name
+         startDate
+       }
+     }
+   }
+ }`
+
 export const COURSES = /* GraphQL */`
 query Courses {
   courses{

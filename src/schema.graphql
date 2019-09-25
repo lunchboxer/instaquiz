@@ -32,6 +32,7 @@ type Mutation {
   login(username: String!, password: String!): AuthPayload!
   changePassword(oldPassword: String!, newPassword: String!): User
   resetPassword(username: String!): String
+  updateUser(id: ID!, input: UserUpdateInput!): User
   createTerm(startDate: DateTime!, endDate: DateTime!, name: String!): Term
   updateTerm(
     startDate: DateTime!

@@ -89,7 +89,7 @@
       {teacherNames.length > 0 ? teacherNames.join(', ') : 'none'}
     </dd>
     <dt>Students:</dt>
-    <dd>{course.students.length}</dd>
+    <dd>{course.students.length} <a href="#/course-students/{course.id}">view student list</a></dd>
   </dl>
   {/if}
 

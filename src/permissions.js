@@ -34,6 +34,7 @@ exports.permissions = shield({
     createQuestion: isTeacher,
     updateQuestion: isTeacher,
     deleteQuestion: isTeacher,
-    resetPassword: isTeacher
+    resetPassword: isTeacher,
+    updateUser: or(isThisUser, isTeacher)
   }
 })
