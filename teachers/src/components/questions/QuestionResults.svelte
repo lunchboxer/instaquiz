@@ -1,17 +1,32 @@
 <script>
   import { formatRelative } from 'date-fns'
+  import PieChart from './PieChart.svelte'
 
   export let question
+
+  const colors = [
+    '#7FFF00',
+    '#FF0C0C',
+    '#0CF2F2',
+    '#7F0CF2',
+    '#F20C7F',
+    '#F2F20C',
+    '#0C0CF2',
+    '#F27F0C',
+    '#0CF27F',
+    '#999'
+  ]
 
   $: totalResponses = question.answers && question.answers.reduce((total, answer) => {
     return total + answer.responses.length
   }, 0)
 
+  const percentage = value => (value === 0 || !totalResponses) ? 0
+    : parseInt((length / totalResponses) * 100)
+
   const formatCount = length => {
     if (!length) return ''
-    const percentage = length === 0 || !totalResponses ? 0
-      : parseInt((length / totalResponses) * 100)
-    return `${length} (${percentage}%)`
+    return `${length} (${percentage(length)}%)`
   }
 
   const formatDate = date => {
@@ -20,12 +35,57 @@
   }
 </script>
 
+<style>
+  section {
+    display: flex;
+    width: 100%;
+  }
+
+  li {
+    list-style: none;
+    display: flex;
+  }
+
+  li .colorlabel {
+    margin-right: 1rem;
+  }
+
+  li .details {
+    margin-left: 0.5rem;
+  }
+
+  div.labels-container {
+    padding: 5rem;
+    display: flex;
+    align-items: center;
+    width: 50%;
+  }
+</style>
 <h3>{totalResponses} Responses</h3>
 
 <p>Asked {formatDate(question.asked)}</p>
 
 {#if question.answers && question.answers.length > 0}
-  {#each question.answers as answer (answer.id)}
-    <li><strong>{answer.text}</strong> {formatCount(answer.responses.length)}</li>
-  {/each}
-{/if}
+<section class="chart">
+
+<PieChart {colors} data={question.answers.map(a => {
+  return { label: a.text, portion: percentage(a.responses.length) / 100 }
+})}
+  />
+  <div class="labels-container">
+    <ul class="labels">
+    {#each question.answers as answer, index (answer.id)}
+      <li>
+          <svg xmlns="http://www.w3.org/2000/svg" class="colorlabel" width="24" height="24" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="12" fill={colors[index]} />
+          </svg>
+        <strong>{answer.text}</strong> 
+        <span class="details">
+          {formatCount(answer.responses.length)}
+        </span>
+        </li>
+    {/each}
+  </ul>
+</div>
+</section>
+  {/if}
