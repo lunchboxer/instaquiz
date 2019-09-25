@@ -21,8 +21,5 @@
 
 <section class="term">
   <CategorizedCourseList courses={term.courses} />
-
-  {#if $user.role === 'Teacher'}
-    <AddCourse termId={term.id} />
-  {/if}
+  <AddCourse termId={term.id} />
 </section>

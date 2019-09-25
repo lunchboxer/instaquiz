@@ -19,9 +19,7 @@
 
 <h1>All Terms</h1>
 
-{#if $user.role === 'Teacher'}
-  <CreateTerm />
-{/if}
+<CreateTerm />
 
 {#if $terms}
   <TermsList terms={$terms}/>

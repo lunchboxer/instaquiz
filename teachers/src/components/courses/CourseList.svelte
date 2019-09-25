@@ -1,13 +1,10 @@
 <script>
   import AddCourse from './AddCourse.svelte'
-  import { user } from '../../data/user'
 
   export let courses = []
 </script>
 
-{#if $user.role === 'Teacher'}
-  <AddCourse />
-{/if}
+<AddCourse />
 
 {#if courses.length > 0}
   {#each courses as course (course.id)}

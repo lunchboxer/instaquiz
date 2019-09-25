@@ -142,6 +142,7 @@ export const QUESTION = /* GraphQL */`
 query Question($id: ID!){
   question(id: $id){
     id
+    asked
     text
     order
     answers {

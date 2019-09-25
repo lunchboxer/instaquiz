@@ -59,15 +59,11 @@
 
 {#if course.teachers && course.students}
 <p>
-  {#if $user.role === 'Teacher'}
-      <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
-    {#if !isCourseTeacher}
-      <AddTeacherToCourse courseId={course.id} />
-    {:else}
-      <RemoveTeacherFromCourse courseId={course.id} />
-    {/if}
+  <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
+  {#if !isCourseTeacher}
+    <AddTeacherToCourse courseId={course.id} />
   {:else}
-    You are{!isEnrolled ? "n't" : ''} enrolled in this class.
+    <RemoveTeacherFromCourse courseId={course.id} />
   {/if}
 </p>
 {:else}
@@ -77,24 +73,21 @@
 
 <div class="course-details">
   {#if course.teachers && course.students}
-  <dl>
-    {#if $user.role === 'Teacher'}
-    <dt>Code:</dt>
-    <dd>
-     {course.code}
-    </dd>
-    {/if}
-    <dt>Teacher(s):</dt>
-    <dd>
-      {teacherNames.length > 0 ? teacherNames.join(', ') : 'none'}
-    </dd>
-    <dt>Students:</dt>
-    <dd>{course.students.length} <a href="#/course-students/{course.id}">view student list</a></dd>
-  </dl>
+    <dl>
+      <dt>Code:</dt>
+      <dd>{course.code}</dd>
+
+      <dt>Teacher(s):</dt>
+      <dd>
+        {teacherNames.length > 0 ? teacherNames.join(', ') : 'none'}
+      </dd>
+      
+      <dt>Students:</dt>
+      <dd>{course.students.length} <a href="#/course-students/{course.id}">view student list</a></dd>
+    </dl>
   {/if}
 
   {#if course.sessions}
-  {#if $user.role === 'Teacher'}
     <section class="sessions">
       <h3>Current and future sessions</h3>
       {#if future.length > 0}
@@ -111,8 +104,7 @@
       {#if isCourseTeacher}
         <AddSession courseId={course.id} />
       {/if}
-    </section>
-  {/if}  
+    </section> 
 
   {#if past.length > 0}
     <section class="sessions">

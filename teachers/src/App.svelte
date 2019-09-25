@@ -28,12 +28,18 @@
 <Navbar />
 
 <main>
-  {#if $user.username}
+  {#if $user.username && $user.role === 'Teacher'}
     <UpcomingSessions />
   {/if}
 
   {#if $user.username || $location === '/signup'}
-    <Router {routes}/>
+    {#if $user.role !== 'Teacher'}
+      <h1>Access denied</h1>
+      <p>Only teachers may enter here.</p>
+      <a href="/students">&leftarrow; Back to students page</a>
+    {:else}
+      <Router {routes}/>
+    {/if}
   {:else}
     <Login/>
   {/if}

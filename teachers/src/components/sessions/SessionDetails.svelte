@@ -25,13 +25,13 @@
 <h1>Lesson {session.order}</h1>
 <p>{formatDate(session.startsAt)} to {formatDate(session.endsAt)}</p>
 
-{#if $user.role === 'Teacher' && session.endsAt > new Date().toJSON()}
+{#if session.endsAt > new Date().toJSON()}
   <ImportQuestions sessionId={session.id} />
   <CreateQuestion sessionId={session.id} />
 {/if}
 
 <section class="question-list">
-    <h2>{questions.length} Questions</h2>
+  <h2>{questions.length} Questions</h2>
   {#if questions && questions.length > 0}
     {#each questions as question (question.id)}
       <li>
