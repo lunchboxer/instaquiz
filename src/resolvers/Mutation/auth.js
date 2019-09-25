@@ -30,8 +30,8 @@ const auth = {
       user
     }
   },
-  async changePassword (_, { id, oldPassword, newPassword }, context) {
-    if (!id) id = getUserId()
+  async changePassword (_, { oldPassword, newPassword }, context) {
+    const id = getUserId()
     const user = await context.prisma.user({ id })
     if (!user) {
       throw new Error(`User '${id}' not found`)
