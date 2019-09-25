@@ -23,6 +23,7 @@
         sessionId: question.session.id
       })
       myResponses.update(previous => {
+        if (!previous) return [response.answerQuestion]
         const filteredResponses = previous.filter(r => r.question.id !== question.id)
         return [...filteredResponses, response.answerQuestion]
       })
