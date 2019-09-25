@@ -1,14 +1,14 @@
 exports.Course = {
-  term (root, args, context) {
+  term (root, _, context) {
     return context.prisma.course({ id: root.id }).term()
   },
-  students (root, args, context) {
-    return context.prisma.course({ id: root.id }).students()
+  students (root, _, context) {
+    return context.prisma.course({ id: root.id }).students({ orderBy: 'username_ASC' })
   },
-  teachers (root, args, context) {
+  teachers (root, _, context) {
     return context.prisma.course({ id: root.id }).teachers()
   },
-  sessions (root, args, context) {
+  sessions (root, _, context) {
     return context.prisma.course({ id: root.id }).sessions({ orderBy: 'startsAt_ASC' })
   }
 }
