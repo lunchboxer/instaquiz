@@ -2,6 +2,7 @@
   import { user } from '../../data/user'
   import Loading from '../Loading.svelte'
   import DL from '../DL.svelte'
+  import ChangePassword from './ChangePassword.svelte'
 </script>
 
 <h1>User Profile</h1>
@@ -39,6 +40,8 @@
     {/if}
 
   </DL>
+
+  <ChangePassword />
 {:else}
   <Loading what="User" />
 {/if}

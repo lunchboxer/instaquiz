@@ -1,9 +1,8 @@
 <script>
-  import { user } from '../data/user'
-  import Loading from './Loading.svelte'
-  import DL from './DL.svelte'
-  import Input from './Input.svelte'
-  import Error from './Error.svelte'
+  import { user } from '../../data/user'
+  import Input from '../Input.svelte'
+  import Error from '../Error.svelte'
+  import { notifications } from '../notifications'
 
   let show = false
   let oldPassword = ''
@@ -21,9 +20,12 @@
     submit.disabled = true
     try {
       await user.changePassword(oldPassword, newPassword)
+      errors = ''
+      notifications.add({ text: 'Your password was changed.', type: 'success' })
       reset()
     } catch (error) {
       errors = error
+      notifications.add({ text: 'Password could not be changed.', type: 'danger' })
     } finally {
       loading = false
       submit.disabled = false
@@ -31,7 +33,6 @@
   }
 
   const reset = () => {
-    errors = ''
     show = false
     oldPassword = ''
     newPassword = ''
@@ -39,34 +40,6 @@
     form.reset()
   }
 </script>
-
-<svelte:head>
-  <title>User Profile</title>
-</svelte:head>
-
-<h1>User Profile</h1>
-
-{#if $user}
-<DL>
-    <dt>Role:</dt>
-    <dd>{$user.role}</dd>
-
-    <dt>Student ID:</dt>
-    <dd>{$user.username}</dd>
-
-    <dt>Name:</dt>
-    <dd>{$user.name}</dd>
-
-    {#if $user.coursesAttending.length > 0}
-    <dt>Courses:</dt>
-    <dd>{$user.coursesAttending.length} total
-      {#each $user.coursesAttending as course (course.id)}
-        <li>{course.name}</li>
-      {/each}
-    </dd>
-    {/if}
-
-  </DL>
 
 {#if show}
   <Error {errors} />
@@ -81,8 +54,4 @@
  
 {:else}
   <button on:click={() => { show = true }}>Change Password</button>
-{/if}
-
-{:else}
-  <Loading what="User" />
 {/if}

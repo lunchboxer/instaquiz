@@ -163,3 +163,11 @@ export const ANSWER_QUESTION = /* GraphQL */`
       }
   }
 `
+
+export const CHANGE_PASSWORD = /* GraphQL */ `
+  mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+   changePassword (oldPassword: $oldPassword, newPassword: $newPassword){
+     id
+   }
+  }
+`

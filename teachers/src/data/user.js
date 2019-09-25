@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store'
 import { request } from './fetch-client'
-import { LOGIN, SIGNUP } from './mutations'
+import { LOGIN, SIGNUP, CHANGE_PASSWORD } from './mutations'
 
 const getAuthFromStorage = () => {
   const coldToken = window.localStorage.getItem('token')
@@ -46,6 +46,9 @@ const createUserStore = () => {
       window.localStorage.removeItem('user')
       set({})
       return user && user.username
+    },
+    changePassword: async (oldPassword, newPassword) => {
+      await request(CHANGE_PASSWORD, { oldPassword, newPassword })
     }
   }
 }
