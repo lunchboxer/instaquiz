@@ -8,8 +8,8 @@ exports.Query = {
   user (_, args, context) {
     return context.prisma.user({ id: args.id })
   },
-  users (_, args, context) {
-    return context.prisma.users()
+  users (_, { orderBy = 'username_ASC', where }, context) {
+    return context.prisma.users({ orderBy, where })
   },
   course (_, args, context) {
     return context.prisma.course({ id: args.id })
