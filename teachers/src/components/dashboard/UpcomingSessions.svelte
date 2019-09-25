@@ -5,9 +5,6 @@
 
   const hours = 24
 
-  const now = new Date()
-  const latest = new Date(now.getTime() + hours * 3.6e+6)
-
   $: sessions.get(
     $user.id,
     $every2Hours,

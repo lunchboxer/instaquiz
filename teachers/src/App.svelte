@@ -6,8 +6,6 @@
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-  import { activeSession } from './components/dashboard/stores'
-  import ActiveSession from './components/dashboard/ActiveSession.svelte'
   import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
 
   terms.get()

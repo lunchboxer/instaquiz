@@ -40,24 +40,22 @@
   })
 </script>
 
-{#if $nowSession && $location !== '/' && $user.role !== 'Student'}
+{#if $nowSession && $location !== '/' && $user.role !== 'Student' && $location !== '/viewer'}
 <Warning
   title="{$nowSession.course.name} lesson {$nowSession.order} has started."
 >
   <p>
-    Started {formatDistanceToNow(new Date($nowSession.startsAt), {
-    includeSeconds: true, addSuffix: true })}. Ends
+    Started {formatDistanceToNow(new Date($nowSession.startsAt), { includeSeconds: true, addSuffix: true })}. Ends
     {formatDate($nowSession.endsAt, { addSuffix: true })}.
   </p>
   <a class="button" href="#/">Go there now</a>
 </Warning>
-{:else if !$nowSession && $imminentSession && $location !== '/'}
+{:else if !$nowSession && $imminentSession && $location !== '/' && $location !== '/viewer'}
 <Warning
   title="{$imminentSession.course.name} lesson {$imminentSession.order} starts soon."
 >
   <p>
-    Starts {formatDistanceToNow(new Date($imminentSession.startsAt), {
-    includeSeconds: true, addSuffix: true })}. Ends
+    Starts {formatDistanceToNow(new Date($imminentSession.startsAt), { includeSeconds: true, addSuffix: true })}. Ends
     {formatDate($imminentSession.endsAt, { addSuffix: true })}.
   </p>
   <a class="button" href="#/">Go there now</a

@@ -10,6 +10,7 @@ import Courses from './components/courses/Courses.svelte'
 import Question from './components/questions/Question.svelte'
 import CourseStudents from './components/courses/CourseStudents.svelte'
 import Student from './components/students/Student.svelte'
+import Viewer from './components/dashboard/Viewer.svelte'
 
 export default {
   '/': Dashboard,
@@ -23,5 +24,6 @@ export default {
   '/question/:id': Question,
   '/course-students/:id': CourseStudents,
   '/student/:id': Student,
+  '/viewer': Viewer,
   '*': NotFound
 }
