@@ -32,7 +32,7 @@
     loading = true
     submit.disabled = true
     try {
-      await user.signup(username, name, password)
+      await user.signup(username.trim(), name.trim(), password.trim())
       errors = ''
       notifications.add({ text: `Created account for '${username}'`, type: 'success' })
       push('/join-course')

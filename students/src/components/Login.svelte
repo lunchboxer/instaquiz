@@ -23,7 +23,7 @@
     loading = true
     submit.disabled = true
     try {
-      await user.login(username, password)
+      await user.login(username.trim(), password.trim())
       notifications.add({ text: `Logged in as '${username}'`, type: 'success' })
     } catch (error) {
       errors = error

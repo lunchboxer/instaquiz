@@ -24,7 +24,7 @@
     loading = true
     submit.disabled = true
     try {
-      const course = await courses.addStudent($user.id, code)
+      const course = await courses.addStudent($user.id, code.trim())
       errors = ''
       notifications.add({ text: `Student ${$user.name} added to ${course.name}`, type: 'success' })
       push('/')
@@ -63,6 +63,7 @@
 
       <Input label="Code word" bind:value="{code}" required />
 
+      <a href="#/" class="button button-clear">Cancel</a>
       <button type="submit" class:is-loading="{loading}" bind:this="{submit}">
         Join!
       </button>
