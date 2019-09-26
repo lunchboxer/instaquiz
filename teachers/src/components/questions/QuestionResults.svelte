@@ -22,11 +22,11 @@
   }, 0)
 
   const percentage = value => (value === 0 || !totalResponses) ? 0
-    : parseInt((value / totalResponses) * 100)
+    : (value / totalResponses) * 100
 
   const formatCount = length => {
     if (!length) return ''
-    return `${length} (${percentage(length)}%)`
+    return `${length} (${Math.round(percentage(length))}%)`
   }
 
   const formatDate = date => {
@@ -40,6 +40,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   li {
@@ -61,9 +62,7 @@
     align-items: center;
   }
 </style>
-<h3>{totalResponses} Responses</h3>
-
-<p>Asked {formatDate(question.asked)}</p>
+<p>{totalResponses} Responses ({formatDate(question.asked)})</p>
 
 {#if question.answers && question.answers.length > 0}
 <section class="chart">

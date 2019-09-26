@@ -7,9 +7,7 @@
   export let question
 </script>
 
-<h1>Question {question.order + 1}</h1>
-
-<h2>{question.text}</h2>
+<h3>{question.order + 1}) {question.text}</h3>
 
 {#if question.asked}
   <QuestionResults {question} />
