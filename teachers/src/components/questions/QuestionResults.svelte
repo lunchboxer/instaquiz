@@ -56,10 +56,21 @@
     margin-left: 0.5rem;
   }
 
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
   div.labels-container {
     padding: 5rem;
     display: flex;
     align-items: center;
+  }
+
+  @media only screen and (max-width: 600px) {
+    div.labels-container {
+      padding: 1rem;
+    }
   }
 </style>
 <p>{totalResponses} Responses ({formatDate(question.asked)})</p>

@@ -3,7 +3,6 @@
 
   export let colors
 
-  console.log(data)
   let cumulativePercent = 0
 
   const getCoordinatesForPercent = percent => {
