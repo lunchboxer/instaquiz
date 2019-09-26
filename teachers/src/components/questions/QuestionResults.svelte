@@ -21,6 +21,10 @@
     return total + answer.responses.length
   }, 0)
 
+  $: sortedAnswers = question.answers && question.answers.slice().sort((a, b) => {
+    return b.responses.length - a.responses.length
+  })
+
   const percentage = value => (value === 0 || !totalResponses) ? 0
     : (value / totalResponses) * 100
 
@@ -78,13 +82,13 @@
 {#if question.answers && question.answers.length > 0}
 <section class="chart">
 
-<PieChart {colors} data={question.answers.map(a => {
+<PieChart {colors} data={sortedAnswers.map(a => {
   return { label: a.text, portion: percentage(a.responses.length) / 100 }
 })}
   />
   <div class="labels-container">
     <ul class="labels">
-    {#each question.answers as answer, index (answer.id)}
+    {#each sortedAnswers as answer, index (answer.id)}
       <li>
           <svg xmlns="http://www.w3.org/2000/svg" class="colorlabel" width="24" height="24" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="12" fill={colors[index]} />
@@ -98,4 +102,4 @@
   </ul>
 </div>
 </section>
-  {/if}
+{/if}
