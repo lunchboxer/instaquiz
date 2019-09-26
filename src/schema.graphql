@@ -4,7 +4,7 @@ scalar DateTime
 type Query {
   me: User
   user(id: ID!): User
-  users: [User!]!
+  users(orderBy: UserOrderByInput, where: UserWhereInput): [User!]!
   course(id: ID!): Course
   courses(orderBy: CourseOrderByInput, where: CourseWhereInput): [Course!]!
   term(id: ID!): Term

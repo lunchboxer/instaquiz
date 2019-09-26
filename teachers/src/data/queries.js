@@ -99,6 +99,15 @@ export const COURSE_STUDENTS = /* GraphQL */`
     }
   }
 `
+export const UNASSOCIATED_STUDENTS = /* GraphQL */ `
+  query UnassociatedStudents{
+    users(where:{role: Student, coursesAttending_none: {}}){
+      id
+      username
+      name
+    }
+  }
+`
 
 export const STUDENT = /* GraphQL */ `
   query Student ($id: ID!){

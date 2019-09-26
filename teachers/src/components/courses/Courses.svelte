@@ -2,6 +2,7 @@
   import { courses } from './data'
   import Loading from '../Loading.svelte'
   import CourseList from './CourseList.svelte'
+  import UnassociatedStudents from '../students/UnassociatedStudents.svelte'
 </script>
 
 <svelte:head>
@@ -22,3 +23,5 @@
 {:else}
   <Loading what="courses"/>
 {/if}
+
+  <UnassociatedStudents />
