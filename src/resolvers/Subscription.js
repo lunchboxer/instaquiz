@@ -4,7 +4,7 @@ exports.Subscription = {
       return prisma.$subscribe.question({
         mutation_in: ['UPDATED'],
         node: { session: { id: sessionId } },
-        updatedFields_contains: 'asked'
+        updatedFields_contains: ['asked', 'publishResponses']
       }).node()
     },
     resolve: payload => {

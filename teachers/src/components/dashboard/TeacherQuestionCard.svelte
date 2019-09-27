@@ -5,6 +5,7 @@
   import { currentQuestion } from './stores'
   import { ASK_QUESTION } from '../../data/mutations'
   import TeacherAnswers from './TeacherAnswers.svelte'
+  import PublishResponses from './PublishResponses.svelte'
 
   export let question
   let asked = false
@@ -67,13 +68,15 @@
 
   {#if isCurrent}
     <TeacherAnswers {question} />
+    {#if question.asked}
+    <span>Asked {formatRelative(new Date(question.asked), new Date())}</span>
+  {/if}
     <div class="buttons">
-      {#if question.asked}
-        <span>Asked {formatRelative(new Date(question.asked), new Date())}</span>
-      {/if}
+
       <button class:is-loading={loading} on:click={send}>
         {asked || question.asked ? 'Send again' : 'Send'}
       </button>
+      <PublishResponses {question} />
     </div>
   {/if}
 

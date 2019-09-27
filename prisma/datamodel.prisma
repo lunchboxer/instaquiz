@@ -47,6 +47,7 @@ type Question {
   responses: [Response!]!
   session: Session! @relation(link: INLINE)
   asked: DateTime
+  publishResponses: Boolean! @default(value: false)
 }
 
 type Answer {

@@ -206,7 +206,7 @@ export const RESPONSES = /* GraphQL */`
   }
 ${ResponseFields}`
 
-export const QUESTION_SUB = /* GraphQL */`
+export const QUESTION_SUBSCRIPTION = /* GraphQL */`
 subscription Questions($sessionId: ID!) {
   questions(sessionId: $sessionId) {
     ...QuestionFields
@@ -221,3 +221,11 @@ subscription Reponses($questionId: ID!) {
   }
 }
 ${ResponseFields} `
+
+export const ASKED_QUESTION = /* GraphQL */`
+  query ResponsesAndQuestions($sessionId: ID!){
+    questions(first: 1, where: {asked_not:null, session: {id: $sessionId}}, orderBy: asked_DESC) {
+    ...QuestionFields
+    }
+  }
+${QuestionFields}`

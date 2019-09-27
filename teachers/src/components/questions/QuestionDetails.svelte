@@ -10,7 +10,7 @@
 <h3>{question.order + 1}) {question.text}</h3>
 
 {#if question.asked}
-  <QuestionResults {question} />
+  <QuestionResults asked={question.asked} answers={question.answers} />
 {:else}
   <CreateAnswer questionId={question.id} />
 

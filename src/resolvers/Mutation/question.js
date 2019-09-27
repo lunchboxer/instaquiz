@@ -77,20 +77,20 @@ exports.question = {
       where: { id }
     })
   },
-  async updateQuestion (_, { id, text, order }, context) {
-    if (order) {
+  async updateQuestion (_, { id, input }, context) {
+    if (input.order) {
       const previous = await context.prisma.question({ id }).$fragment(fragmentWithSession)
       // if previous order was 0 and new order is 5 then we need to shift down all prompts where order > 0 && order <= 5
-      if (previous.order < order) {
-        await shiftOrderDown(order, previous.session.id, context.prisma, previous.order)
+      if (previous.order < input.order) {
+        await shiftOrderDown(input.order, previous.session.id, context.prisma, previous.order)
       }
       // if previous order was 5 and new order is 0 then we need to shift up all prompts where order >= 0 && order < 5
-      if (previous.order > order) {
-        await shiftOrderUp(order, previous.session.id, context.prisma, previous.order)
+      if (previous.order > input.order) {
+        await shiftOrderUp(input.order, previous.session.id, context.prisma, previous.order)
       }
     }
     return context.prisma.updateQuestion({
-      data: { text, order },
+      data: input,
       where: { id }
     })
   },

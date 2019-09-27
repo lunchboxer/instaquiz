@@ -42,6 +42,7 @@
 </style>
 
 <svg viewBox="-1 -1 2 2" style="transform: rotate(-90deg)" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#222" d="M 1 0 A 1 1 0 1 1 1 -2.4492935982947064e-16 L 0 0"></path>
   {#each data as item, index}
     <path fill={colors[index]} d={makeSlice(item)} />
   {/each}

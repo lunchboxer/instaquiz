@@ -1,8 +1,10 @@
 <script>
   import { formatRelative } from 'date-fns'
   import PieChart from './PieChart.svelte'
+  import { flip } from 'svelte/animate'
 
-  export let question
+  export let answers
+  export let asked
 
   const colors = [
     '#7FFF00',
@@ -17,12 +19,18 @@
     '#999'
   ]
 
-  $: totalResponses = question.answers && question.answers.reduce((total, answer) => {
+  $: totalResponses = answers && answers.reduce((total, answer) => {
+    if (!answer.responses) return total
     return total + answer.responses.length
   }, 0)
 
-  $: sortedAnswers = question.answers && question.answers.slice().sort((a, b) => {
-    return b.responses.length - a.responses.length
+  $: sortedAnswers = answers && answers.map(a => {
+    if (!a.responses) a.responses = []
+    return a
+  }).sort((a, b) => {
+    const bnum = b.responses ? b.responses.length : 0
+    const anum = a.responses ? a.responses.length : 0
+    return bnum - anum
   })
 
   const percentage = value => (value === 0 || !totalResponses) ? 0
@@ -77,19 +85,20 @@
     }
   }
 </style>
-<p>{totalResponses} Responses ({formatDate(question.asked)})</p>
 
-{#if question.answers && question.answers.length > 0}
+{#if answers && answers.length > 0}
 <section class="chart">
 
 <PieChart {colors} data={sortedAnswers.map(a => {
+  if (!a.responses) return { label: a.text, portion: 0 }
   return { label: a.text, portion: percentage(a.responses.length) / 100 }
 })}
   />
   <div class="labels-container">
     <ul class="labels">
+      <li>{totalResponses} Responses ({formatDate(asked)})</li>
     {#each sortedAnswers as answer, index (answer.id)}
-      <li>
+      <li animate:flip>
           <svg xmlns="http://www.w3.org/2000/svg" class="colorlabel" width="24" height="24" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="12" fill={colors[index]} />
           </svg>

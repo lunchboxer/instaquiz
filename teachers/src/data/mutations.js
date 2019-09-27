@@ -194,3 +194,11 @@ export const UPDATE_USER = /* GraphQL */ `
      }
    }
  }`
+
+export const PUBLISH_RESPONSES = /* GraphQL */ `
+  mutation PublishResponses($questionId: ID!) {
+    updateQuestion(id: $questionId, input: {publishResponses: true}) {
+      ...QuestionFields
+    }
+  }
+  ${QuestionFields}`

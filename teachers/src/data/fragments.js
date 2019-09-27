@@ -76,6 +76,7 @@ export const QuestionFields = /* GraphQL */`
     text
     order
     asked
+    publishResponses
     answers {
       id
       text
