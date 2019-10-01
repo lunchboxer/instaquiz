@@ -4,14 +4,14 @@
   import { request } from '../../data/fetch-client'
   import { RESPONSES, RESPONSE_SUBSCRIPTION } from '../../data/queries'
   import QuestionResults from '../questions/QuestionResults.svelte'
+  import { responses } from './stores'
 
   export let question
-  let results = []
 
   onMount(async () => {
-    const { responses } = await request(RESPONSES, { questionId: question.id })
-    if (responses && responses.length > 0) {
-      results = responses
+    const response = await request(RESPONSES, { questionId: question.id })
+    if (response.responses && response.responses.length > 0) {
+      responses.set(response.responses)
     }
     const subscription = ws.request({
       query: RESPONSE_SUBSCRIPTION,
@@ -19,8 +19,12 @@
     })
       .subscribe({
         next (result) {
-          const filteredResponses = results.filter(r => r.id !== result.data.responses.id)
-          results = [...filteredResponses, result.data.responses]
+          responses.update(previous => {
+            if (!previous) return [result.data.responses]
+            const filtered = previous.filter(r => r.id !== result.data.responses.id)
+            const newOne = result.data.responses
+            return [newOne, ...filtered]
+          })
         }
       })
     return () => subscription && subscription.unsubscribe()
@@ -29,12 +33,13 @@
   const mapResultsToAnswers = () => {
     if (!question.answers) return
     return question.answers.map(answer => {
-      answer.responses = results.filter(result => result.answer.id === answer.id)
+      const filteredResponses = $responses.filter(r => r.answer.id === answer.id)
+      answer.responses = filteredResponses
       return answer
     })
   }
 
-  $: if (results && results.length > 0) {
+  $: if ($responses && $responses.length > 0) {
     question.answers = mapResultsToAnswers()
   }
 </script>
