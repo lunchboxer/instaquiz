@@ -1,6 +1,6 @@
 import { readable, writable } from 'svelte/store'
 import { request } from '../../data/fetch-client'
-import { GET_MY_SESSIONS } from '../../data/queries'
+import { GET_MY_SESSIONS, RESPONSES } from '../../data/queries'
 
 export function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -65,3 +65,5 @@ const createSessionsStore = () => {
 }
 
 export const sessions = createSessionsStore()
+
+export const responses = writable()
