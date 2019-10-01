@@ -1,14 +1,20 @@
 <script>
   import { onMount } from 'svelte'
+  import { fade } from 'svelte/transition'
   import { ws } from '../../data/ws-client'
   import { request } from '../../data/fetch-client'
   import ViewerResponses from './ViewerResponses.svelte'
+  import { students } from '../students/data'
+  import { responses } from './stores'
   import { QUESTION_SUBSCRIPTION, ASKED_QUESTION } from '../../data/queries'
 
   let question
   export let session
 
+  $: console.log($students)
+
   onMount(async () => {
+    students.getByCourse(session.course.id)
     const { questions } = await request(ASKED_QUESTION, { sessionId: session.id })
     if (questions && questions.length > 0) question = questions[0]
     const subscription = ws.request({
@@ -23,6 +29,10 @@
         }
       })
     return () => subscription && subscription.unsubscribe()
+  })
+
+  $: hasntAnswered = $responses && $students.filter(s => {
+    return !$responses.find(r => r.student.id === s.id)
   })
 </script>
 
@@ -40,11 +50,22 @@
   h1 {
     font-size: 5rem;
   }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 </style>
 
 {#if question}
-<div class="container">
+<div class="container" transition:fade>
   <h1>{question.text}</h1>
+  {#if hasntAnswered && hasntAnswered.length > 0}
+    <p>{hasntAnswered.length} students have not answered</p>
+    {#if hasntAnswered.length < 10}
+      {hasntAnswered.map(s => s.name).join(', ')}
+    {/if}
+  {/if}
   {#if question.publishResponses}
     <ViewerResponses {question} />
   {/if}

@@ -6,6 +6,7 @@
   import Error from '../Error.svelte'
   import Loading from '../Loading.svelte'
   import TeachersQuestions from './TeachersQuestions.svelte'
+  import StudentCaller from './StudentCaller.svelte'
 
   let errors = ''
 
@@ -23,6 +24,7 @@
 
 <Error {errors} />
 
+<StudentCaller />
 {#if $activeSession.questions}
   <TeachersQuestions questions={$activeSession.questions} />
 {:else}
