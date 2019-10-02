@@ -4,5 +4,8 @@ exports.User = {
   },
   coursesTeaching (root, args, context) {
     return context.prisma.user({ id: root.id }).coursesTeaching()
+  },
+  calls (root, args, context) {
+    return context.prisma.user({ id: root.id }).calls()
   }
 }

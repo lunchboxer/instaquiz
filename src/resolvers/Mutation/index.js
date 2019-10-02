@@ -5,6 +5,7 @@ const { session } = require('./session')
 const { question } = require('./question')
 const { answer } = require('./answer')
 const { response } = require('./response')
+const { call } = require('./call')
 
 exports.Mutation = {
   ...auth,
@@ -13,5 +14,6 @@ exports.Mutation = {
   ...session,
   ...question,
   ...answer,
-  ...response
+  ...response,
+  ...call
 }

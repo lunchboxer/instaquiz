@@ -202,3 +202,29 @@ export const PUBLISH_RESPONSES = /* GraphQL */ `
     }
   }
   ${QuestionFields}`
+
+export const CALL_STUDENT = /* GraphQL */ `
+  mutation CallStudent($sessionId: ID!) {
+    callStudent (sessionId: $sessionId) {
+      id
+      student {
+        id
+        username
+        name
+      }
+    }
+  }
+`
+
+export const EVALUATE_STUDENT = /* GraphQL */ `
+  mutation EvaluateStudent($callId: ID!, $evaluation: Evaluation!) {
+    evaluateStudent (callId: $callId, evaluation: $evaluation) {
+      id
+      student {
+        id
+        username
+        name
+      }
+    }
+  }
+`

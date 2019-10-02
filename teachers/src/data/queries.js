@@ -220,7 +220,21 @@ subscription Reponses($questionId: ID!) {
       ...ResponseFields
   }
 }
-${ResponseFields} `
+${ResponseFields}`
+
+export const CALL_SUBSCRIPTION = /* GraphQL */`
+  subscription Calls($sessionId: ID!) {
+    calls(sessionId: $sessionId) {
+      id
+      evaluation
+      student {
+        id
+        name
+        username
+      }
+    }
+  }
+`
 
 export const ASKED_QUESTION = /* GraphQL */`
   query ResponsesAndQuestions($sessionId: ID!){

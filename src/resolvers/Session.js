@@ -12,5 +12,8 @@ exports.Session = {
   },
   questions (root, args, context) {
     return context.prisma.session({ id: root.id }).questions({ orderBy: 'order_ASC' })
+  },
+  calls (root, args, context) {
+    return context.prisma.session({ id: root.id }).calls({ orderBy: 'createdAt_DESC' })
   }
 }

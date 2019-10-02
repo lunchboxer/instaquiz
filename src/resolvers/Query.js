@@ -49,5 +49,8 @@ exports.Query = {
   },
   responses (_, { orderBy, where }, context) {
     return context.prisma.responses({ orderBy, where })
+  },
+  calls (_, { orderBy = 'createdAt_DESC', where, first, last }, context) {
+    return context.prisma.calls({ orderBy, where, first, last })
   }
 }

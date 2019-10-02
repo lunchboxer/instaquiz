@@ -25,6 +25,7 @@ type Query {
     orderBy: ResponseOrderByInput
     where: ResponseWhereInput
   ): [Response!]!
+  calls(orderBy: CallOrderByInput, where: CallWhereInput): [Call!]!
 }
 
 type Mutation {
@@ -60,11 +61,14 @@ type Mutation {
     answerId: ID!
     sessionId: ID!
   ): Response
+  callStudent(sessionId: ID!): Call
+  evaluateStudent(callId: ID!, evaluation: Evaluation): Call
 }
 
 type Subscription {
   questions(sessionId: ID!): Question
   responses(sessionId: ID, questionId: ID): Response
+  calls(sessionId: ID!): Call
 }
 
 type AuthPayload {
@@ -79,6 +83,7 @@ type Session {
   course: Course!
   questions: [Question!]!
   order: Int
+  calls: [Call!]!
 }
 
 type User {
@@ -88,4 +93,5 @@ name: String!
 coursesAttending: [Course!]
 coursesTeaching: [Course!]
 role: Role!
+calls: [Call!]!
 }

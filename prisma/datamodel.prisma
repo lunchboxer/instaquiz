@@ -6,6 +6,7 @@ type User {
   coursesAttending: [Course!]! @relation(name: "CourseStudents", onDelete: SET_NULL)
   coursesTeaching: [Course!]! @relation(name: "CourseTeachers", onDelete: SET_NULL)
   role: Role! @default(value: Student)
+  calls: [Call!]!
 }
 
 enum Role {
@@ -37,6 +38,7 @@ type Session {
   endsAt: DateTime!
   course: Course! @relation(link: INLINE)
   questions: [Question!]!
+  calls: [Call!]!
 }
 
 type Question {
@@ -64,4 +66,18 @@ type Response {
   answer: Answer! @relation(link: INLINE)
   session: Session!
   createdAt: DateTime! @createdAt
+}
+
+type Call {
+  id: ID! @id
+  session: Session!
+  student: User!
+  createdAt: DateTime! @createdAt
+  evaluation: Evaluation
+}
+
+enum Evaluation {
+  Fail
+  OK
+  Good
 }
