@@ -1,34 +1,8 @@
 <script>
-  import { onMount } from 'svelte'
-  import { ws } from '../../data/ws-client'
-  import { request } from '../../data/fetch-client'
-  import { RESPONSES, RESPONSE_SUBSCRIPTION } from '../../data/queries'
   import QuestionResults from '../questions/QuestionResults.svelte'
   import { responses } from '../dashboard/stores'
 
   export let question
-
-  onMount(async () => {
-    const response = await request(RESPONSES, { questionId: question.id })
-    if (response.responses && response.responses.length > 0) {
-      responses.set(response.responses)
-    }
-    const subscription = ws.request({
-      query: RESPONSE_SUBSCRIPTION,
-      variables: { questionId: question.id }
-    })
-      .subscribe({
-        next (result) {
-          responses.update(previous => {
-            if (!previous) return [result.data.responses]
-            const filtered = previous.filter(r => r.id !== result.data.responses.id)
-            const newOne = result.data.responses
-            return [newOne, ...filtered]
-          })
-        }
-      })
-    return () => subscription && subscription.unsubscribe()
-  })
 
   const mapResultsToAnswers = () => {
     if (!question.answers) return

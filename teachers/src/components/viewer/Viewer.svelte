@@ -7,13 +7,20 @@
 
 <style>
   .countdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 2rem;
-    text-align: center;
-    font-size: 3rem;
+    justify-content: center;
+    height: calc(100vh - 12rem);
+    width: 100%;
+    font-size: 5rem;
+    border: 1px solid red;
+    margin: 0;
   }
 
   .big {
-    font-size: 3rem;
+    font-size: 5rem;
   }
 </style>
 
@@ -21,8 +28,8 @@
   <ViewerActive session={$activeSession} />
 {:else if $imminentSession}
   <section class="countdown">
-    <h1>{$imminentSession.course.name}</h1> 
-    <h1>Lesson {$imminentSession.order}</h1>
+    <span>{$imminentSession.course.name}</span> 
+    <span>Lesson {$imminentSession.order}</span>
     <p>starts in...</p>
     <p class="big">{formatDistanceStrict(new Date($imminentSession.startsAt), new Date(), { addSuffix: true })}</p>
   </section>

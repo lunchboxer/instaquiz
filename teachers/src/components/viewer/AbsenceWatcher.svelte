@@ -25,7 +25,7 @@
               })
               absences.update(previous => previous ? [...previous, data.absences.node] : [data.absences.node])
             } else {
-              const deletedAbsence = absences.find(a => a.id === data.absences.previousValues.id)
+              const deletedAbsence = $absences.find(a => a.id === data.absences.previousValues.id)
               absences.update(previous => previous && previous.filter(a => a.id !== deletedAbsence.id))
               notifications.add({
                 text: `${deletedAbsence.student.name} marked present.`,
