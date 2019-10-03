@@ -1,6 +1,6 @@
 <script>
   import { formatDistanceStrict } from 'date-fns'
-  import { imminentSession, activeSession } from './stores'
+  import { imminentSession, activeSession } from '../dashboard/stores'
   import ViewerActive from './ViewerActive.svelte'
 </script>
 

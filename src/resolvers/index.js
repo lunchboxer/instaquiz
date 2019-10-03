@@ -8,6 +8,7 @@ const { Question } = require('./Question')
 const { Answer } = require('./Answer')
 const { Response } = require('./Response')
 const { Call } = require('./Call')
+const { Absence } = require('./Absence')
 const { Subscription } = require('./Subscription')
 
 exports.resolvers = {
@@ -21,5 +22,6 @@ exports.resolvers = {
   Answer,
   Response,
   Call,
+  Absence,
   Subscription
 }

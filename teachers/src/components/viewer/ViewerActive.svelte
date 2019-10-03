@@ -5,7 +5,7 @@
   import { request } from '../../data/fetch-client'
   import ViewerResponses from './ViewerResponses.svelte'
   import { students } from '../students/data'
-  import { responses } from './stores'
+  import { responses } from '../dashboard/stores'
   import CallWatcher from './CallWatcher.svelte'
   import { QUESTION_SUBSCRIPTION, ASKED_QUESTION } from '../../data/queries'
 

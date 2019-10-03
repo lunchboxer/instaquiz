@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, AllSessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, AbsenceFields, AllSessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
 
 export const ME = /* GraphQL */`
 {
@@ -243,3 +243,20 @@ export const ASKED_QUESTION = /* GraphQL */`
     }
   }
 ${QuestionFields}`
+
+export const SESSION_ABSENCES = /* GraphQL */`
+  query SessionAbsences($sessionId: ID!) {
+    absences(where: {session: {id: $sessionId }}) {
+      ...AbsenceFields
+    }
+    session(id: $sessionId){
+      course {
+        students {
+          id
+          name
+          pinyinName
+        }
+      }
+    }
+  }
+${AbsenceFields}`

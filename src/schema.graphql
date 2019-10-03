@@ -26,6 +26,7 @@ type Query {
     where: ResponseWhereInput
   ): [Response!]!
   calls(orderBy: CallOrderByInput, where: CallWhereInput): [Call!]!
+  absences(orderBy: AbsenceOrderByInput, where: AbsenceWhereInput): [Absence!]!
 }
 
 type Mutation {
@@ -63,6 +64,8 @@ type Mutation {
   ): Response
   callStudent(sessionId: ID!): Call
   evaluateStudent(callId: ID!, evaluation: Evaluation): Call
+  markStudentAbsent(studentId: ID!, sessionId: ID!): Absence
+  unmarkStudentAbsent(studentId: ID!, sessionId: ID!): Absence
 }
 
 type Subscription {
@@ -84,6 +87,7 @@ type Session {
   questions: [Question!]!
   order: Int
   calls: [Call!]!
+  absences: [Absence!]!
 }
 
 type User {
@@ -95,4 +99,5 @@ coursesTeaching: [Course!]
 role: Role!
 calls: [Call!]!
 pinyinName: String
+absences: [Absence!]!
 }

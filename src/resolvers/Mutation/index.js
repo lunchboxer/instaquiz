@@ -6,6 +6,7 @@ const { question } = require('./question')
 const { answer } = require('./answer')
 const { response } = require('./response')
 const { call } = require('./call')
+const { absence } = require('./absence')
 
 exports.Mutation = {
   ...auth,
@@ -15,5 +16,6 @@ exports.Mutation = {
   ...question,
   ...answer,
   ...response,
-  ...call
+  ...call,
+  ...absence
 }

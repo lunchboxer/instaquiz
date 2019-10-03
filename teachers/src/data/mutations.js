@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, AllSessionFields, QuestionFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, AllSessionFields, QuestionFields, UserFields, AbsenceFields } from './fragments'
 
 // Auth
 
@@ -226,6 +226,22 @@ export const EVALUATE_STUDENT = /* GraphQL */ `
         username
         name
       }
+    }
+  }
+`
+
+export const MARK_STUDENT_ABSENT = /* GraphQL */ `
+ mutation MarkStudentAbsent($sessionId: ID!, $studentId: ID!) {
+   markStudentAbsent (sessionId: $sessionId, studentId: $studentId){
+     ...AbsenceFields
+   }
+ }
+ ${AbsenceFields}`
+
+export const UNMARK_STUDENT_ABSENT = /* GraphQL */ `
+  mutation UnarkStudentAbsent($sessionId: ID!, $studentId: ID!) {
+    unmarkStudentAbsent (sessionId: $sessionId, studentId: $studentId){
+      id
     }
   }
 `

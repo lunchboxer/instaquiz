@@ -7,6 +7,7 @@
   import Loading from '../Loading.svelte'
   import TeachersQuestions from './TeachersQuestions.svelte'
   import StudentCaller from './StudentCaller.svelte'
+  import Absences from './Absences.svelte'
 
   let errors = ''
 
@@ -23,6 +24,8 @@
 </script>
 
 <Error {errors} />
+
+<Absences sessionId={$activeSession.id} />
 
 <StudentCaller />
 {#if $activeSession.questions}

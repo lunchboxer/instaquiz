@@ -98,3 +98,14 @@ export const ResponseFields = /* GraphQL */`
     }
   }
 `
+
+export const AbsenceFields = /* GraphQL */`
+  fragment AbsenceFields on Absence {
+    id
+    student {
+       id
+       name
+       pinyinName
+    }
+  }
+`

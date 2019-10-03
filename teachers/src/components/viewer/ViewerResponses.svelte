@@ -4,7 +4,7 @@
   import { request } from '../../data/fetch-client'
   import { RESPONSES, RESPONSE_SUBSCRIPTION } from '../../data/queries'
   import QuestionResults from '../questions/QuestionResults.svelte'
-  import { responses } from './stores'
+  import { responses } from '../dashboard/stores'
 
   export let question
 

@@ -52,5 +52,8 @@ exports.Query = {
   },
   calls (_, { orderBy = 'createdAt_DESC', where, first, last }, context) {
     return context.prisma.calls({ orderBy, where, first, last })
+  },
+  absences (_, { orderBy = 'createdAt_DESC', where, first, last }, context) {
+    return context.prisma.absences({ orderBy, where, first, last })
   }
 }

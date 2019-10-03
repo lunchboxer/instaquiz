@@ -10,7 +10,7 @@ import Courses from './components/courses/Courses.svelte'
 import Question from './components/questions/Question.svelte'
 import CourseStudents from './components/courses/CourseStudents.svelte'
 import Student from './components/students/Student.svelte'
-import Viewer from './components/dashboard/Viewer.svelte'
+import Viewer from './components/viewer/Viewer.svelte'
 
 export default {
   '/': Dashboard,
