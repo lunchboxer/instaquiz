@@ -211,6 +211,7 @@ export const CALL_STUDENT = /* GraphQL */ `
         id
         username
         name
+        pinyinName
       }
     }
   }

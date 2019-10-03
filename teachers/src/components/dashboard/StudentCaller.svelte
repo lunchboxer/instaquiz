@@ -38,8 +38,12 @@
 <button class:is-loading={loading} on:click={callStudent}>Call on a student</button>
 
 {#if called}
-  <p>Called on {called.student.name} ({called.student.username})</p>
+  <p>Called on {called.student.name}
+    {#if called.student.name !== called.student.pinyinName}
+      ({called.student.pinyinName})
+    {/if}, {called.student.username}</p>
   <button on:click={() => evaluate('Fail') }>Fail</button>
   <button on:click={() => evaluate('OK') }>OK</button>
   <button on:click={() => evaluate('Good') }>Good</button>
+  <button class="button-outline" on:click={() => evaluate('Skip') }>Skip</button>
 {/if}

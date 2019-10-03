@@ -94,4 +94,5 @@ coursesAttending: [Course!]
 coursesTeaching: [Course!]
 role: Role!
 calls: [Call!]!
+pinyinName: String
 }
