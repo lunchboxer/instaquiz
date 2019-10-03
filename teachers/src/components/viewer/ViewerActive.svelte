@@ -7,6 +7,7 @@
   import { students } from '../students/data'
   import { responses } from '../dashboard/stores'
   import CallWatcher from './CallWatcher.svelte'
+  import { absences } from './stores'
   import AbsenceWatcher from './AbsenceWatcher.svelte'
   import { QUESTION_SUBSCRIPTION, ASKED_QUESTION } from '../../data/queries'
 
@@ -31,7 +32,8 @@
     return () => subscription && subscription.unsubscribe()
   })
 
-  $: hasntAnswered = $responses && $students.filter(s => {
+  $: hasntAnswered = $responses && $absences && $students.filter(s => {
+    if ($absences.find(a => a.student.id === s.id)) return false
     return !$responses.find(r => r.student.id === s.id)
   })
 </script>

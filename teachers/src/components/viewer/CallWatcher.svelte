@@ -42,7 +42,7 @@
     top: 5rem;
     width: 100%;
     height: calc(100% - 5rem);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     margin: 0;
     padding: 0;
   }

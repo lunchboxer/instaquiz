@@ -6,7 +6,9 @@ exports.call = {
     let studentId
     let students
 
-    const allStudentsThisCourse = await prisma.session({ id: sessionId }).course().students()
+    const allStudentsThisCourse = await prisma.session({ id: sessionId }).course()
+      .students({ where: { absences_none: { session: { id: sessionId } } } })
+
     if (!allStudentsThisCourse || allStudentsThisCourse.length === 0) {
       throw new Error('This course has no students enrolled.')
     }

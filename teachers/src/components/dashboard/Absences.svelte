@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { request } from '../../data/fetch-client'
-  import { SESSION_ABSENCES } from '../../data/queries'
+  import { SESSION_ABSENCES_AND_STUDENTS } from '../../data/queries'
   import { MARK_STUDENT_ABSENT, UNMARK_STUDENT_ABSENT } from '../../data/mutations'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
@@ -15,7 +15,7 @@
   let loading = false
 
   onMount(async () => {
-    const response = await request(SESSION_ABSENCES, { sessionId })
+    const response = await request(SESSION_ABSENCES_AND_STUDENTS, { sessionId })
     absences = response.absences
     students = response.session.course.students
   })

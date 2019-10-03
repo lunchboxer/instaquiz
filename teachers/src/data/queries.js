@@ -262,7 +262,7 @@ export const ASKED_QUESTION = /* GraphQL */`
   }
 ${QuestionFields}`
 
-export const SESSION_ABSENCES = /* GraphQL */`
+export const SESSION_ABSENCES_AND_STUDENTS = /* GraphQL */`
   query SessionAbsences($sessionId: ID!) {
     absences(where: {session: {id: $sessionId }}) {
       ...AbsenceFields
@@ -275,6 +275,14 @@ export const SESSION_ABSENCES = /* GraphQL */`
           pinyinName
         }
       }
+    }
+  }
+${AbsenceFields}`
+
+export const SESSION_ABSENCES = /* GraphQL */`
+  query SessionAbsences($sessionId: ID!) {
+    absences(where: {session: {id: $sessionId }}) {
+      ...AbsenceFields
     }
   }
 ${AbsenceFields}`

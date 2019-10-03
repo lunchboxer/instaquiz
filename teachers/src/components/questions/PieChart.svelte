@@ -1,6 +1,4 @@
 <script>
-  import PieSlice from './PieSlice.svelte'
-
   export let data
 
   export let colors

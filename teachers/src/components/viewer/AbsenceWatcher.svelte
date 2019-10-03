@@ -3,14 +3,15 @@
   import { notifications } from '../notifications'
   import { ws } from '../../data/ws-client'
   import { request } from '../../data/fetch-client'
+  import { absences } from './stores'
   import { ABSENCE_SUBSCRIPTION, SESSION_ABSENCES } from '../../data/queries'
 
   export let session
-  let absences
 
   onMount(async () => {
     const response = await request(SESSION_ABSENCES, { sessionId: session.id })
-    absences = response.absences
+    absences.set(response.absences)
+    students.set(response.session.course.students)
     const subscription = ws.request({
       query: ABSENCE_SUBSCRIPTION,
       variables: { sessionId: session.id }
@@ -23,10 +24,10 @@
                 text: `${data.absences.node.student.name} marked absent.`,
                 type: 'danger'
               })
-              absences = [...absences, data.absences.node]
+              absences.update(previous => previous ? [...previous, data.absences.node] : [data.absences.node])
             } else {
               const deletedAbsence = absences.find(a => a.id === data.absences.previousValues.id)
-              absences = absences.filter(a => a.id !== deletedAbsence.id)
+              absences.update(previous => previous && previous.filter(a => a.id !== deletedAbsence.id))
               notifications.add({
                 text: `${deletedAbsence.student.name} marked present.`,
                 type: 'success'
