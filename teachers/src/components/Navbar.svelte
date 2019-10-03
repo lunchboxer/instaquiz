@@ -2,6 +2,7 @@
   import { user } from '../data/user'
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
+  import { location } from 'svelte-spa-router'
 
   const logout = async () => {
     const username = await user.logout()
@@ -64,7 +65,7 @@
   </div>
 
   <div class="navbar-end">
-    {#if $user.name}
+    {#if $user.name && $location !== '/viewer'}
       <NavbarLink url="#/me" icon="user-circle" text={$user.name}/>
         
       <div class="buttons">

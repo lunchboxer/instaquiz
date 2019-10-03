@@ -2,6 +2,7 @@
   import { formatDistanceStrict } from 'date-fns'
   import { imminentSession, activeSession } from '../dashboard/stores'
   import ViewerActive from './ViewerActive.svelte'
+  import ViewerNotificationList from './ViewerNotificationList.svelte'
 </script>
 
 <style>
@@ -28,3 +29,5 @@
 {:else}
   <p>No class session active or imminent.</p>
 {/if}
+
+<ViewerNotificationList />

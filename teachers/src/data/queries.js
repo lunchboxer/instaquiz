@@ -236,6 +236,24 @@ export const CALL_SUBSCRIPTION = /* GraphQL */`
   }
 `
 
+export const ABSENCE_SUBSCRIPTION = /* GraphQL */`
+subscription Absences($sessionId: ID!) {
+  absences(sessionId: $sessionId) {
+    mutation
+    previousValues {
+      id
+    }
+    node {
+      id
+      student {
+        id
+        name
+      }
+    }
+  }
+}
+`
+
 export const ASKED_QUESTION = /* GraphQL */`
   query ResponsesAndQuestions($sessionId: ID!){
     questions(first: 1, where: {asked_not:null, session: {id: $sessionId}}, orderBy: asked_DESC) {

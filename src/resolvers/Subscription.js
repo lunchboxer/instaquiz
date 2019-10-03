@@ -37,5 +37,18 @@ exports.Subscription = {
     resolve: payload => {
       return payload
     }
+  },
+  absences: {
+    subscribe: async (_, { sessionId }, { prisma }) => {
+      return prisma.$subscribe.absence({
+        mutation_in: ['CREATED', 'DELETED'],
+        node: {
+          session: { id: sessionId }
+        }
+      })
+    },
+    resolve: payload => {
+      return payload
+    }
   }
 }

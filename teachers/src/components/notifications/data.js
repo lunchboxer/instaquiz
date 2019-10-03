@@ -1,7 +1,5 @@
 import { writable } from 'svelte/store'
 
-const selfDestructDelay = 4000 // milliseconds
-
 const generateKey = () => {
   // timestamp with 4 random characters on the end
   const now = new Date()
@@ -22,7 +20,8 @@ const createNotificationStore = () => {
         return withoutThisOne
       })
     },
-    add: function (message) {
+    add: function (message, selfDestructDelay) {
+      selfDestructDelay = selfDestructDelay || 4000
       const id = generateKey()
       update(previous => ({ ...previous, [id]: message }))
       setTimeout(() => {

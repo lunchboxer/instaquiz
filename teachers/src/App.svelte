@@ -44,4 +44,6 @@
         
 </main>
   
-<NotificationList/>
+{#if $location !== '/viewer'}
+  <NotificationList/>
+{/if}

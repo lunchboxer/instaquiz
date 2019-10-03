@@ -7,6 +7,7 @@
   import { students } from '../students/data'
   import { responses } from '../dashboard/stores'
   import CallWatcher from './CallWatcher.svelte'
+  import AbsenceWatcher from './AbsenceWatcher.svelte'
   import { QUESTION_SUBSCRIPTION, ASKED_QUESTION } from '../../data/queries'
 
   let question
@@ -55,6 +56,8 @@
     padding: 0;
   }
 </style>
+
+<AbsenceWatcher {session} />
 
 <CallWatcher {session} />
 

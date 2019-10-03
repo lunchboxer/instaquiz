@@ -1,4 +1,6 @@
 <script>
+  import PieSlice from './PieSlice.svelte'
+
   export let data
 
   export let colors
@@ -12,23 +14,11 @@
   }
 
   const makeSlice = slice => {
-    // destructuring assignment sets the two variables at once
     const [startX, startY] = getCoordinatesForPercent(cumulativePercent)
-
-    // each slice starts where the last slice ended, so keep a cumulative percent
     cumulativePercent += slice.portion
-
     const [endX, endY] = getCoordinatesForPercent(cumulativePercent)
-
-    // if the slice is more than 50%, take the large arc (the long way around)
     const largeArcFlag = slice.portion > 0.5 ? 1 : 0
-
-    // create an array and join it just for code readability
-    return [
-      `M ${startX} ${startY}`, // Move
-      `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`, // Arc
-      'L 0 0' // Line
-    ].join(' ')
+    return `M ${startX} ${startY} A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY} L 0 0`
   }
 </script>
 

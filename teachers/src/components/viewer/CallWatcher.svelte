@@ -17,7 +17,10 @@
           if (data) {
             call = data.calls
             if (data.calls.evaluation) {
-              setTimeout(()=> call = null, 4000);
+              setTimeout(() => {
+                // we might have already replaced it
+                if (data.calls.id === call.id) call = null
+              }, 4000)
             }
           }
         }

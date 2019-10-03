@@ -1,5 +1,6 @@
 <script>
   import { notifications } from './data'
+  import { location } from 'svelte-spa-router'
 
   export let id
   export let message
@@ -82,7 +83,7 @@
 </style>
 
 
-<div class="notification {type}">
+<div class="notification {type}" class:viewer={$location === 'viewer' }>
   <button class="close" on:click={remove}></button>
   <span>{text}</span>
 </div>
