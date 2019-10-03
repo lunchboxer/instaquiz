@@ -74,24 +74,23 @@
 
   progress {
     width: 90%;
-    height: 8px;
+    height: 7px;
     margin: 4rem;
   }
 
   progress[value] {
     -webkit-appearance: none;
     appearance: none;
-    height: 4px;
   }
 
   progress[value]::-webkit-progress-bar {
-    border: 1px solid var(--primary-color);
+    border: 1px solid #ccc;
     background: transparent;
-    height: 8px;
+    height: 7px;
   }
 
   progress[value]::-webkit-progress-value {
-    background-color: var(--primary-color);
+    background-color: #ccc;
   }
 </style>
 
