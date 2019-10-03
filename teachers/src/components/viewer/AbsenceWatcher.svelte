@@ -11,7 +11,6 @@
   onMount(async () => {
     const response = await request(SESSION_ABSENCES, { sessionId: session.id })
     absences.set(response.absences)
-    students.set(response.session.course.students)
     const subscription = ws.request({
       query: ABSENCE_SUBSCRIPTION,
       variables: { sessionId: session.id }
