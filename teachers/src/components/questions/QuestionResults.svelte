@@ -2,14 +2,15 @@
   import { formatRelative } from 'date-fns'
   import PieChart from './PieChart.svelte'
   import { flip } from 'svelte/animate'
+  import { location } from 'svelte-spa-router'
 
   export let answers
   export let asked
 
   const colors = [
     '#7FFF00',
-    '#FF0C0C',
     '#0CF2F2',
+    '#FF0C0C',
     '#7F0CF2',
     '#F20C7F',
     '#F2F20C',
@@ -87,7 +88,7 @@
 </style>
 
 {#if answers && answers.length > 0}
-<section class="chart">
+<section class="chart" class:viewer={$location === '/viewer'}>
 
 <PieChart {colors} data={sortedAnswers.map(a => {
   if (!a.responses) return { label: a.text, portion: 0 }
@@ -96,7 +97,7 @@
   />
   <div class="labels-container">
     <ul class="labels">
-      <li>{totalResponses} Responses ({formatDate(asked)})</li>
+      <li>{totalResponses} Responses {#if $location !== '/viewer'}({formatDate(asked)}){/if}</li>
     {#each sortedAnswers as answer, index (answer.id)}
       <li animate:flip>
           <svg xmlns="http://www.w3.org/2000/svg" class="colorlabel" width="24" height="24" viewBox="0 0 24 24">
