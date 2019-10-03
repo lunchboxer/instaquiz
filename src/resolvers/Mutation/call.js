@@ -1,27 +1,53 @@
 exports.call = {
-  async callStudent (_, { sessionId }, context) {
-    // making the call is easy, the hard part is picking a student to call in a smart way
-    // for now lets only focus on calls this session, later we can look into the whole course
-    // we could find all students and find a list of all calls and compare them
-    // make a list of who hasn't been called and choose from that list
-    // if the list is empty then just randomly pick a student.
+  async callStudent (_, { sessionId }, { prisma }) {
+    // the goal is to not randomly choose one student five times and other never.
+    // so we'll call the students who have been called on the least.
 
-    // this can be improved by counting the number of calls on a student in this course
-    // then weighting the random selection with it.
-    const notCalledStudents = await context.prisma.session({ id: sessionId })
-      .course()
-      .students({ where: { calls_none: { session: { id: sessionId } } } })
     let studentId
-    if (notCalledStudents.length > 0) {
-      studentId = notCalledStudents[Math.floor(Math.random() * notCalledStudents.length)].id
-    } else {
-      const students = await context.prisma.session({ id: sessionId })
-        .course()
-        .students()
-      if (!students || students.length === 0) throw new Error('Session has no students')
-      studentId = students[Math.floor(Math.random() * students.length)].id
+    let students
+
+    const allStudentsThisCourse = await prisma.session({ id: sessionId }).course().students()
+    if (!allStudentsThisCourse || allStudentsThisCourse.length === 0) {
+      throw new Error('This course has no students enrolled.')
     }
-    return context.prisma.createCall({
+    // find all the students who have been called this semester in this course
+    const calledByCourse = await prisma.session({ id: sessionId }).course().sessions().calls().student()
+    if (calledByCourse && calledByCourse.length > 0) {
+      const calledStudentIds = calledByCourse.map(course => course.calls).flat().map(item => item.student.id)
+      const uniqueCalledStudentIds = [...new Set(calledStudentIds)]
+      const notCalledStudents = allStudentsThisCourse.filter(s => {
+        return !uniqueCalledStudentIds.includes(s.id)
+      })
+      // pick a student from those who've never been called
+      if (notCalledStudents.length > 0) {
+        studentId = notCalledStudents[Math.floor(Math.random() * notCalledStudents.length)].id
+      } else {
+        // if there are no students who haven't been called then find the ones
+        // who've been calle dthe least and pick one of them
+        const studentsWithCallCounts = calledStudentIds.reduce((acc, studentId) => {
+          acc[studentId] ? acc[studentId]++ : acc[studentId] = 1
+          return acc
+        }, {})
+        const minimumCalls = Object.keys(studentsWithCallCounts).reduce((min, student) => {
+          if (!min || studentsWithCallCounts[student] < min) {
+            min = studentsWithCallCounts[student]
+          }
+          return min
+        }, 0)
+        const leastCalledStudents = Object.keys(studentsWithCallCounts).filter(id => {
+          return studentsWithCallCounts[id] === minimumCalls
+        })
+        students = leastCalledStudents
+      }
+    } else {
+      // none of the students have been called, so just pick one
+      students = allStudentsThisCourse.map(s => s.id)
+    }
+    // pick a student to call
+    studentId = students[Math.floor(Math.random() * students.length)]
+
+    // call that student
+    return prisma.createCall({
       student: {
         connect: {
           id: studentId
