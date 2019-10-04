@@ -5,21 +5,20 @@
   import { location } from 'svelte-spa-router'
 
   export let answers
-  export let asked
+  export let asked = ''
 
   const colors = [
     '#7FFF00',
     '#0CF2F2',
-    '#FF0C0C',
-    '#7F0CF2',
     '#F20C7F',
+    '#7F0CF2',
+    '#FF0C0C',
     '#F2F20C',
     '#0C0CF2',
     '#F27F0C',
     '#0CF27F',
     '#999'
   ]
-
   $: totalResponses = answers && answers.reduce((total, answer) => {
     if (!answer.responses) return total
     return total + answer.responses.length
@@ -97,7 +96,7 @@
   />
   <div class="labels-container">
     <ul class="labels">
-      <li>{totalResponses} Responses {#if $location !== '/viewer'}({formatDate(asked)}){/if}</li>
+      <li>{totalResponses} Responses {#if $location !== '/viewer' && asked}({formatDate(asked)}){/if}</li>
     {#each sortedAnswers as answer, index (answer.id)}
       <li animate:flip>
           <svg xmlns="http://www.w3.org/2000/svg" class="colorlabel" width="24" height="24" viewBox="0 0 24 24">

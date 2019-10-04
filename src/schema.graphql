@@ -27,6 +27,7 @@ type Query {
   ): [Response!]!
   calls(orderBy: CallOrderByInput, where: CallWhereInput): [Call!]!
   absences(orderBy: AbsenceOrderByInput, where: AbsenceWhereInput): [Absence!]!
+  duplicateQuestions: [QuestionDuplicatePayload!]!
 }
 
 type Mutation {
@@ -101,4 +102,9 @@ role: Role!
 calls: [Call!]!
 pinyinName: String
 absences: [Absence!]!
+}
+
+type QuestionDuplicatePayload {
+  text: String!
+  count: Int!
 }

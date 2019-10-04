@@ -11,6 +11,8 @@ import Question from './components/questions/Question.svelte'
 import CourseStudents from './components/courses/CourseStudents.svelte'
 import Student from './components/students/Student.svelte'
 import Viewer from './components/viewer/Viewer.svelte'
+import DuplicateQuestions from './components/questions/DuplicateQuestions.svelte'
+import DuplicateQuestion from './components/questions/DuplicateQuestion.svelte'
 
 export default {
   '/': Dashboard,
@@ -25,5 +27,7 @@ export default {
   '/course-students/:id': CourseStudents,
   '/student/:id': Student,
   '/viewer': Viewer,
+  '/duplicate-questions': DuplicateQuestions,
+  '/duplicate-question/:text': DuplicateQuestion,
   '*': NotFound
 }

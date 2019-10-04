@@ -286,3 +286,44 @@ export const SESSION_ABSENCES = /* GraphQL */`
     }
   }
 ${AbsenceFields}`
+
+export const DUPLICATE_QUESTIONS = /* GraphQL */ `
+ {
+   duplicateQuestions {
+     text
+     count
+   }
+ }`
+
+export const QUESTIONS_BY_TEXT = /* GraphQL */ `
+  query QuestionsByText($text: String!){
+   questions (where: {text_contains: $text}){
+    id
+    asked
+    text
+    order
+    answers {
+      id
+      text
+      responses {
+        id
+        student {
+          id
+        }
+        createdAt
+      }
+    }
+    session {
+      id
+      order
+      course {
+        id
+        name
+        term {
+          id
+          name
+        }
+      }
+    }
+   }
+ }`

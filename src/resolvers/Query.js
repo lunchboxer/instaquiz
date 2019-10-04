@@ -55,5 +55,25 @@ exports.Query = {
   },
   absences (_, { orderBy = 'createdAt_DESC', where, first, last }, context) {
     return context.prisma.absences({ orderBy, where, first, last })
+  },
+  async duplicateQuestions (_, args, context) {
+    const allQuestions = await context.prisma.questions()
+    // what is the result we are looking for?
+    // an array of the duplicate texts may be enough
+    const collector = {}
+    const dupes = []
+    allQuestions.forEach(question => {
+      if (!collector[question.text]) {
+        collector[question.text] = 0
+      }
+      collector[question.text] += 1
+    })
+
+    for (const text in collector) {
+      if (collector[text] >= 2) {
+        dupes.push({ text, count: collector[text] })
+      }
+    }
+    return dupes
   }
 }
