@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { request } from '../../data/fetch-client'
-  import { QUESTIONS_BY_TEXT } from '../../data/queries'
+  import { QUESTIONS_BY_TEXT, RESPONSES_SAME_QUESTION_TEXT } from '../../data/queries'
   import { DELETE_RESPONSE } from '../../data/mutations'
   import QuestionResults from './QuestionResults.svelte'
   import Loading from '../Loading.svelte'
@@ -10,14 +10,18 @@
   export let params = {}
   let questions
   let allAnswers
+  let allResponses
 
   const text = (decodeURI(params.text))
 
   onMount(async () => {
     if (!text) return
     const response = await request(QUESTIONS_BY_TEXT, { text })
+    console.log(response.questions)
     questions = response.questions
     allAnswers = mergeQuestions(questions)
+    const { responses } = await request(RESPONSES_SAME_QUESTION_TEXT, { text })
+    allResponses = responses
   })
 
   const mergeQuestions = questions => {
@@ -39,6 +43,7 @@
     if (!answers || answers.length === 0) return
     // merge all the responses first
     const allResponses = answers.flatMap(answer => answer.responses)
+    console.log(allResponses)
     // count the unique students
     const uniqueStudents = {}
     let count = 0
@@ -58,44 +63,42 @@
     }, 0)
   }
 
-  const findDuplicateResponses = questions => {
+  const findDuplicateResponses = () => {
     // comb through all responses find which have same student and same session,
-    // questions is already grouped into same session
-    // next flatten responses
-    questions.forEach(question => {
-      const allResponses = question.answers.flatMap(a => a.responses)
-      console.log(allResponses)
+
+    // group by same student first
+    const groupedByStudent = {}
+
+    allResponses.forEach(response => {
+      if (groupedByStudent[response.student.id]) {
+        groupedByStudent[response.student.id].push(response)
+      } else {
+        groupedByStudent[response.student.id] = [response]
+      }
     })
 
-    // const duplicates = {}
-    // questions.forEach(question => {
-    //   const studentsWhoHaveResponded = {}
-    //   question.answers.forEach(answer => {
-    //     answer.responses.forEach(response => {
-    //       if (!studentsWhoHaveResponded[response.student.id]) {
-    //         studentsWhoHaveResponded[response.student.id] = [response]
-    //       } else {
-    //         studentsWhoHaveResponded[response.student.id].push(response)
-    //         if (duplicates[response.student.id]) {
-    //           duplicates[response.student.id].push(response)
-    //         } else {
-    //           duplicates[response.student.id] = studentsWhoHaveResponded[response.student.id]
-    //         }
-    //       }
-    //     })
-    //   })
-    // })
-    // const duplicatesList = []
-    // for (const student in duplicates) {
-    //   const responses = duplicates[student].sort((a, b) => {
-    //     return b.createdAt.localeCompare(a.createdAt)
-    //   })
-    //   duplicatesList.push({ studentId: student, responses })
-    // }
-    // return duplicatesList
+    const duplicates = []
+    // then see if there are same session in a single students responses
+    for (const student in groupedByStudent) {
+      if (groupedByStudent[student].length < 2) return
+      const bySession = {}
+      groupedByStudent[student].forEach(response => {
+        if (bySession[response.session.id]) {
+          bySession[response.session.id].push(response)
+        } else {
+          bySession[response.session.id] = [response]
+        }
+      })
+      for (const session in bySession) {
+        if (bySession[session].length > 1) {
+          duplicates.push(bySession[session])
+        }
+      }
+    }
+    return duplicates
   }
 
-  $: duplicateResponses = questions && findDuplicateResponses(questions)
+  $: duplicateResponses = allResponses && findDuplicateResponses()
 
   $: console.log(questions)
   const remove = async id => {
@@ -132,14 +135,12 @@
 
   {#if duplicateResponses && duplicateResponses.length > 0}
     <h4>Duplicate responses</h4>
-    {#each duplicateResponses as dupe (dupe.studentId)}
-      <li>Student: {dupe.studentId}
+    {#each duplicateResponses as dupe}
+      <li>Student: {dupe[0].student.Id}
         <ul>
-          {#each dupe.responses as response, index (response.id)}
+          {#each dupe as response, index (response.id)}
             <li>{response.id} - {response.createdAt} sessionId: {response.session.id}, answer: {response.answer.text}
-              {#if index !== 0}
                 <button class="button-clear" on:click={() => remove(response.id)}>delete</button>
-              {/if}
             </li>
           {/each}
         </ul>

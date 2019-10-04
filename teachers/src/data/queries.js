@@ -333,3 +333,20 @@ export const QUESTIONS_BY_TEXT = /* GraphQL */ `
     }
    }
  }`
+
+export const RESPONSES_SAME_QUESTION_TEXT = /* GraphQL */ `
+  query ($text: String!){
+    responses(where: {answer:{question:{text_contains: $text}}}) {
+      id
+      session {
+        id
+      }
+      answer {
+        text
+      }
+      student {
+        id
+      }
+    }
+  }
+`
