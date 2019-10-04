@@ -306,6 +306,12 @@ export const QUESTIONS_BY_TEXT = /* GraphQL */ `
       id
       text
       responses {
+        answer {
+          text
+        }
+        session {
+          id
+        }
         id
         student {
           id

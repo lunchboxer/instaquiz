@@ -245,3 +245,11 @@ export const UNMARK_STUDENT_ABSENT = /* GraphQL */ `
     }
   }
 `
+
+export const DELETE_RESPONSE = /* GraphQL */ `
+  mutation DeleteResponse($id: ID!) {
+    deleteResponse (id: $id){
+      id
+    }
+  }
+`

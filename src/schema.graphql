@@ -63,6 +63,7 @@ type Mutation {
     answerId: ID!
     sessionId: ID!
   ): Response
+  deleteResponse(id: ID!): Response
   callStudent(sessionId: ID!): Call
   evaluateStudent(callId: ID!, evaluation: Evaluation): Call
   markStudentAbsent(studentId: ID!, sessionId: ID!): Absence

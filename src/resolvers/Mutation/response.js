@@ -27,5 +27,8 @@ exports.response = {
         connect: { id: studentId }
       }
     })
+  },
+  deleteResponse (_, { id }, { prisma }) {
+    return prisma.deleteResponse({ id })
   }
 }
