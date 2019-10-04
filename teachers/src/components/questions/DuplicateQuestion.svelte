@@ -40,10 +40,9 @@
     const uniqueStudents = {}
     let count = 0
     allResponses.forEach(response => {
-      if (uniqueStudents[response.student.id]) {
-        count++
-      } else {
+      if (!uniqueStudents[response.student.id]) {
         uniqueStudents[response.student.id] = 1
+        count++
       }
     })
     return count
