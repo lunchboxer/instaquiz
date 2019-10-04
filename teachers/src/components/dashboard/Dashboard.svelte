@@ -3,6 +3,7 @@
   import { imminentSession, activeSession } from './stores'
   import ActiveSession from './ActiveSession.svelte'
   import Terms from '../terms/Terms.svelte'
+  import DuplicateQuestions from '../questions/DuplicateQuestions.svelte'
 </script>
 
 <style>
@@ -32,4 +33,6 @@
   </section>
 {:else}
   <Terms />
+
+  <DuplicateQuestions />
 {/if}
