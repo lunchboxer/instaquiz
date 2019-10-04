@@ -45,6 +45,29 @@
     const dateDate = new Date(date)
     return formatRelative(dateDate, new Date())
   }
+
+  const findDuplicateResponses = () => {
+    const allResponses = answers.flatMap(a => a.responses)
+    // the most straight-forward and least efficient way
+    // compare every result to every other result
+    const duplicates = []
+    const groupedByStudent = {}
+    allResponses.forEach(response => {
+      if (!groupedByStudent[response.student.id]) {
+        groupedByStudent[response.student.id] = [response]
+      } else {
+        groupedByStudent[response.student.id].push(response)
+      }
+    })
+    for (const studentId in groupedByStudent) {
+      if (groupedByStudent[studentId].length > 1) {
+        duplicates.push(groupedByStudent[studentId])
+      }
+    }
+    return duplicates
+  }
+
+  $: duplicateResponses = answers && findDuplicateResponses()
 </script>
 
 <style>
@@ -111,4 +134,17 @@
   </ul>
 </div>
 </section>
+
+{#if duplicateResponses && duplicateResponses.length > 0}
+  <h3>Duplicate reponses</h3>
+  {#each duplicateResponses as dupe}
+    <li>{dupe.length} similar responses</li>
+    <ul>
+      {#each dupe as response}
+        <li>{response.id} - {response.createdAt}, {response.student.id}</li>
+      {/each}
+    </ul>
+  {/each}
+{/if}
+
 {/if}
