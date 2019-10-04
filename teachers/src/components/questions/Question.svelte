@@ -11,8 +11,8 @@
 
   $: if ($question && !$questions) questions.get($question.session.id)
 
-  $: nextQuestion = $questions && $questions.find(q => q.order === $question.order + 1)
-  $: previousQuestion = $questions && $questions.find(q => q.order === $question.order - 1)
+  $: nextQuestion = $questions && $question && $questions.find(q => q.order === $question.order + 1)
+  $: previousQuestion = $questions && $question && $questions.find(q => q.order === $question.order - 1)
 </script>
 
 <svelte:head>
