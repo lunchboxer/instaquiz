@@ -3,6 +3,9 @@
   import PieChart from './PieChart.svelte'
   import { flip } from 'svelte/animate'
   import { location } from 'svelte-spa-router'
+  import { DELETE_RESPONSE } from '../../data/mutations'
+  import { request } from '../../data/fetch-client'
+  import { notifications } from '../notifications'
 
   export let answers
   export let asked = ''
@@ -68,6 +71,16 @@
   }
 
   $: duplicateResponses = answers && findDuplicateResponses()
+
+  const remove = async id => {
+    try {
+      await request(DELETE_RESPONSE, { id })
+      notifications.add({ text: `removed response ${id}`, type: 'success' })
+    } catch (error) {
+      notifications.add({ text: `could not remove response ${id}`, type: 'danger' })
+      console.error(error)
+    }
+  }
 </script>
 
 <style>
@@ -141,7 +154,10 @@
     <li>{dupe.length} similar responses</li>
     <ul>
       {#each dupe as response}
-        <li>{response.id} - {response.createdAt}, {response.student.id}</li>
+        <li>
+          {response.id} - {response.createdAt}, student:{response.student.id}, session: {response.session.id}
+          <button class="button-clear" on:click={() => remove(response.id)}>delete</button>
+        </li>
       {/each}
     </ul>
   {/each}

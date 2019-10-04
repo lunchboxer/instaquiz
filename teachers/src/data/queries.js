@@ -159,6 +159,9 @@ query Question($id: ID!){
       text
       responses {
         id
+        session {
+          id
+        }
         student {
           id
         }
