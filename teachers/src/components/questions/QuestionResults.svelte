@@ -64,7 +64,9 @@
     })
     for (const studentId in groupedByStudent) {
       if (groupedByStudent[studentId].length > 1) {
-        duplicates.push(groupedByStudent[studentId])
+        duplicates.push(groupedByStudent[studentId].sort((a, b) => {
+          return b.createdAt.localeCompare(a.createdAt)
+        }))
       }
     }
     return duplicates
@@ -153,10 +155,12 @@
   {#each duplicateResponses as dupe}
     <li>{dupe.length} similar responses</li>
     <ul>
-      {#each dupe as response}
+      {#each dupe as response, index (response.id)}
         <li>
-          {response.id} - {response.createdAt}, student:{response.student.id}, session: {response.session.id}
-          <button class="button-clear" on:click={() => remove(response.id)}>delete</button>
+          {response.id} - {new Date(response.createdAt).toLocaleString()}, student:{response.student.id}, session: {response.session.id}
+          {#if index !== 0}
+            <button class="button-clear" on:click={() => remove(response.id)}>delete</button>
+          {/if}
         </li>
       {/each}
     </ul>
