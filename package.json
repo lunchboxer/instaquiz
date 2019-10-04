@@ -65,6 +65,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "sirv-cli": "^0.4.4",
     "svelte": "^3.12.1",
-    "svelte-spa-router": "^1.2.0"
+    "svelte-spa-router": "^1.2.0",
+    "swiped-events": "^1.0.9"
   }
 }
