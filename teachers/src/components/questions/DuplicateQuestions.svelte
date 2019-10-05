@@ -1,26 +1,32 @@
 <script>
   import { onMount } from 'svelte'
-  import { request } from '../../data/fetch-client'
-  import { DUPLICATE_QUESTIONS } from '../../data/queries'
+  import { duplicateQuestions } from './data'
   import Loading from '../Loading.svelte'
   import Input from '../Input.svelte'
+  import Error from '../Error.svelte'
 
-  let questions
   let searchString = ''
+  let errors = ''
 
   onMount(async () => {
-    const response = await request(DUPLICATE_QUESTIONS)
-    questions = response.duplicateQuestions
+    try {
+      await duplicateQuestions.get()
+    } catch (error) {
+      errors = error
+    }
   })
 
-  $: filteredQuestions = questions && questions.filter(q => {
+  $: filteredQuestions = $duplicateQuestions && $duplicateQuestions.filter(q => {
     return q.text.toUpperCase().includes(searchString.toUpperCase())
   })
 </script>
 
 <h1>Duplicate Questions</h1>
-{#if questions}
-  {#if questions.length > 0}
+
+<Error {errors} />
+
+{#if $duplicateQuestions}
+  {#if $duplicateQuestions.length > 0}
     <Input type="text" bind:value={searchString} label="Search" />
     {#each filteredQuestions as question}
       <li>
