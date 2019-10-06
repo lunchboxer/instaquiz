@@ -21,7 +21,7 @@
     "build:students": "rollup -c students/rollup.config.js",
     "build:server": "export $(cat .env | xargs) && prisma generate",
     "deploy": "export $(cat .env | xargs) && prisma deploy",
-    "copy-fonts": "cp node_modules/nunito-fontface/fonts/nunito/nunito-[BR][oe]* teachers/public/fonts/nunito/"
+    "copy-fonts": "mkdir -p teachers/public/fonts/nunito && cp node_modules/nunito-fontface/fonts/nunito/nunito-[BR][oe]* teachers/public/fonts/nunito/"
   },
   "keywords": [],
   "author": "",
