@@ -75,7 +75,12 @@
   progress {
     width: 90%;
     height: 7px;
-    margin: 4rem;
+    margin: 4rem 4rem 2rem;
+  }
+
+  progress.is-complete {
+    opacity: 0;
+    transition: opacity 1.5s;
   }
 
   progress[value] {
@@ -84,13 +89,52 @@
   }
 
   progress[value]::-webkit-progress-bar {
-    border: 1px solid #ccc;
-    background: transparent;
+    background: black;
     height: 7px;
   }
 
   progress[value]::-webkit-progress-value {
     background-color: #ccc;
+  }
+
+  @-webkit-keyframes zoomOut {
+    from {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+      -webkit-transform: scale(5);
+      transform: scale(5);
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes zoomOut {
+    from {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+      -webkit-transform: scale(5);
+      transform: scale(5);
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  p.is-complete {
+    font-size: 3rem;
+    font-weight: bold;
+    -webkit-animation: 2s zoomOut;
+    animation: 2s zoomOut;
+    opacity: 0;
   }
 </style>
 
@@ -105,13 +149,16 @@
   <div class="container" transition:fade>
     <h1>{question.text}</h1>
     {#if hasntAnswered && $students}
-      <progress value={$progress} max={presentStudents.length}></progress>
+      <progress class:is-complete={$progress === presentStudents.length} value={$progress} max={presentStudents.length}></progress>
     {/if}
     {#if hasntAnswered && hasntAnswered.length > 0}
       <p>{hasntAnswered.length} students have not answered</p>
       {#if hasntAnswered.length < 10}
         {hasntAnswered.map(s => s.name).join(', ')}
       {/if}
+    {/if}
+    {#if hasntAnswered && hasntAnswered.length === 0}
+      <p class="is-complete">Done!</p>
     {/if}
     {#if question.publishResponses}
       <ViewerResponses {question} />

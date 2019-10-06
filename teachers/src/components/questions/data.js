@@ -10,6 +10,7 @@ const createQuestionStore = () => {
     subscribe,
     update,
     get: async (id) => {
+      set()
       const response = await request(QUESTION, { id })
       set(response.question)
     },
