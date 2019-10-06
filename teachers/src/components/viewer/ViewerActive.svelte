@@ -13,6 +13,7 @@
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
   import ResponseWatcher from './ResponseWatcher.svelte'
+  import TimeTracker from './TimeTracker.svelte'
 
   const progress = tweened(0, {
     duration: 400,
@@ -141,6 +142,10 @@
 <AbsenceWatcher {session} />
 
 <CallWatcher {session} />
+
+{#if session && session.endsAt}
+  <TimeTracker endsAt={session.endsAt} />
+{/if}
 
 {#if question}
 

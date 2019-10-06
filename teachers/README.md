@@ -2,6 +2,8 @@
 
 This is a [Svelte](https://svelte.technology) app to provide instant quizes on student devices in the classroom. It's based on [svelte v3 webpack template](https://github.com/sveltejs/template-webpack#v3).
 
+The viewer component uses [mallet hit 8 exclamation sound](https://www.zapsplat.com/music/game-tone-notification-exclamation-sound-mallet-hit-8/) from Zapsplat.com
+
 ## Get started
 
 *with [Node.js](https://nodejs.org) installed...*
