@@ -8,6 +8,32 @@ mostly the addition of custom property colors, so that components can use them t
  * Copyright (c) 2018 CJ Patoilo
  * Licensed under the MIT license
  */
+ @font-face {
+  font-family: 'nunito';
+  src: url('./fonts/nunito/nunito-Bold.eot');
+  src: local('nunito Bold'), local('nunito-Bold'), url('./fonts/nunito/nunito-Bold.eot?#iefix') format('embedded-opentype'), url('./fonts/nunito/nunito-Bold.woff2') format('woff2'), url('./fonts/nunito/nunito-Bold.woff') format('woff'), url('./fonts/nunito/nunito-Bold.ttf') format('truetype'), url('./fonts/nunito/nunito-Bold.svg#nunito') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nunito-Bold';
+  src: url('./fonts/nunito/nunito-Bold.eot');
+  src: local('nunito Bold'), local('nunito-Bold'), url('./fonts/nunito/nunito-Bold.eot?#iefix') format('embedded-opentype'), url('./fonts/nunito/nunito-Bold.woff2') format('woff2'), url('./fonts/nunito/nunito-Bold.woff') format('woff'), url('./fonts/nunito/nunito-Bold.ttf') format('truetype'), url('./fonts/nunito/nunito-Bold.svg#nunito') format('svg');
+}
+ @font-face {
+  font-family: 'nunito';
+  src: url('./fonts/nunito/nunito-Regular.eot');
+  src: local('nunito Regular'), local('nunito-Regular'), url('./fonts/nunito/nunito-Regular.eot?#iefix') format('embedded-opentype'), url('./fonts/nunito/nunito-Regular.woff2') format('woff2'), url('./fonts/nunito/nunito-Regular.woff') format('woff'), url('./fonts/nunito/nunito-Regular.ttf') format('truetype'), url('./fonts/nunito/nunito-Regular.svg#nunito') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'nunito-Regular';
+  src: url('./fonts/nunito/nunito-Regular.eot');
+  src: local('nunito Regular'), local('nunito-Regular'), url('./fonts/nunito/nunito-Regular.eot?#iefix') format('embedded-opentype'), url('./fonts/nunito/nunito-Regular.woff2') format('woff2'), url('./fonts/nunito/nunito-Regular.woff') format('woff'), url('./fonts/nunito/nunito-Regular.ttf') format('truetype'), url('./fonts/nunito/nunito-Regular.svg#nunito') format('svg');
+}
+
  :root {
   --alt-background: #333333;
   --color-on-primary: #ffffff;
@@ -32,7 +58,7 @@ input, select {
 body {
   color: var(--base-color);
   background-color: var(--background);
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "Nunito","Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 1.6em;
   font-weight: 300;
   letter-spacing: 0.01em;

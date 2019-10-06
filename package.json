@@ -16,11 +16,12 @@
     "dev:server": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
     "debug": "nodemon -e js,graphql -x node --inspect -r dotenv/config src/index.js",
     "nodemon": "nodemon --config nodemon.json",
-    "build": "npm run build:teachers && npm run build:students && npm run build:server",
+    "build": "npm run copy-fonts && npm run build:teachers && npm run build:students && npm run build:server",
     "build:teachers": "rollup -c teachers/rollup.config.js",
     "build:students": "rollup -c students/rollup.config.js",
     "build:server": "export $(cat .env | xargs) && prisma generate",
-    "deploy": "export $(cat .env | xargs) && prisma deploy"
+    "deploy": "export $(cat .env | xargs) && prisma deploy",
+    "copy-fonts": "cp node_modules/nunito-fontface/fonts/nunito/nunito-[BR][oe]* teachers/public/fonts/nunito/"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +54,7 @@
     "graphql-subscriptions-client": "^0.12.0",
     "nodemon": "^1.19.3",
     "npm-run-all": "^4.1.5",
+    "nunito-fontface": "^0.7.3",
     "prisma": "^1.34.8",
     "rollup": "^1.22.0",
     "rollup-plugin-commonjs": "^10.1.0",
