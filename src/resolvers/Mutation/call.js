@@ -3,7 +3,6 @@ exports.call = {
     // the goal is to not randomly choose one student five times and other never.
     // so we'll call the students who have been called on the least.
 
-    let studentId
     let students
 
     const allStudentsThisCourse = await prisma.session({ id: sessionId }).course()
@@ -14,15 +13,17 @@ exports.call = {
     }
     // find all the students who have been called this semester in this course
     const calledByCourse = await prisma.session({ id: sessionId }).course().sessions().calls().student()
-    if (calledByCourse && calledByCourse.length > 0) {
-      const calledStudentIds = calledByCourse.map(course => course.calls).flat().map(item => item.student.id)
+    // above comes back as array of sessions
+    const flatcalls = calledByCourse.flatMap(session => session.calls)
+    if (flatcalls && flatcalls.length > 0) {
+      const calledStudentIds = flatcalls.map(item => item.student.id)
       const uniqueCalledStudentIds = [...new Set(calledStudentIds)]
       const notCalledStudents = allStudentsThisCourse.filter(s => {
         return !uniqueCalledStudentIds.includes(s.id)
       })
       // pick a student from those who've never been called
       if (notCalledStudents.length > 0) {
-        studentId = notCalledStudents[Math.floor(Math.random() * notCalledStudents.length)].id
+        students = notCalledStudents.map(s => s.id)
       } else {
         // if there are no students who haven't been called then find the ones
         // who've been calle dthe least and pick one of them
@@ -45,10 +46,10 @@ exports.call = {
       // none of the students have been called, so just pick one
       students = allStudentsThisCourse.map(s => s.id)
     }
-    // pick a student to call
-    studentId = students[Math.floor(Math.random() * students.length)]
 
     // call that student
+    const studentId = students[Math.floor(Math.random() * students.length)]
+
     return prisma.createCall({
       student: {
         connect: {
