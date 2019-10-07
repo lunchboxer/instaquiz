@@ -30,7 +30,7 @@
         throw new Error('Session ends before it starts.')
       }
       const { createSession } = await request(CREATE_SESSION, { startsAt, endsAt, courseId })
-      sessions.patch(createSession, $user.id, now, latest)
+      await sessions.patch(createSession, $user.id, now, latest)
       courses.update(previous => previous && previous.map(course => {
         if (course.id !== createSession.course.id) return course
         return { ...course, sessions: [...course.sessions, createSession] }

@@ -25,7 +25,7 @@
     order && order--
     try {
       const response = await request(CREATE_QUESTION,
-        { text, order, sessionId }
+        { input: { text, order, session: { id: sessionId } } }
       )
       if (order !== null) session.get(sessionId)
       else {

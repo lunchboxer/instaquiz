@@ -6,6 +6,7 @@ node_modules
 *.log
 yarn.lock
 .env*
+.remote.env
 src/generated
 teachers/public/fonts
 .import

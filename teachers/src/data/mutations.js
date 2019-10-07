@@ -102,8 +102,8 @@ export const IMPORT_QUESTIONS = /* GraphQL */`
 // Question
 
 export const CREATE_QUESTION = /* GraphQL */`
-  mutation CreateQuestion($text: String!, $sessionId: ID!, $order: Int){
-    createQuestion(text: $text, sessionId: $sessionId, order: $order) {
+  mutation CreateQuestion($input: QuestionCreateInput!){
+    createQuestion(input: $input) {
       ...QuestionFields
     }
   }

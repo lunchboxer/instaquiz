@@ -51,7 +51,7 @@ type Mutation {
   removeTeacherFromCourse(id: ID!, courseId: ID!): Course
   createSession(startsAt: DateTime!, endsAt: DateTime!, courseId: ID!): Session
   importQuestions(fromSessionId: ID!, toSessionId: ID!): Session
-  createQuestion(text: String!, order: Int, sessionId: ID!): Question
+  createQuestion(input: QuestionCreateInput!): Question
   updateQuestion(id: ID!, input: QuestionUpdateInput!): Question
   askQuestion(id: ID!): Question
   deleteQuestion(id: ID!): Question

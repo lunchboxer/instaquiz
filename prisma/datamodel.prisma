@@ -46,7 +46,7 @@ type Session {
 type Question {
   id: ID! @id
   text: String!
-  order: Int!
+  order: Int
   answers: [Answer!]!
   responses: [Response!]!
   session: Session! @relation(link: INLINE)

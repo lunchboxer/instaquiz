@@ -41,13 +41,14 @@ fragment QuestionWithSession on Question {
 }`
 
 exports.question = {
-  async createQuestion (_, { text, order, sessionId }, context) {
+  async createQuestion (_, { input }, context) {
     let newOrder = null
+    const { order, text, session } = input
     if (typeof order === 'number') {
       const existing = await context.prisma.questions({ where: { order } })
       if (existing && existing.length > 0) {
         newOrder = order
-        await shiftOrderUp(order, sessionId, context.prisma)
+        await shiftOrderUp(order, session.connect.id, context.prisma)
       }
     }
     // order on server side should count from 0
@@ -56,7 +57,7 @@ exports.question = {
       newOrder = await context.prisma.questionsConnection({
         where: {
           session: {
-            id: sessionId
+            id: session.connect.id
           }
         }
       }).aggregate().count()
@@ -64,11 +65,7 @@ exports.question = {
     return context.prisma.createQuestion({
       text,
       order: newOrder,
-      session: {
-        connect: {
-          id: sessionId
-        }
-      }
+      session
     })
   },
   askQuestion (_, { id }, context) {

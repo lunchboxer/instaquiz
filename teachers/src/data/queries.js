@@ -31,6 +31,19 @@ export const SESSION = /* GraphQL */`
   ${AllSessionFields}
 `
 
+export const SESSION_QUESTIONS = /* GraphQL */`
+  query SessionQuestions($sessionId: ID!){
+    questions(where: {session: {id: $sessionId}}){
+      id
+      text
+      order
+      answers {
+        text
+      }
+    }
+  }
+`
+
 export const TERMS_AND_ALL = /* GraphQL */`
 {
   terms(orderBy: startDate_ASC) {

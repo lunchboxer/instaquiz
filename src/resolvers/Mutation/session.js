@@ -1,3 +1,4 @@
+
 exports.session = {
   async importQuestions (_, { fromSessionId, toSessionId }, { prisma }) {
     const fromQuestions = await prisma.session({ id: fromSessionId }).questions()
@@ -9,7 +10,6 @@ exports.session = {
           questions: {
             create: {
               text: question.text,
-              order: question.order,
               answers: { create: answers.map(ans => ({ text: ans.text })) }
             }
           }
