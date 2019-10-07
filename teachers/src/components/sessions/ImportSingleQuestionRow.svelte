@@ -6,11 +6,13 @@
 
   export let question
   let errors = ''
+  let loading = false
 
   $: isAdded = !!$session.questions.find(q => q.text === question.text)
 
   const add = async () => {
     if (isAdded) return
+    loading = true
     try {
       await request(CREATE_QUESTION, {
         input: {
@@ -27,6 +29,8 @@
       errors = error
       console.error(error)
       notifications.add({ text: `Question couldn't be added - ${question.text}`, type: 'danger' })
+    } finally {
+      loading = false
     }
   }
 </script>
@@ -34,7 +38,11 @@
 <style>
   li {
     list-style: none;
+  }
 
+  li.is-loading {
+    color: #666;
+    cursor: inherit;
   }
 
   li:not(.isAdded) {
@@ -50,7 +58,7 @@
   }
 </style>
 
-<li on:click={add} class:isAdded>
+<li on:click={add} class:isAdded class:is-loadin={loading}>
   {#if isAdded}&checkmark;{/if}
-  {question.order}) {question.text}
+  {question.order + 1}) {question.text}
 </li>
