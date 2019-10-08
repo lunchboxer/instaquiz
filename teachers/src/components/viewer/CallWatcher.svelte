@@ -7,6 +7,8 @@
   export let session
   let call
 
+  const alert = new Audio('sounds/zapsplat_multimedia_game_sound_mallet_generic_018_40859.mp3')
+
   onMount(() => {
     const subscription = ws.request({
       query: CALL_SUBSCRIPTION,
@@ -16,6 +18,7 @@
         next ({ data }) {
           if (data) {
             call = data.calls
+            alert.play()
             if (data.calls.evaluation) {
               setTimeout(() => {
                 // we might have already replaced it
