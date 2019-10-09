@@ -1,4 +1,5 @@
 <script>
+  import { push } from 'svelte-spa-router'
   import { request } from '../../data/fetch-client'
   import { CREATE_QUESTION } from '../../data/mutations'
   import { session, questions } from '../sessions/data'
@@ -40,6 +41,7 @@
       }
       notifications.add({ text: 'Saved new question', type: 'success' })
       reset()
+      push(`/question/${response.createQuestion.id}`)
     } catch (error) {
       errors = error
       notifications.add({
