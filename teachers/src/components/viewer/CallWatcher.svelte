@@ -18,12 +18,13 @@
         next ({ data }) {
           if (data) {
             call = data.calls
-            alert.play()
             if (data.calls.evaluation) {
               setTimeout(() => {
                 // we might have already replaced it
                 if (data.calls.id === call.id) call = null
               }, 4000)
+            } else {
+              alert.play()
             }
           }
         }
