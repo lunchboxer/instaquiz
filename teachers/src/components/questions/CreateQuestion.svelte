@@ -1,7 +1,7 @@
 <script>
   import { request } from '../../data/fetch-client'
   import { CREATE_QUESTION } from '../../data/mutations'
-  import { session } from '../sessions/data'
+  import { session, questions } from '../sessions/data'
   import { notifications } from '../notifications'
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
@@ -25,14 +25,18 @@
     order && order--
     try {
       const response = await request(CREATE_QUESTION,
-        { input: { text, order, session: { id: sessionId } } }
+        { input: { text, order, session: { connect: { id: sessionId } } } }
       )
       if (order !== null) session.get(sessionId)
       else {
-        session.update(previous => previous && ({
-          ...previous,
-          questions: [...previous.questions, response.createQuestion]
-        }))
+        session.update(previous => {
+          const questionList = [...previous.questions, response.createQuestion]
+            .slice(0).sort((a, b) => {
+              return a.order - b.order
+            })
+          questions.set(questionList)
+          return { ...previous, questions: questionList }
+        })
       }
       notifications.add({ text: 'Saved new question', type: 'success' })
       reset()
