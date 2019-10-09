@@ -3,7 +3,7 @@
   import { courses } from '../courses/data'
   import { IMPORT_QUESTIONS } from '../../data/mutations'
   import { request } from '../../data/fetch-client'
-  import { session } from './data'
+  import { session, questions } from './data'
   import { notifications } from '../notifications'
   import ImportQuestionsList from './ImportQuestionsList.svelte'
 
@@ -31,7 +31,12 @@
         toSessionId: sessionId,
         fromSessionId: importFromSessionId
       })
-      session.set(response.importQuestions)
+      const sessionQuestions = response.importQuestions.questions
+        .slice(0).sort((a, b) => {
+          return a.order - b.order
+        })
+      session.set({ ...response.importQuestions, questions: sessionQuestions })
+      questions.set(sessionQuestions)
       notifications.add({ text: 'Copied questions into session', type: 'success' })
       show = false
       termId = ''

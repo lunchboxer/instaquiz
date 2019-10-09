@@ -43,7 +43,7 @@ fragment QuestionWithSession on Question {
 exports.question = {
   async createQuestion (_, { input }, context) {
     let newOrder = null
-    const { order, text, session, answers } = input
+    const { order, session } = input
     if (typeof order === 'number') {
       const existing = await context.prisma.questions({ where: { order } })
       if (existing && existing.length > 0) {
