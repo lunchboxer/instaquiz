@@ -14,7 +14,8 @@ exports.call = {
     // find all the students who have been called this semester in this course
     const calledByCourse = await prisma.session({ id: sessionId }).course().sessions().calls().student()
     // above comes back as array of sessions
-    const flatcalls = calledByCourse.flatMap(session => session.calls)
+    const flatcalls = []
+    calledByCourse.forEach(session => flatcalls.push(...session.calls))
     if (flatcalls && flatcalls.length > 0) {
       const calledStudentIds = flatcalls.map(item => item.student.id)
       const uniqueCalledStudentIds = [...new Set(calledStudentIds)]
