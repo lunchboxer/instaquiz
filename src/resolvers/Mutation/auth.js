@@ -45,7 +45,7 @@ const auth = {
     const password = await bcrypt.hash(newPassword, 10)
     return context.prisma.updateUser({
       where: { id },
-      data: { password }
+      data: { password, passwordIsTemporary: false }
     })
   },
   async resetPassword (_, { username }, context) {
@@ -53,7 +53,7 @@ const auth = {
     const password = await bcrypt.hash(newPassword, 10)
     await context.prisma.updateUser({
       where: { username },
-      data: { password }
+      data: { password, passwordIsTemporary: true }
     })
     return newPassword
   },

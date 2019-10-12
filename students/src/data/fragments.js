@@ -1,9 +1,10 @@
 export const UserFields = /* GraphQL */`
   fragment UserFields on User {
+    id
     username
     name
     role
-    id
+    passwordIsTemporary
     coursesTeaching {
       id
       name

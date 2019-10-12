@@ -1,4 +1,5 @@
 <script>
+  import { push } from 'svelte-spa-router'
   import { user } from '../data/user'
   import { notifications } from './notifications'
   import Input from './Input.svelte'
@@ -25,6 +26,9 @@
     try {
       await user.login(username.trim(), password.trim())
       notifications.add({ text: `Logged in as '${username}'`, type: 'success' })
+      if ($user.passwordIsTemporary) {
+        push('/change-password')
+      }
     } catch (error) {
       errors = error
       notifications.add({ text: 'Login failed.', type: 'danger' })

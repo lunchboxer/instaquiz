@@ -8,6 +8,7 @@ type User {
   role: Role! @default(value: Student)
   calls: [Call!]!
   absences: [Absence!]!
+  passwordIsTemporary: Boolean! @default(value: false)
 }
 
 enum Role {

@@ -103,6 +103,7 @@ role: Role!
 calls: [Call!]!
 pinyinName: String
 absences: [Absence!]!
+passwordIsTemporary: Boolean!
 }
 
 type QuestionDuplicatePayload {
