@@ -29,8 +29,8 @@ const createUserStore = () => {
         token: login.token
       }))
     },
-    signup: async (username, name, password) => {
-      const { signup } = await request(SIGNUP, { username, name, password })
+    signup: async (username, name, password, code) => {
+      const { signup } = await request(SIGNUP, { username, name, password, code })
       window.localStorage.setItem('user', JSON.stringify(signup.user))
       window.localStorage.setItem('token', JSON.stringify(signup.token))
       update(previous => ({

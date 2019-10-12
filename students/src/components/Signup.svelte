@@ -9,6 +9,7 @@
   let name = ''
   let password = ''
   let confirmpass = ''
+  let code = ''
   let errors = ''
   let loading = false
   let submit
@@ -32,10 +33,10 @@
     loading = true
     submit.disabled = true
     try {
-      await user.signup(username.trim(), name.trim(), password.trim())
+      await user.signup(username.trim(), name.trim(), password.trim(), code.trim())
       errors = ''
       notifications.add({ text: `Created account for '${username}'`, type: 'success' })
-      push('/join-course')
+      push('/')
     } catch (error) {
       errors = error
       notifications.add({ text: 'registration failed.', type: 'danger' })
@@ -65,12 +66,14 @@
     <Error {errors} />
     <form bind:this={form} novalidate on:submit|preventDefault={signup}>
 
-      <Input type="text" bind:value={username} label="Student ID" required leftIcon="id-card" />
+      <Input type="text" bind:value={username} label="Student ID" required />
 
-      <Input type="text" bind:value={name} label="Name" required leftIcon="user" />
+      <Input type="text" bind:value={name} label="Name" required />
 
-      <Input type="password" bind:value={password} label="Password" required leftIcon="key" />
-      <Input type="password" label="Confirm password" bind:value={confirmpass} leftIcon="check" />
+      <Input type="password" bind:value={password} label="Password" required />
+      <Input type="password" label="Confirm password" bind:value={confirmpass} />
+
+      <Input type="text" bind:value={code} label="Code word" required />
 
       <div class="buttons">
         <a href="#/login" class="button button-clear">I have an account!</a>

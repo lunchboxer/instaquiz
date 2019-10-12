@@ -8,9 +8,11 @@ const auth = {
     const user = await context.prisma.createUser({
       username: args.username,
       name: args.name,
-      password
+      password,
+      coursesAttending: {
+        connect: { code: args.code.toUpperCase() }
+      }
     })
-
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
       user
