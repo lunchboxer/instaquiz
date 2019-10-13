@@ -5,11 +5,9 @@
   export let previous
 
   const goPrevious = () => {
-    console.log('going to previous', previous)
     if (previous) push(previous)
   }
   const goNext = () => {
-    console.log('going to next', next)
     if (next) push(next)
   }
 </script>

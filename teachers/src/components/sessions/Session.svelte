@@ -6,8 +6,6 @@
   export let params = {}
 
   session.get(params.id)
-
-  $: console.log($session)
 </script>
 
 <svelte:head>

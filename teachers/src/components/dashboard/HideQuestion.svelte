@@ -6,8 +6,6 @@
 
   export let question
 
-  $: console.log(question)
-
   let loading = false
 
   const hide = async () => {

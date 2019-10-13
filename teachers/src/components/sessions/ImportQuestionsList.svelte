@@ -1,15 +1,11 @@
 <script>
   import { request } from '../../data/fetch-client'
   import { SESSION_QUESTIONS } from '../../data/queries'
-  import { session } from './data'
   import ImportSingleQuestionRow from './ImportSingleQuestionRow.svelte'
 
   export let sessionId
 
   let questions
-  let errors = ''
-
-  $: console.log($session && $session.questions)
 
   const showQuestions = async () => {
     try {
