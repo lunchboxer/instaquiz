@@ -126,6 +126,14 @@ export const ASK_QUESTION = /* GraphQL */`
   }
   ${QuestionFields}`
 
+export const HIDE_QUESTION = /* GraphQL */`
+mutation HideQuestion($id: ID!, $input: QuestionUpdateInput!){
+  updateQuestion(id: $id, input: $input){
+    ...QuestionFields
+  }
+}
+${QuestionFields}`
+
 //  Answer
 
 export const CREATE_ANSWER = /* GraphQL */`

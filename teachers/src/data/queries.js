@@ -201,18 +201,11 @@ export const ACTIVE_TEACHER_SESSION = /* GraphQL */`
     session(id: $id){
       id
       questions {
-        id
-        text
-        order
-        asked
-        answers {
-          id
-          text
-        }
+        ...QuestionFields
       }
     }
   }
-`
+${QuestionFields}`
 
 export const RESPONSES = /* GraphQL */`
   query Responses($questionId: ID!){
@@ -272,7 +265,7 @@ subscription Absences($sessionId: ID!) {
 
 export const ASKED_QUESTION = /* GraphQL */`
   query ResponsesAndQuestions($sessionId: ID!){
-    questions(first: 1, where: {asked_not:null, session: {id: $sessionId}}, orderBy: asked_DESC) {
+    questions(first: 1, where: {asked_not:null, session: {id: $sessionId}, showInViewer: true}, orderBy: asked_DESC) {
     ...QuestionFields
     }
   }

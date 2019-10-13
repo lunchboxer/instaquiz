@@ -147,7 +147,7 @@
   <TimeTracker endsAt={session.endsAt} />
 {/if}
 
-{#if question}
+{#if question && question.showInViewer}
 
   <ResponseWatcher {question} />
   

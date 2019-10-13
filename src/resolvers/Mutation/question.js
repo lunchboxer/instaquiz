@@ -69,7 +69,7 @@ exports.question = {
   },
   askQuestion (_, { id }, context) {
     return context.prisma.updateQuestion({
-      data: { asked: new Date() },
+      data: { asked: new Date(), showInViewer: true },
       where: { id }
     })
   },

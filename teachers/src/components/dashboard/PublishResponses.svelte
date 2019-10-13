@@ -20,5 +20,8 @@
   }
 </script>
 
-<button class="button-outline" on:click={publish} class:is-loading={loading} disabled={loading}>Publish
-  responses</button>
+{#if question && !question.publishResponses}
+  <button class="button-outline" on:click={publish} class:is-loading={loading} disabled={loading}>
+    Publish responses
+  </button>
+{/if}
