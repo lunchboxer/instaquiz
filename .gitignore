@@ -10,3 +10,4 @@ yarn.lock
 src/generated
 teachers/public/fonts
 .import
+docker-compose*

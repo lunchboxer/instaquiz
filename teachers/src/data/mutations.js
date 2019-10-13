@@ -261,3 +261,11 @@ export const DELETE_RESPONSE = /* GraphQL */ `
     }
   }
 `
+
+export const SEND_MESSAGE = /* GraphQL */ `
+  mutation SendMessage($sessionId: ID!, $label: String!, $body: String!) {
+    sendMessage (sessionId: $sessionId, label: $label, body: $body) {
+      id
+    }
+  }
+`

@@ -14,6 +14,7 @@
   import { cubicOut } from 'svelte/easing'
   import ResponseWatcher from './ResponseWatcher.svelte'
   import TimeTracker from './TimeTracker.svelte'
+  import MessageWatcher from './MessageWatcher.svelte'
 
   const progress = tweened(0, {
     duration: 400,
@@ -140,6 +141,8 @@
 </style>
 
 <AbsenceWatcher {session} />
+
+<MessageWatcher {session} />
 
 <CallWatcher {session} />
 

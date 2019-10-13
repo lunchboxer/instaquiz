@@ -39,13 +39,23 @@ exports.Subscription = {
     }
   },
   absences: {
-    subscribe: async (_, { sessionId }, { prisma }) => {
+    subscribe: (_, { sessionId }, { prisma }) => {
       return prisma.$subscribe.absence({
         mutation_in: ['CREATED', 'DELETED'],
         node: {
           session: { id: sessionId }
         }
       })
+    },
+    resolve: payload => {
+      return payload
+    }
+  },
+  messages: {
+    subscribe: (_, { sessionId }, { prisma }) => {
+      return prisma.$subscribe.message({
+        node: { session: { id: sessionId } }
+      }).node()
     },
     resolve: payload => {
       return payload

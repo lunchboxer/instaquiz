@@ -76,6 +76,7 @@ type Subscription {
   responses(sessionId: ID, questionId: ID): Response
   calls(sessionId: ID!): Call
   absences(sessionId: ID!): AbsenceSubscriptionPayload
+  messages(sessionId: ID!): Message
 }
 
 type AuthPayload {

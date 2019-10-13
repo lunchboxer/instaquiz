@@ -9,7 +9,7 @@
   $: if ([10, 5, 1].includes(minutesLeft)) {
     alert.play()
     notifications.add({
-      text: `Class ends in ${minutesLeft} minute${minutesLeft > 1 && 's'}`
+      text: `Class ends in ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}`
     })
   }
 </script>

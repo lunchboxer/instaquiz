@@ -7,6 +7,7 @@
   import Loading from '../Loading.svelte'
   import TeachersQuestions from './TeachersQuestions.svelte'
   import StudentCaller from './StudentCaller.svelte'
+  import SetTimer from './SetTimer.svelte'
   import Absences from './Absences.svelte'
 
   let errors = ''
@@ -33,3 +34,5 @@
 {:else}
   <Loading what="Session data and questions" />
 {/if}
+
+<SetTimer />

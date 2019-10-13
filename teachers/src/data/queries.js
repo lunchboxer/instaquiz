@@ -245,6 +245,15 @@ export const CALL_SUBSCRIPTION = /* GraphQL */`
   }
 `
 
+export const MESSAGE_SUBSCRIPTION = /* GraphQL */ `
+ subscription Messages($sessionId: ID!){
+   messages (sessionId: $sessionId) {
+     label
+     body
+   }
+ }
+`
+
 export const ABSENCE_SUBSCRIPTION = /* GraphQL */`
 subscription Absences($sessionId: ID!) {
   absences(sessionId: $sessionId) {
