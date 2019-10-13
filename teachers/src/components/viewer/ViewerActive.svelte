@@ -35,7 +35,7 @@
       .subscribe({
         next ({ data }) {
           if (data) {
-            if (question.id !== data.questions.id) {
+            if (question.id && question.id !== data.questions.id) {
               responses.set([])
             }
             question = data.questions
