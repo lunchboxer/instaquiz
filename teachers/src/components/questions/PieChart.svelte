@@ -24,8 +24,8 @@
   svg {
     width: 50%;
     height: 50%;
-    max-height: 450px;
-    max-width: 450px;
+    max-height: 400px;
+    max-width: 400px;
   }
 </style>
 

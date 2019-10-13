@@ -65,7 +65,7 @@
   }
 
   h1 {
-    font-size: 6rem;
+    font-size: 5rem;
   }
 
   p {
@@ -76,7 +76,7 @@
   progress {
     width: 90%;
     height: 7px;
-    margin: 4rem 4rem 2rem;
+    margin: 3rem 4rem 1rem;
   }
 
   progress.is-complete {
