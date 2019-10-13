@@ -12,7 +12,7 @@
       const response = await request(SESSION_QUESTIONS, { sessionId })
       questions = response.questions
     } catch (error) {
-      errors = error
+      console.error(error)
     }
   }
 </script>

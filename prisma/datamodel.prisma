@@ -94,3 +94,12 @@ type Absence {
   student: User!
   session: Session!
 }
+
+type Message {
+  id: ID! @id
+  session: Session!
+  body: String!
+  label: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

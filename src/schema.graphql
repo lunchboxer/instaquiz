@@ -68,6 +68,7 @@ type Mutation {
   evaluateStudent(callId: ID!, evaluation: Evaluation): Call
   markStudentAbsent(studentId: ID!, sessionId: ID!): Absence
   unmarkStudentAbsent(studentId: ID!, sessionId: ID!): Absence
+  sendMessage(sessionId: ID!, label: String!, body: String!): Message
 }
 
 type Subscription {
