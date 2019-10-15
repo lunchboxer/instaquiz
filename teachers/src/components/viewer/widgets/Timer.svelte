@@ -1,6 +1,7 @@
 <script>
   import { time } from '../../dashboard/stores'
   import { fade } from 'svelte/transition'
+  import { notifications } from '../../notifications'
 
   export let seconds = 0
 
@@ -9,8 +10,8 @@
   let diffSeconds = 0
   let diffHours = 0
   let diffMinutes = 0
-  let start = false
-  let end = false
+  const start = false
+  const end = false
 
   const timesUpSound = new Audio('/sounds/zapsplat_multimedia_game_sound_mallet_positive_advance_001_40871.mp3')
   const leftPad = number => number.toString().length === 1 ? '0' + number : number
@@ -28,26 +29,19 @@
   }
 
   $: if (seconds > 0) {
-    start = true
-    setTimeout(() => {
-      start = false
-    }, 3000)
     endTime = false
     const now = new Date()
     endTime = new Date(now.valueOf() + seconds * 1000)
     totalTimerString = formatDistance(now, endTime)
+    notifications.add(`${totalTimerString} starts now!`)
     seconds = 1
   }
 
   $: timeLeft = endTime && endTime > $time && formatDistance($time, endTime)
 
-  $: if (!timeLeft) {
+  $: if (timeLeft === false) {
     timesUpSound.play()
-    end = true
-    setTimeout(() => {
-      end = false
-      seconds = 0
-    }, 4000)
+    notifications.add(`${totalTimerString} is up!`)
   }
 </script>
 
@@ -85,41 +79,7 @@
   p.total {
     font-size: 2rem;
   }
-
-  .timer-intro,
-  .timer-outro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 40;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  .timer-intro p,
-  .timer-outro p {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-size: 5rem;
-  }
 </style>
-
-{#if start}
-<div class="timer-intro" transition:fade>
-  <p>{totalTimerString}
-    <br>
-    starting now
-  </p>
-
-</div>
-{/if}
 
 {#if timeLeft}
   <section class="timer" transition:fade>
@@ -134,10 +94,4 @@
       <p class="total">out of {totalTimerString}<p>
     </div>
   </section>
-{/if}
-
-{#if end}
-<div class="timer-outro" transition:fade>
-  <p>Times Up!</p>
-</div>
 {/if}
