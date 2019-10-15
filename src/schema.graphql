@@ -106,6 +106,7 @@ calls: [Call!]!
 pinyinName: String
 absences: [Absence!]!
 passwordIsTemporary: Boolean!
+responses: [Response!]!
 }
 
 type QuestionDuplicatePayload {

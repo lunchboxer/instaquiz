@@ -9,6 +9,7 @@ type User {
   calls: [Call!]!
   absences: [Absence!]!
   passwordIsTemporary: Boolean! @default(value: false)
+  responses: [Response!]!
 }
 
 enum Role {
