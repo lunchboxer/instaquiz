@@ -14,8 +14,7 @@
     loading = true
     try {
       const body = JSON.stringify({ seconds })
-      const response = await request(SEND_MESSAGE, { sessionId: $activeSession.id, label: 'timer', body })
-      console.log(response)
+      await request(SEND_MESSAGE, { sessionId: $activeSession.id, label: 'timer', body })
       notifications.add({ text: `Set timer for ${seconds} seconds`, type: 'success' })
     } catch (error) {
       errors = error

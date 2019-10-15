@@ -7,7 +7,7 @@
   export let session
 
   let message
-  let timer = 0
+  let seconds = 0
 
   onMount(async () => {
     const subscription = ws.request({
@@ -19,7 +19,7 @@
           if (data && data.messages) {
             message = { ...data.messages, body: JSON.parse(data.messages.body) }
             if (data.messages.label === 'timer') {
-              timer = message.body.seconds
+              seconds = message.body.seconds
             }
           }
         }
@@ -28,6 +28,6 @@
   })
 </script>
 
-{#if timer > 0}
-  <Timer bind:seconds={timer} />
+{#if seconds > 0}
+  <Timer bind:seconds />
 {/if}
