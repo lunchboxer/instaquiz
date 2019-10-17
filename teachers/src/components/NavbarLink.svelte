@@ -1,35 +1,39 @@
 <script>
+  import { location } from 'svelte-spa-router'
   export let url = ''
   export let text = ''
   export let icon = null
 </script>
 
 <style>
-  i {
-    margin-right: 0.3rem;
-    width: 20px;
-    text-align: center;
-  }
-
-  @media only screen and (max-width: 1024px) {
-    :global(a.active) {
-      border-radius: 4px;
-      color: #cb2d6f;
+   :global(a.active) {
+      color: white;
       font-weight: bold;
       background-color: inherit;
+    }
+  @media only screen and (max-width: 1024px) {
+   
+    .navbar-item {
+      padding: .5rem;
     }
   }
 
   .navbar-item {
     line-height: 1.5;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     position: relative;
     align-items: center;
     display: flex;
     font-weight: 400;
   }
+
+  li {
+    list-style-type: none;
+  }
 </style>
 
-<a class="navbar-item" href="{url}">
-  {text}
-</a>
+<li>
+  <a class="navbar-item" href="#{url}" class:active={url === $location}>
+    {text}
+  </a>
+</li>

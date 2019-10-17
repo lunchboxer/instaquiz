@@ -10,8 +10,6 @@
   let diffSeconds = 0
   let diffHours = 0
   let diffMinutes = 0
-  const start = false
-  const end = false
 
   const timesUpSound = new Audio('/sounds/zapsplat_multimedia_game_sound_mallet_positive_advance_001_40871.mp3')
   const leftPad = number => number.toString().length === 1 ? '0' + number : number
