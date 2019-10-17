@@ -10,12 +10,6 @@
   $: thisCourse = $courses && $courses.find(c => c.id === params.id)
 </script>
 
-<style>
-  li .button {
-    margin: 0;
-  }
-</style>
-
 <svelte:head>
   <title>Students</title>
 </svelte:head>
@@ -34,7 +28,7 @@
   {#if $students}
     <ul>
       {#each $students as student (student.id)}
-        <li>#{student.username} - {student.name} <a href="#/student/{student.id}" class="button button-clear">edit</a></li>
+      <a href="#/student/{student.id}"><li>#{student.username} - {student.name}</li></a>
       {/each}
     </ul>
   {:else}
