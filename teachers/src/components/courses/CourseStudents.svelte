@@ -2,12 +2,19 @@
   import Loading from '../Loading.svelte'
   import { courses } from './data'
   import { students } from '../students/data'
+
   export let params = {}
 
   students.getByCourse(params.id)
   $: if (!$courses) { courses.get(params.id) }
   $: thisCourse = $courses && $courses.find(c => c.id === params.id)
 </script>
+
+<style>
+  li .button {
+    margin: 0;
+  }
+</style>
 
 <svelte:head>
   <title>Students</title>
