@@ -5,7 +5,7 @@
     if (!errors) return false
     return (Array.isArray(errors))
       ? errors.map(error => error.message).join('\n')
-      : !errors.message ? errors : errors.message
+      : (!errors.message ? errors : errors.message)
   }
 </script>
 
@@ -20,10 +20,6 @@
 
   .error strong {
     color: inherit;
-  }
-
-  .error-message i {
-    margin-right: 0.3rem;
   }
 </style>
 
