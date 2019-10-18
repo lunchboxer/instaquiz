@@ -61,24 +61,24 @@
 
 <div class="container-centered">
   <div class="login">
-    <h1>Create an acount</h1>
+    <h1>创建帐号</h1>
 
     <Error {errors} />
     <form bind:this={form} novalidate on:submit|preventDefault={signup}>
 
-      <Input type="text" bind:value={username} label="Student ID" required />
+      <Input type="text" bind:value={username} label="学号" required />
 
-      <Input type="text" bind:value={name} label="Name" required />
+      <Input type="text" bind:value={name} label="姓名" required />
 
-      <Input type="password" bind:value={password} label="Password" required />
-      <Input type="password" label="Confirm password" bind:value={confirmpass} />
+      <Input type="password" bind:value={password} label="密码" required />
+      <Input type="password" label="确认密码" bind:value={confirmpass} />
 
-      <Input type="text" bind:value={code} label="Code word" required />
+      <Input type="text" bind:value={code} label="验证码" required />
 
       <div class="buttons">
-        <a href="#/login" class="button button-clear">I have an account!</a>
+        <a href="#/login" class="button button-clear">已有帐号</a>
         <button type="submit" class:is-loading={loading} bind:this={submit}>
-          Register
+          注册
         </button>
       </div>
 

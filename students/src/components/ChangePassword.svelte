@@ -22,7 +22,7 @@
       await user.changePassword(oldPassword, newPassword)
       notifications.add({ text: 'Password changed', type: 'success' })
       reset()
-      if ($location === '/reset-password') {
+      if ($location === '/change-password') {
         push('/')
       }
     } catch (error) {
