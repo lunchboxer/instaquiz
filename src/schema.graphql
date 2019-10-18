@@ -28,7 +28,8 @@ type Query {
   calls(orderBy: CallOrderByInput, where: CallWhereInput): [Call!]!
   absences(orderBy: AbsenceOrderByInput, where: AbsenceWhereInput): [Absence!]!
   duplicateQuestions: [QuestionDuplicatePayload!]!
-  slideShow(id: ID!): SlideShow
+  slideshow(id: ID!): Slideshow
+  slideshows: [Slideshow!]!
 }
 
 type Mutation {
@@ -94,7 +95,7 @@ type Session {
   order: Int
   calls: [Call!]!
   absences: [Absence!]!
-  slideShows: [SlideShow!]!
+  slideshows: [Slideshow!]!
 }
 
 type User {

@@ -43,7 +43,7 @@ type Session {
   questions: [Question!]!
   calls: [Call!]!
   absences: [Absence!]!
-  slideShows: [SlideShow!]!
+  slideshows: [Slideshow!]!
 }
 
 type Question {
@@ -111,7 +111,7 @@ type Slide {
   order: Int
   contents: String!
 }
-type SlideShow {
+type Slideshow {
   id: ID! @id
   name: String! @unique
   slides: [Slide!]!

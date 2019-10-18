@@ -76,7 +76,10 @@ exports.Query = {
     }
     return dupes
   },
-  slideShow (_, { id }, { prisma }) {
-    return prisma.slideShow({ id })
+  slideshow (_, { id }, { prisma }) {
+    return prisma.slideshow({ id })
+  },
+  slideshows (_, args, { prisma }) {
+    return prisma.slideshows()
   }
 }
