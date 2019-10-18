@@ -43,6 +43,7 @@ type Session {
   questions: [Question!]!
   calls: [Call!]!
   absences: [Absence!]!
+  slideShows: [SlideShow!]!
 }
 
 type Question {
@@ -103,4 +104,15 @@ type Message {
   label: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type Slide {
+  id: ID! @id
+  order: Int
+  contents: String!
+}
+type SlideShow {
+  id: ID! @id
+  name: String! @unique
+  slides: [Slide!]!
 }

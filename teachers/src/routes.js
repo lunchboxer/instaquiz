@@ -13,6 +13,7 @@ import Student from './components/students/Student.svelte'
 import Viewer from './components/viewer/Viewer.svelte'
 import DuplicateQuestions from './components/questions/DuplicateQuestions.svelte'
 import DuplicateQuestion from './components/questions/DuplicateQuestion.svelte'
+import SlideViewer from './components/slides/SlideViewer.svelte'
 
 export default {
   '/': Dashboard,
@@ -29,5 +30,6 @@ export default {
   '/viewer': Viewer,
   '/duplicate-questions': DuplicateQuestions,
   '/duplicate-question/:text': DuplicateQuestion,
+  '/slides/:slideNumber?': SlideViewer,
   '*': NotFound
 }

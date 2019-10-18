@@ -10,6 +10,7 @@ const { Response } = require('./Response')
 const { Call } = require('./Call')
 const { Absence } = require('./Absence')
 const { Message } = require('./Message')
+const { SlideShow } = require('./SlideShow')
 const { Subscription } = require('./Subscription')
 
 exports.resolvers = {
@@ -25,5 +26,6 @@ exports.resolvers = {
   Call,
   Absence,
   Message,
+  SlideShow,
   Subscription
 }

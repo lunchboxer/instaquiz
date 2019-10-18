@@ -75,5 +75,8 @@ exports.Query = {
       }
     }
     return dupes
+  },
+  slideShow (_, { id }, { prisma }) {
+    return prisma.slideShow({ id })
   }
 }

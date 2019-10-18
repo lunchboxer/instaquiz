@@ -15,5 +15,8 @@ exports.Session = {
   },
   calls (root, args, context) {
     return context.prisma.session({ id: root.id }).calls({ orderBy: 'createdAt_DESC' })
+  },
+  slideShows (root, args, context) {
+    return context.prisma.session({ id: root.id }).slideShows()
   }
 }
