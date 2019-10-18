@@ -1,21 +1,15 @@
 <script>
-  import { formatRelative } from 'date-fns'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
 
   export let term
-
-  const format = (date) => {
-    const string = formatRelative(new Date(date), new Date())
-    return string.charAt(0).toUpperCase() + string.slice(1)
-  }
 </script>
 
 <svelte:head>
   <title>Courses</title>
 </svelte:head>
 
-<h1>Courses</h1>
-<p>{term.name}: {format(term.startDate)} to {format(term.endDate)}</p>
+<h1>My courses</h1>
+<p>{term.name}</p>
 
 <section class="term">
   <CategorizedCourseList courses={term.courses} />
