@@ -14,14 +14,14 @@
   {#if attending && attending.length}
     <h3>Attending</h3>
     {#each attending as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li>{course.name}</li>
     {/each}
   {/if}
 
   {#if notAttending.length > 0}
     <h3>Not attending</h3>
     {#each notAttending as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li>{course.name}</li>
     {/each}
   {/if}
 
