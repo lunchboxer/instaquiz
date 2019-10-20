@@ -3,7 +3,6 @@
 </script>
 <style>
   .container {
-    margin: 4rem;
     height: 100%;
     display: flex;
     justify-content: center;

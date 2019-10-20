@@ -71,6 +71,10 @@ type Mutation {
   markStudentAbsent(studentId: ID!, sessionId: ID!): Absence
   unmarkStudentAbsent(studentId: ID!, sessionId: ID!): Absence
   sendMessage(sessionId: ID!, label: String!, body: String!): Message
+  createSlideshow(name:String!): Slideshow
+  addSlide(slideshowId: ID!, order: Int, contents: String!): Slideshow
+  updateSlide(slideshowId: ID!, id: ID!, order: Int, contents: String): Slideshow
+  deleteSlide(slideshowId: ID!, id: ID!): Slideshow
 }
 
 type Subscription {

@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, AbsenceFields, AllSessionFields, QuestionFields, ResponseFields, UserFields } from './fragments'
+import { CourseFields, SessionFields, AbsenceFields, AllSessionFields, QuestionFields, ResponseFields, UserFields, AllSlideshowFields } from './fragments'
 
 export const ME = /* GraphQL */`
 {
@@ -368,3 +368,20 @@ export const RESPONSES_SAME_QUESTION_TEXT = /* GraphQL */ `
     }
   }
 `
+
+export const SLIDESHOWS = /* GraphQL */ `
+ {
+   slideshows {
+     id
+     name
+   }
+ }
+`
+
+export const SLIDESHOW = /* GraphQL */ `
+ query ($id: ID!){
+   slideshow (id:$id) {
+     ...AllSlideshowFields
+   }
+ }
+${AllSlideshowFields}`

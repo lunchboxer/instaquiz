@@ -1,4 +1,4 @@
-import { CourseFields, SessionFields, AllSessionFields, QuestionFields, UserFields, AbsenceFields } from './fragments'
+import { CourseFields, SessionFields, AllSlideshowFields, AllSessionFields, QuestionFields, UserFields, AbsenceFields } from './fragments'
 
 // Auth
 
@@ -268,4 +268,38 @@ export const SEND_MESSAGE = /* GraphQL */ `
       id
     }
   }
+`
+
+export const CREATE_SLIDESHOW = /* GraphQL */ `
+ mutation CreateSlideshow($name: String!) {
+   createSlideshow (name: $name){
+     id
+     name
+   }
+ }`
+
+export const CREATE_SLIDE = /* GraphQL */ `
+  mutation CreateSlide ($slideshowId: ID!, $order: Int, $contents: String!) {
+    addSlide(slideshowId: $slideshowId, order: $order, contents: $contents) {
+      ...AllSlideshowFields
+    }
+  }
+  ${AllSlideshowFields}`
+
+export const UPDATE_SLIDE = /* GraphQL */ `
+  mutation UpdateSlide ($slideshowId: ID!, $id: ID!, $order: Int, $contents: String) {
+    updateSlide(slideshowId: $slideshowId, id: $id, order: $order, contents: $contents) {
+      ...AllSlideshowFields
+    }
+  }
+  ${AllSlideshowFields}
+`
+
+export const DELETE_SLIDE = /* GraphQL */ `
+  mutation DeleteSlide ($slideshowId: ID!, $id: ID!) {
+    deleteSlide(slideshowId: $slideshowId, id: $id) {
+      ...AllSlideshowFields
+    }
+  }
+  ${AllSlideshowFields}
 `

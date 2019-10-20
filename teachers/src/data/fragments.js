@@ -110,3 +110,15 @@ export const AbsenceFields = /* GraphQL */`
     }
   }
 `
+
+export const AllSlideshowFields = /* GraphQL */`
+  fragment AllSlideshowFields on Slideshow {
+    id
+    name
+    slides {
+      id
+      order
+      contents
+    }
+  }
+`

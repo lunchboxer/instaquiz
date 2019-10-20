@@ -45,7 +45,7 @@ exports.question = {
     let newOrder = null
     const { order, session } = input
     if (typeof order === 'number') {
-      const existing = await context.prisma.questions({ where: { order } })
+      const existing = await context.prisma.questions({ where: { order, session: { id: session.id } } })
       if (existing && existing.length > 0) {
         newOrder = order
         await shiftOrderUp(order, session.connect.id, context.prisma)

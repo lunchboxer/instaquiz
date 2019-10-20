@@ -52,7 +52,7 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
 }
-input, select {
+input, select, textarea {
   color: var(--base-color);
 }
 body {

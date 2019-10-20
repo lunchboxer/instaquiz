@@ -13,7 +13,9 @@ import Student from './components/students/Student.svelte'
 import Viewer from './components/viewer/Viewer.svelte'
 import DuplicateQuestions from './components/questions/DuplicateQuestions.svelte'
 import DuplicateQuestion from './components/questions/DuplicateQuestion.svelte'
-import SlideViewer from './components/slides/SlideViewer.svelte'
+import Slideshows from './components/slides/Slideshows.svelte'
+import CreateSlideshow from './components/slides/CreateSlideshow.svelte'
+import Slideshow from './components/slides/Slideshow.svelte'
 
 export default {
   '/': Dashboard,
@@ -30,6 +32,8 @@ export default {
   '/viewer': Viewer,
   '/duplicate-questions': DuplicateQuestions,
   '/duplicate-question/:text': DuplicateQuestion,
-  '/slides/:slideNumber?': SlideViewer,
+  '/slideshows': Slideshows,
+  '/create-slideshow': CreateSlideshow,
+  '/slideshow/:id': Slideshow,
   '*': NotFound
 }

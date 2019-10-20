@@ -136,6 +136,7 @@
       <NavbarLink url="/" text="Dashboard" />
       <NavbarLink url="/courses" text="Courses" />
       <NavbarLink url="/terms" text="Terms" />
+      <NavbarLink url="/slideshows" text="Slideshows" />
     {/if}
 
     {#if $user.name && $location !== '/viewer'}
