@@ -118,34 +118,29 @@
     </a>
   </div>
 
-  {#if $user.id}
+  {#if $user.id && $location !== '/viewer'}
     <button class:is-active={showMenu} on:click={toggleMenu} class="menu-toggle button-clear"
       aria-controls="navbar-menu" aria-expanded={showMenu}
     >
-    {#if showMenu}
-      close
-    {:else}
-      menu
-    {/if}
+      {#if showMenu}
+        close
+      {:else}
+        menu
+      {/if}
     </button>
-  {/if}
 
-  <ul id="navbar-menu" bind:this={menu} hidden on:click={() => { showMenu = false }} class:is-active={showMenu}>
+    <ul id="navbar-menu" bind:this={menu} hidden on:click={() => { showMenu = false }} class:is-active={showMenu}>
    
-    {#if $user.id}
       <NavbarLink url="/" text="Dashboard" />
       <NavbarLink url="/courses" text="Courses" />
       <NavbarLink url="/terms" text="Terms" />
       <NavbarLink url="/slideshows" text="Slideshows" />
-    {/if}
-
-    {#if $user.name && $location !== '/viewer'}
       <NavbarLink url="/me" icon="user-circle" text={$user.name}/>
       <button class="button-clear" on:click={logout}>
         <strong>Log out</strong>
       </button>
-    {/if}
 
-  </ul><!-- navbar-menu -->
+    </ul><!-- navbar-menu -->
+  {/if}
     
 </nav>

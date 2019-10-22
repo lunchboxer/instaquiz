@@ -84,11 +84,6 @@
     font-size: 2rem;
     font-weight: bold;
   }
-
-  input {
-    width: 5rem;
-    border: none;
-  }
 </style>
 
 <section class="slide">
